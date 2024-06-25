@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.audiro.repository.PostDao">
+    
+    <!-- post테이블에 insert하는 문장 -->
+    <insert id="insertFreeAndMate">
+        insert into post (users_id, post_type_id, title, content)
+        values (#{usersId}, #{postTypeId}, #{title}, #{content})
+    </insert>
+    
+    <!-- post테이블에서 수정(update)하는 문장 -->
+    <update id="updateFreeAndMate">
+        update post
+        set post_type_id = #{postTypeId},
+        title = #{title},
+        content = #{content},
+        modified_time = systimestamp
+        where post_id = #{postId}
+    </update>
+    
+    <!-- 상세보기 select-->
+    <select id="selectDetailsFreeAndMate" resultType="Post">
+        select * from post where post_id = #{postId} and post_type_id = #{postTypeId}
+    </select>
+    
+    <!--통합 최신순 정렬 -->
+    <select id="recentOrder" resultType="Post">
+        select * from post order by created_time desc
+    </select>
+    <!-- 게시판 별 최신 순 -->
+    <select id="recentOrder" resultType="Post">
+        select * from post where post_type_id = #{postTypeId} order by created_time desc
+    </select>    
+    
+</mapper>
