@@ -17,7 +17,6 @@ public class CommunityController {
 	@GetMapping("/free")
 	public void free() {
 		log.debug("free()");
-		
 	}
 
 }
