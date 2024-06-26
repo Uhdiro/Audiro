@@ -16,7 +16,7 @@ public class Post {
 
 	private Integer postId;  				//Primary key.
 	private Integer usersId;				//Foregin Key: users 테이블의 usres_id(pk) 컬럼을 참조.
-	private Integer postTypeId;				//Foregin key: post_type 테이블의 post_type_id(pk) 컬럼을 참조.
+	private String postTypeId;				//Foregin key: post_type 테이블의 post_type_id(pk) 컬럼을 참조. (10:여행후기, 20:여행메이트, 30:자유)
 	private String title;					//게시글 제목.
 	private String content;					//게시글 내용.
 	private LocalDateTime createTime;		//댓글 최초 작성 시간.
