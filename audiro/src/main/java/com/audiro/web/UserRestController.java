@@ -43,4 +43,15 @@ public class UserRestController {
 			return ResponseEntity.ok("N");
 		}
 	}
+	
+	@GetMapping("/check-phone")
+	@ResponseBody
+	public ResponseEntity<String> checkPhone(@RequestParam(name = "phone") String phone) {
+		boolean result = userService.checkPhone(phone);
+		if (result) {
+			return ResponseEntity.ok("Y");
+		} else {
+			return ResponseEntity.ok("N");
+		}
+	}
 }

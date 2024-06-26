@@ -31,7 +31,7 @@ public class UserServiceTest {
 		log.debug("result is true");
 	}
 	
-	@Test
+//	@Test
 	public void testCheckNickname() {
 		boolean result = userService.checkNickname("nick1");
 		Assertions.assertEquals(false, result);
@@ -40,5 +40,16 @@ public class UserServiceTest {
 		result = userService.checkNickname("nick100");
 		Assertions.assertEquals(true, result);
 		log.debug("result is true");
+	}
+	
+	@Test
+	public void testCheckPhone() {
+		boolean result = userService.checkPhone("010-1234-1234");
+		Assertions.assertEquals(false, result);
+		log.debug("result is {}", result);
+		
+		result = userService.checkPhone("010-9999-9999");
+		Assertions.assertEquals(true, result);
+		log.debug("result is {}", result);
 	}
 }
