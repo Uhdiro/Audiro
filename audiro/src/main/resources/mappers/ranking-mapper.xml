@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
     <mapper namespace="com.audiro.repository.PostDao">
-        <!-- 관심user 순위 3명 뽑아오는 sql문 커뮤니티 순위에서 사용-->
+        <!-- 관심user 순위 3명 뽑아오는 sql문 커뮤니티 순위에서 사용
         <select id="selectUserlikeTop3" resultType="favoriteUsers" >
             select users_id, count(*) as user_count
             from favorite_users
@@ -12,7 +12,8 @@
             order by user_count DESC
             fetch first 3 rows only
         </select>
-
+            -->
+            
         <!-- 여행후기 많이 쓴 사람 top3 select 여행후기 순위에서 사용-->
         <select id="selectReviewUserTop3" resultType="Post" >
             select users_id, count(*) as user_count
