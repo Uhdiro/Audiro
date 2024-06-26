@@ -9,6 +9,5 @@
 	
 	<typeAliases>
 		<typeAlias type="com.audiro.repository.TravelDestination" alias="Destination"/>
-		<typeAlias type="com.audiro.repository.FavoriteDestination" alias="FavoriteDestination"/>
 	</typeAliases>
 </configuration>

@@ -1,16 +1,26 @@
 package com.audiro.repository;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Data
-@NoArgsConstructor
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@ToString
 public class TravelDestination {
-	private int TravelDestinationId;
+	@Id
+	@GeneratedValue
+	private int travelDestinationId;
+	
 	private String name;
 	private String description;
 	private String phone;
