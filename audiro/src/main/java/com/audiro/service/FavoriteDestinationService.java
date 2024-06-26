@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.audiro.repository.FavoriteDestination;
+import com.audiro.dto.FavoriteDestinationDto;
 import com.audiro.repository.FavoriteDestinationDao;
 
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ public class FavoriteDestinationService {
 
 	private final FavoriteDestinationDao dao;
 
-	public List<FavoriteDestination> readAll() {
-		List<FavoriteDestination> list = dao.selectOrderById();
+	public List<FavoriteDestinationDto> readAll() {
+		List<FavoriteDestinationDto> list = dao.selectAllOrderById();
 		return list;
 	}
 }

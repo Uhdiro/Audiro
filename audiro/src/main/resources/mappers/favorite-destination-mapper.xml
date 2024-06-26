@@ -5,10 +5,10 @@
 <mapper namespace="com.audiro.repository.FavoriteDestinationDao">
 	
 	<!-- 찜한 여행지 불러오기 -->
-	<select id="selectOrderById" resultType="FavoriteDestination">
-		select * from favorite_destination f
+	<select id="selectAllOrderById" resultType="FavoriteDestinationDto">
+		select f.*, t.name, t.img_url from favorite_destination f
 		join travel_destination t
-		on f.favorite_destination_id = t.travel_destination_id
+		on f.destination_id = t.travel_destination_id
 		order by favorite_destination_id
 	</select>
 	

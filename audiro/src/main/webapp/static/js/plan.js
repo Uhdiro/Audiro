@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log('js');
 
 	getAllFavDestination();
+	
+	function createDayPlan(){
+		const favDestinaition=document.querySelectorAll('div#favDestinaition');
+		
+	}
 
 	function getAllFavDestination() {
 		const uri = '../api/plan/fav';
@@ -26,19 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		let htmlStr='';
 		for(let destination of data){
-			htmlStr+=`
-				<div class="col">
-					<div class="card">
-						<img src="${destination.imgUrl}" class="card-img-top" alt="${destination.name}">
-						<div class="card-body">
-							<h5 class="cardTitle">${destination.name}</h5>
+			htmlStr +=`
+				<div class="favDestinaition col">
+					<div name="destinationId" value="${destination.destinationId}" />
+						<div class="card">
+							<img src="${destination.imgUrl}" class="card-img-top" alt="${destination.name}">
+							<div class="card-body">
+								<h5 class="cardTitle">${destination.name}</h5>
+							</div>
+							<div>
+								// 버튼 클릭 시 상세 페이지 넘어가게 하자.
+								<button></butto>
+							</div>
 						</div>
-					</div>
+					</form>
 				</div>
 			`;
-			divFav.innerHTML=htmlStr;
 		}
+		
+		divFav.innerHTML = htmlStr;
 	}
+
 	
 
 

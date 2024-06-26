@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.audiro.dto.FavoriteDestinationDto;
 import com.audiro.repository.FavoriteDestination;
 import com.audiro.service.FavoriteDestinationService;
 import com.audiro.service.PlanService;
@@ -20,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PlanRestController {
 
-	private final FavoriteDestinationService favService;
+	private final FavoriteDestinationService service;
 
 	@GetMapping("/fav")
-	public List<FavoriteDestination> readAllFavoriteDestination() {
+	public List<FavoriteDestinationDto> readAllFavoriteDestination() {
 		 log.info("Fetching all favorite destinations");
-		return favService.readAll();
+		return service.readAll();
 		
 	}
 	
