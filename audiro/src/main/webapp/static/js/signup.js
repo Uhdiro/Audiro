@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputPhone = document.querySelector('input#phone');
     inputPhone.addEventListener('change', checkPhone);
     
+    const inputEmail = document.querySelector('input#email');
+    inputEmail.addEventListener('change', checkEmail);
+    
     function checkId(event) {
         const id = event.target.value;
         
@@ -119,6 +122,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkPhoneResult.innerHTML = '사용할 수 없는 전화번호입니다.'
                 checkPhoneResult.classList.add('text-danger');
                 checkPhoneResult.classList.remove('text-success');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+    
+    function checkEmail(event) {
+        const email = event.target.value;
+        
+        const uri = `../api/user/check-email?email=${email}`;
+        axios
+        .get(uri)
+        .then((response) => {
+            const checkEmailResult = document.querySelector('div#checkEmailResult');
+            
+            if (response.data === 'Y') {
+                checkEmailResult.innerHTML = '사용할 수 있는 이메일입니다.';
+                checkEmailResult.classList.add('text-success');
+                checkEmailResult.classList.remove('text-danger');
+            } else {
+                checkEmailResult.innerHTML = '사용할 수 없는 이메일입니다.';
+                checkEmailResult.classList.add('text-danger');
+                checkEmailResult.classList.remove('text-success');
             }
         })
         .catch((error) => {

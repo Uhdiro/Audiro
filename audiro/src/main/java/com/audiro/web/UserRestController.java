@@ -54,4 +54,15 @@ public class UserRestController {
 			return ResponseEntity.ok("N");
 		}
 	}
+	
+	@GetMapping("/check-email")
+	@ResponseBody
+	public ResponseEntity<String> checkEmail(@RequestParam(name = "email") String email) {
+		boolean result = userService.checkEmail(email);
+		if (result) {
+			return ResponseEntity.ok("Y");
+		} else {
+			return ResponseEntity.ok("N");
+		}
+	}
 }

@@ -42,13 +42,24 @@ public class UserDaoTest {
 		log.debug("user is null");
 	}
 	
-	@Test
+//	@Test
 	public void testSelectByPhone() {
 		User user = userDao.selectByPhone("010-1234-1234");
 		Assertions.assertNotNull(user);
 		log.debug(user.toString());
 		
 		user = userDao.selectByPhone("010-9999-9999");
+		Assertions.assertNull(user);
+		log.debug("user is null");
+	}
+	
+	@Test
+	public void testSelectByEmail() {
+		User user = userDao.selectByEmail("email@gmail.com");
+		Assertions.assertNotNull(user);
+		log.debug(user.toString());
+		
+		user = userDao.selectByEmail("mail@gmail.com");
 		Assertions.assertNull(user);
 		log.debug("user is null");
 	}

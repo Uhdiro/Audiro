@@ -32,6 +32,7 @@
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="전화번호" required />
                     <div id="checkPhoneResult"></div>
                     <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required />
+                    <div id="checkEmailResult"></div>
                     <button class="form-control btn btn-outline-success">작성 완료</button>
                 </form>
             </div>
