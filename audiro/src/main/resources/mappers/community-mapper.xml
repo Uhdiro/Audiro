@@ -4,15 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.audiro.repository.PostDao">
 
-    <!-- 화면에 인기여행지 top5개(찜많은순) 
+    <!-- 화면에 인기여행지 top10개(찜많은순) 
     <select id="selectPopularTravelDestinations5" resultType="">
         select destination_id, count(*) count
         from favorite_destination
         group by destination_id
         order by count DESC,
         destination_id ASC
-        fetch first 5 rows only
-    </select> -->
+        fetch first 10 rows only
+    </select> 
+    -->
+    
     <!-- TODO: 위에서 인기여행지 id 뽑은걸로 여행지 테이블의 정보 필요함(화면에 제목+사진보여주어야됨) 
         인기 여행지 클릭했을 때 인기 여행지 상세보기는 리다이렉트 써서 destination_id에 해당하는 상세보기 페이지로 이동
      -->
@@ -31,15 +33,22 @@
         ORDER BY
         count DESC,
         f.destination_id ASC
-        FETCH FIRST 5 ROWS ONLY;
+        FETCH FIRST 10 ROWS ONLY;
     </select>
     -->
     
-    <!-- 인기 여행지 top5에서 찜 누르면 찜 여행지에 insert 
+    <!-- 인기 여행지 top10에서 찜 누르면 찜 여행지에 insert 
     <insert id="insertFavoriteDestinations">
         INSERT INTO favorite_destination (users_id, destination_id) 
         VALUES (#{usersId}, #{destinationId})
     </insert>
+    -->
+    
+    <!-- 찜 취소 
+    <delete id="deleteCancelFavoriteDestinations">
+        DELETE FROM favorite_destination 
+        WHERE users_id = #{usersId} AND destination_id = #{destinationId}        
+    </delete>
     -->
     
     <!-- 통합 게시판 목록 select 최신순으로 가져옴 
@@ -121,7 +130,14 @@
         where post_id = #{postId}
     </update>
     -->
-
+    
+    <!-- 사용자가 good버튼 한번 또 누르면 good 삭제(누른 good취소) 
+    <update id="updateCancelPostGood">
+        update post set good = good - 1
+        where post_id = #{postId}
+    </update>
+    -->
+    
     <!-- 자유+여행메이트 상세 페이지 select
     <select id="selectDetailsFreeAndMate" resultType="Post">
         select p.*, u.nickname
@@ -180,9 +196,21 @@
         where draft_post_id = #{draftPostId}
     </select>
     -->
+    
+    <!-- 임시저장 된 글 삭제하기 
+    <delete id="deleteDraftPostById">
+        delete from draft_post where draft_post_id = #{draftPostId}
+    </delete>
+    -->
+    
+    <!-- 임시저장 된 글 전체 삭제하기 
+    <delete id="deleteAllDraftPostsByUserId">
+        delete from draft_post where users_id = #{usersId}
+    </delete>
+    -->
 
-    <!-- 검색 창 -->
-    <!-- post 테이블에서 제목/내용/작성자로 검색하기 기능 
+    <!-- 커뮤니티 검색 창 -->
+    <!-- post 테이블에서 제목/내용/제목+내용/닉네임으로 검색하기 기능 
     <select id="search" resultType="Post">
         <bind name="searchKeyword" value="'%' + keyword + '%'" />
         SELECT p.*, u.nickname
