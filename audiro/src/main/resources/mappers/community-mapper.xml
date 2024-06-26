@@ -123,10 +123,16 @@
     -->
 
     <!-- 자유+여행메이트 상세 페이지 select
-    <select id="" resultType=""></select>
+    <select id="selectDetailsFreeAndMate" resultType="Post">
+        select p.*, u.nickname
+        from post p 
+        join users u
+        on p.users_id = u.users_id
+        where p.post_id = #{postId}
+    </select>
      -->
      
-    <!-- post테이블에서 수정(update)하는 문장 
+    <!-- 자유+여행메이트 게시판에서 수정(update)하는 문장 
     <update id="updateFreeAndMate">
         update post
         set post_type_id = #{postTypeId},
@@ -137,12 +143,43 @@
     </update>
     -->
     
-    <!-- 상세보기 select
+    <!-- 자유+여행메이트 게시판에서 삭제(delete)하는 문장 
+    <delete id="deletePostById">
+        delete from post 
+        where post_id = #{postId}
+    </delete>    
+    -->
+
+    
+    <!-- 자유 or 여행메이트 게시판 상세보기 select
     <select id="selectDetailsFreeAndMate" resultType="Post">
         select * from post where post_id = #{postId} and post_type_id = #{postTypeId}
     </select>
     -->
-
+    
+    <!-- 임시 저장 등록 insert 
+    <insert id="insertDraftPost">
+        insert into draft_post (type_id, title, users_id, content) 
+        values (#{typeId}, #{title}, #{usersId}, #{content})
+    </insert>
+    -->
+    
+    <!--(자유+여행메이트) 임시저장된 목록 불러오기 select 
+    <select id="selectFreeAndMateDraftPost" resultType="DraftPost">
+        select *
+        from draft_post
+        where users_id = #{usersId}
+        and (type_id = 20 or type_id = 30)
+    </select>
+    -->
+    
+    <!-- 임시저장 된 게시글 1개 불러오기 select 
+    <select id="selectDraftPost" resultType="DraftPost">
+        select *
+        from draft_post
+        where draft_post_id = #{draftPostId}
+    </select>
+    -->
 
     <!-- 검색 창 -->
     <!-- post 테이블에서 제목/내용/작성자로 검색하기 기능 
