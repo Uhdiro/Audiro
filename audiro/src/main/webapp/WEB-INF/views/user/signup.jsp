@@ -25,6 +25,7 @@
                     <div id="checkIdResult"></div>
                     <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required />
                     <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인" required />
+                    <div id="checkPasswordResult"></div>
                     <input type="text" class="form-control" id="username" name="username" placeholder="이름" required />
                     <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임" required />
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="전화번호" required />
