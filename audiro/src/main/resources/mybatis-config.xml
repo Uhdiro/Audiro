@@ -8,6 +8,7 @@
 	</settings>
 	
 	<typeAliases>
+        <typeAlias type="com.audiro.repository.User" alias="User"/>
 		<typeAlias type="com.audiro.repository.TravelDestination" alias="Destination"/>
 	</typeAliases>
 </configuration>
