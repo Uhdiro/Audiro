@@ -8,11 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/post/review")
 public class ReviewController {
 
-	@GetMapping("/review")
-	public void myReviewRead() {
+	@GetMapping("/mypage")
+	public void myReview() {
 		
+	}
+	
+	@GetMapping("/create")
+	public void create() {
+
 	}
 }
