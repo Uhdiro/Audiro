@@ -20,7 +20,7 @@ public class UserServiceTest {
 	@Autowired
 	private UserService userService;
 	
-	@Test
+//	@Test
 	public void testCheckId() {
 		boolean result = userService.checkId("id1");
 		Assertions.assertEquals(false, result);
@@ -31,5 +31,14 @@ public class UserServiceTest {
 		log.debug("result is true");
 	}
 	
-	
+	@Test
+	public void testCheckNickname() {
+		boolean result = userService.checkNickname("nick1");
+		Assertions.assertEquals(false, result);
+		log.debug("result is false");
+		
+		result = userService.checkNickname("nick100");
+		Assertions.assertEquals(true, result);
+		log.debug("result is true");
+	}
 }

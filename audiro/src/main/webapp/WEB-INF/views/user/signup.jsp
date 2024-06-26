@@ -28,6 +28,7 @@
                     <div id="checkPasswordResult"></div>
                     <input type="text" class="form-control" id="username" name="username" placeholder="이름" required />
                     <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임" required />
+                    <div id="checkNicknameResult"></div>
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="전화번호" required />
                     <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required />
                     <button class="form-control btn btn-outline-success">작성 완료</button>

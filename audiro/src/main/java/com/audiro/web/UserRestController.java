@@ -20,12 +20,23 @@ public class UserRestController {
 
 	private final UserService userService;
 	
-	@GetMapping("/checkid")
+	@GetMapping("/check-id")
 	@ResponseBody
 	public ResponseEntity<String> checkId(@RequestParam(name = "id") String id) {
 		log.debug("checkId(id={})", id);
 		
 		boolean result = userService.checkId(id);
+		if (result) {
+			return ResponseEntity.ok("Y");
+		} else {
+			return ResponseEntity.ok("N");
+		}
+	}
+	
+	@GetMapping("/check-nickname")
+	@ResponseBody
+	public ResponseEntity<String> checkNickname(@RequestParam(name = "nickname") String nickname) {
+		boolean result = userService.checkNickname(nickname);
 		if (result) {
 			return ResponseEntity.ok("Y");
 		} else {

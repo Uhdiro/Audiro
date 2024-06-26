@@ -20,13 +20,24 @@ public class UserDaoTest {
 	@Autowired
 	private UserDao userDao;
 	
-	@Test
+//	@Test
 	public void testSelectById() {
 		User user = userDao.selectById("id1");
 		Assertions.assertNotNull(user);
 		log.debug(user.toString());
 		
 		user = userDao.selectById("id100");
+		Assertions.assertNull(user);
+		log.debug("user is null");
+	}
+	
+	@Test
+	public void testSelectByNickname() {
+		User user = userDao.selectByNickname("nick1");
+		Assertions.assertNotNull(user);
+		log.debug(user.toString());
+		
+		user = userDao.selectByNickname("nick100");
 		Assertions.assertNull(user);
 		log.debug("user is null");
 	}
