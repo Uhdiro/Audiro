@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     inputPassword.addEventListener('change', checkPassword);
     inputConfirmPassword.addEventListener('change', checkPassword);
     
+    const inputUsername = document.querySelector('input#username');
+    inputUsername.addEventListener('change', checkUsername);
+    
     const inputNickname = document.querySelector('input#nickname');
     inputNickname.addEventListener('change', checkNickname);
     
@@ -83,15 +86,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    function checkUsername(event) {
+        const username = event.target.value;
+        const checkUsernameResult = document.querySelector('div#checkUsernameResult');
+        const usernameRegexKo = /^[가-힣]{2,30}$/;
+        const usernameRegexEn = /^[a-zA-Z]{2,30}$/;
+        
+        if (usernameRegexKo.test(username) || usernameRegexEn.test(username)) {
+            checkUsernameResult.innerHTML = '사용할 수 있는 이름입니다.';
+            checkUsernameResult.classList.add('text-success');
+            checkUsernameResult.classList.remove('text-danger');
+        } else {
+            checkUsernameResult.innerHTML = '한글 이름은 길이가 2자에서 30자 사이의 한글로, 영문 이름은 2자에서 30자 사이의 영문자로 구성되어야 합니다.';
+            checkUsernameResult.classList.add('text-danger');
+            checkUsernameResult.classList.remove('text-success');
+        }
+        
+    }
+    
     function checkNickname(event) {
         const nickname = event.target.value;
+        const checkNicknameResult = document.querySelector('div#checkNicknameResult');
+        
         
         const uri = `../api/user/check-nickname?nickname=${nickname}`;
         axios
         .get(uri)
         .then((response) => {
-            const checkNicknameResult = document.querySelector('div#checkNicknameResult');
-            
             if (response.data === 'Y') {
                 checkNicknameResult.innerHTML = '사용할 수 있는 별명입니다.';
                 checkNicknameResult.classList.add('text-success');
