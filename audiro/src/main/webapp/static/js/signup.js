@@ -178,13 +178,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function checkEmail(event) {
         const email = event.target.value;
+        const checkEmailResult = document.querySelector('div#checkEmailResult');
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        // 이메일 정규 표현식은 전체 문자열의 길이를 제한할 수 없음
+        if (email.length < 6 || email.length > 50) {
+            checkEmailResult.innerHTML = '길이는 6자에서 50자 사이여야 합니다.';
+            checkEmailResult.classList.add('text-danger');
+            checkEmailResult.classList.remove('text-success');
+            return;
+        }
+        
+        if (!emailRegex.test(email)) {
+            checkEmailResult.innerHTML = '이메일 형식을 확인하세요.';
+            checkEmailResult.classList.add('text-danger');
+            checkEmailResult.classList.remove('text-success');
+            return;
+        }
         
         const uri = `../api/user/check-email?email=${email}`;
+        
         axios
         .get(uri)
         .then((response) => {
-            const checkEmailResult = document.querySelector('div#checkEmailResult');
-            
             if (response.data === 'Y') {
                 checkEmailResult.innerHTML = '사용할 수 있는 이메일입니다.';
                 checkEmailResult.classList.add('text-success');
