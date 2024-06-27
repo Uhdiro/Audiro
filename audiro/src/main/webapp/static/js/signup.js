@@ -107,18 +107,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkNickname(event) {
         const nickname = event.target.value;
         const checkNicknameResult = document.querySelector('div#checkNicknameResult');
-        
-        
+        const nicknameRegex = /^[a-zA-Z0-9가-힣._]{1,15}$/;
+
+        if (!nicknameRegex.test(nickname)) {
+            checkNicknameResult.innerHTML = '영문자, 숫자, 한글, 밑줄 및 점을 포함할 수 있으며, 길이가 3자에서 15자 사이여야 합니다.';
+            checkNicknameResult.classList.add('text-danger');
+            checkNicknameResult.classList.remove('text-success');
+            return;
+        }
+
         const uri = `../api/user/check-nickname?nickname=${nickname}`;
+        
         axios
         .get(uri)
         .then((response) => {
             if (response.data === 'Y') {
-                checkNicknameResult.innerHTML = '사용할 수 있는 별명입니다.';
+                checkNicknameResult.innerHTML = '사용할 수 있는 닉네임입니다.';
                 checkNicknameResult.classList.add('text-success');
                 checkNicknameResult.classList.remove('text-danger');
             } else {
-                checkNicknameResult.innerHTML = '사용할 수 없는 별명입니다.';
+                checkNicknameResult.innerHTML = '사용할 수 없는 닉네임입니다.';
                 checkNicknameResult.classList.add('text-danger');
                 checkNicknameResult.classList.remove('text-success');
             }
