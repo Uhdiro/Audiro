@@ -138,28 +138,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function checkPhone(event) {
         let phone = event.target.value.replace(/\D/g, '');
-        
         const checkPhoneResult = document.querySelector('div#checkPhoneResult');
-        checkPhoneResult.innerHTML = '';
+        const phoneRegex = /^\d{3}-\d{3,4}-\d{4}$/;
         
         if (phone.length === 10) {
             phone = phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            inputPhone.value = phone;
         } else if (phone.length === 11) {
             phone = phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-        } else {
-            checkPhoneResult.innerHTML = '전화번호 자릿수를 확인하세요'
+            inputPhone.value = phone;
+        }     
+        
+        if (!phoneRegex.test(phone)) {
+            checkPhoneResult.innerHTML = '숫자, 하이픈을 포함할 수 있으며, 길이는 3-3-4 혹은 3-4-4이어야 합니다.';
             checkPhoneResult.classList.add('text-danger');
             checkPhoneResult.classList.remove('text-success');
             return;
         }
         
-        inputPhone.value = phone;
-        
         const uri = `../api/user/check-phone?phone=${phone}`;
+        
         axios
         .get(uri)
         .then((response) => {            
-            
             if (response.data === 'Y') {
                 checkPhoneResult.innerHTML = '사용할 수 있는 전화번호입니다.'
                 checkPhoneResult.classList.add('text-success');
