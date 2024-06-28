@@ -16,12 +16,14 @@ public class FavoriteUsersDto {
 		private Integer favoriteUsersId;
 		private Integer usersId;
 		private Integer interestedUserId;
+		private String interestedUserNickname;
 		
 		public static FavoriteUsersDto fromEntity(FavoriteUsers favoriteusers) {
 			return FavoriteUsersDto.builder()
 					.favoriteUsersId(favoriteusers.getFavoriteUsersId())
 					.usersId(favoriteusers.getUsersId())
 					.interestedUserId(favoriteusers.getInterestedUserId())
+					.interestedUserNickname(favoriteusers.getInterestedUserNickname())
 					.build();
 		}
 }

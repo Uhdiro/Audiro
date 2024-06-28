@@ -10,10 +10,9 @@ import lombok.ToString;
 
 @Getter @Setter @ToString @EqualsAndHashCode
 @NoArgsConstructor @AllArgsConstructor @Builder
-public class FavoriteUsers {
-	private Integer favoriteUsersId;
+public class FavoriteDestination {
+	private Integer favoriteDestinationId;
 	private Integer usersId;
-	private Integer interestedUserId;
-	private String interestedUserNickname;
-
+	private Integer destinationId;
+	private String favoriteDestination;
 }
