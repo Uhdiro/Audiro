@@ -9,20 +9,31 @@
 		delete from post where post_id = #{postId}
 	</delete>
 	
-	<!-- 내 여행 후기 게시글 삭제전 해당 게시글 -->
-	
-	<!-- 내 여행후기 전체 불러오기 테스트!!!-->
+	<!-- 내 여행후기 전체 불러오기 (최신순)-->
 	<select id="readMyReview" resultType="Post">
-		select users_id, title, good, travel_plan_id
+		select users_id, title, modified_time, post_id 
 		from post
-		where users_id = #{usersId}
+		where users_id = 4 
+		and post_type_id = 10
+		order by modified_time desc
 	</select>
 	
+	<!-- 내 여행후기 전체 불러오기 (좋아요순)-->
+	<select id="readMyReviewByGood" resultType="Post">
+		select users_id, title, modified_time 
+		from post
+		where users_id = 4 
+		and post_type_id = 10
+		order by good desc
+	</select>
+	
+	
+	
 	<!-- 나를 찜한 유저 수 -->
-	<select id="countMylike" resultType="int">
+	<select id="likedUsersCount" resultType="int">
 		select count(*) 
 		from favorite_users fu
-		where fu.interested_user_id = #{usersId}	
+		where fu.interested_user_id = 4	
 	</select>
 	
 	<!-- 여행후기 good  갯수 -->
