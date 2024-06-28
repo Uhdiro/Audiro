@@ -30,4 +30,9 @@ public class UserController {
 		
 		return "redirect:/user/signin";
 	}
+	
+	@GetMapping("/signin")
+	public void signin() {
+		
+	}
 }
