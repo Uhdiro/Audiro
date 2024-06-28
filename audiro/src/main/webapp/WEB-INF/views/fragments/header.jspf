@@ -17,9 +17,7 @@
     .navbar {
         padding: 20px;      
     }
- 
 
-    
 </style>
 
     
@@ -60,9 +58,8 @@
     
     <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        
         <c:url var="audiroPage" value="/" />     
-        <a class="navbar-brand me-auto" href="${audiroPage}">audiro</a>
+        <a class="navbar-brand" href="${audiroPage}">audiro</a>
         <button class="navbar-toggler" type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
