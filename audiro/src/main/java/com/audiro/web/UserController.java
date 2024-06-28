@@ -2,8 +2,10 @@ package com.audiro.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.audiro.dto.UserDto;
 import com.audiro.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,5 +22,12 @@ public class UserController {
 	@GetMapping("/signup")
 	public void signup() {
 
+	}
+	
+	@PostMapping("/signup")
+	public String signUp(UserDto dto) {
+		userService.signup(dto);
+		
+		return "redirect:/user/signin";
 	}
 }

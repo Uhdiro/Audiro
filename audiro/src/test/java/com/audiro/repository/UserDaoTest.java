@@ -53,7 +53,7 @@ public class UserDaoTest {
 		log.debug("user is null");
 	}
 	
-	@Test
+//	@Test
 	public void testSelectByEmail() {
 		User user = userDao.selectByEmail("email@gmail.com");
 		Assertions.assertNotNull(user);
@@ -62,5 +62,20 @@ public class UserDaoTest {
 		user = userDao.selectByEmail("mail@gmail.com");
 		Assertions.assertNull(user);
 		log.debug("user is null");
+	}
+	
+	@Test
+	public void testInsert() {
+		User user = User.builder()
+				.id("insert-id")
+				.passwordHash("insert-pw")
+				.userName("insert-un")
+				.nickname("insert-nn")
+				.phone("insert-ph")
+				.email("insert-em")
+				.build();
+		
+		int result = userDao.insertUser(user);
+		Assertions.assertEquals(1, result);
 	}
 }

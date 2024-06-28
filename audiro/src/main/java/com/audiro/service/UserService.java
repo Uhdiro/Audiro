@@ -2,6 +2,8 @@ package com.audiro.service;
 
 import org.springframework.stereotype.Service;
 
+import com.audiro.dto.UserDto;
+import com.audiro.repository.ProfileDao;
 import com.audiro.repository.User;
 import com.audiro.repository.UserDao;
 
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 	
 	private final UserDao userDao;
+	private final ProfileDao profileDao;
 	
 	// 아이디 중복 체크
 	public boolean checkId(String id) {
@@ -50,5 +53,18 @@ public class UserService {
 		} else {
 			return false;
 		}
+	}
+	
+	public int signup(UserDto dto) {
+		// 유저 생성
+		int result = userDao.insertUser(dto.toEntity());
+		
+		// 등록한 유저의 pk id 찾기
+		User user = userDao.selectById(dto.getId());
+	
+		// 프로필 생성
+		profileDao.insertProfileByUsersId(user.getUsersId());
+		
+		return result;
 	}
 }

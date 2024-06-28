@@ -20,4 +20,8 @@
         select * from users where email = #{email}
     </select>
 
+    <insert id="insertUser">
+        insert into users (id, password_hash, user_name, nickname, phone, email)
+        values (#{id}, #{passwordHash}, #{userName}, #{nickname}, #{phone}, #{email})
+    </insert>
 </mapper>

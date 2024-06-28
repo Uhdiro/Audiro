@@ -23,10 +23,10 @@
                 <form action="${signUpPage}" method="post">
                     <input type="text" class="form-control" id="id" name="id" placeholder="아이디" required autofocus />
                     <div id="checkIdResult"></div>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required />
+                    <input type="password" class="form-control" id="password" name="passwordHash" placeholder="비밀번호" required />
                     <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인" required />
                     <div id="checkPasswordResult"></div>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="이름" required />
+                    <input type="text" class="form-control" id="username" name="userName" placeholder="이름" required />
                     <div id="checkUsernameResult"></div>
                     <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임" required />
                     <div id="checkNicknameResult"></div>
@@ -34,7 +34,7 @@
                     <div id="checkPhoneResult"></div>
                     <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required />
                     <div id="checkEmailResult"></div>
-                    <button class="form-control btn btn-outline-success">작성 완료</button>
+                    <button class="form-control btn btn-outline-success disabled" id="btnSignUp">작성 완료</button>
                 </form>
             </div>
         </main>  
