@@ -6,9 +6,9 @@
     
     <!-- FavoriteUsers 테이블 전체 검색 >> 목록보기 -->
     <select id="selectFavoriteUsers" resultType="FavoriteUsers"> 
-        select fu.users_id, u.nickname
+        select fu.users_id, u.nickname as interestedUserNickname
         from favorite_users fu
-        join users u on fu.interested_user_id = u.users_id;
+        join users u on fu.interested_user_id = u.users_id
     </select>
     
 </mapper>

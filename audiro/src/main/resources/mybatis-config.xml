@@ -10,5 +10,8 @@
 	<typeAliases>
 		<typeAlias type="com.audiro.repository.TravelDestination" alias="Destination" />
         <typeAlias type="com.audiro.repository.FavoriteUsers" alias="FavoriteUsers" />
+        <typeAlias type="com.audiro.repository.FavoriteDestination" alias="FavoriteDestination" />
+        <typeAlias type="com.audiro.repository.FavoritePost" alias="FavoritePost" />
 	</typeAliases>
+
 </configuration>

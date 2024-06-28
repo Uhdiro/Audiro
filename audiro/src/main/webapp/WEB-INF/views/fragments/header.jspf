@@ -17,12 +17,9 @@
     .navbar {
         padding: 20px;      
     }
-
 </style>
-
     
 </head>
-
     <nav class="navbar navbar-expand-lg">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-4 mx-auto">               
@@ -57,7 +54,7 @@
     </nav>
     
     <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+    <div class="container">
         <c:url var="audiroPage" value="/" />     
         <a class="navbar-brand" href="${audiroPage}">audiro</a>
         <button class="navbar-toggler" type="button"
@@ -97,6 +94,7 @@
                 </li>           
             </ul>
         </div>
+       
     </div>
     </nav>
 
