@@ -1,5 +1,7 @@
 package com.audiro.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.audiro.dto.UserDto;
@@ -17,6 +19,9 @@ public class UserService {
 	
 	private final UserDao userDao;
 	private final ProfileDao profileDao;
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	// 아이디 중복 체크
 	public boolean checkId(String id) {
@@ -56,6 +61,10 @@ public class UserService {
 	}
 	
 	public int signup(UserDto dto) {
+		// 비밀번호 암호화
+		String password = passwordEncoder.encode(dto.getPasswordHash());
+		dto.setPasswordHash(password);
+		
 		// 유저 생성
 		int result = userDao.insertUser(dto.toEntity());
 		
