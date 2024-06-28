@@ -13,171 +13,141 @@
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
     <style>
-        .marquee {
+        .wrap {
+            display: flex;
             overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-            margin-top: 20px;
-            position: relative;
         }
         
-        .marquee-content-reverse {
-            display: inline-block;
-            animation: marquee-right 30s linear infinite; /* 오른쪽으로 움직이는 애니메이션 */
-            animation-timing-function: linear;
-            white-space: nowrap;
-        }  
-                
-        .marquee-content {
-            display: inline-block;
-            animation: marquee-left 30s linear infinite; /* 왼쪽으로 움직이는 애니메이션 */
-            animation-timing-function: linear;
-            white-space: nowrap;
+        .wrap .rolling-list ul {
+            display:flex;
+        }
+        .wrap .rolling-list ul li { 
+            width: 400px; 
+            height: 300px; 
+            box-sizing: border-box; 
+            border-radius: 0px; 
+            margin: 0 10px; 
+            padding: 10px 0px; 
+            display: flex; 
+            align-items: center; 
+            flex-shrink: 0; 
+        }
+        .rolling-list.original {
+            animation: rollingleft1 90s linear infinite;
+        }
+        .rolling-list.clone {
+            animation: rollingleft2 90s linear infinite;
         }
         
+        @keyframes rollingleft1 {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-100%); }
+            50.01% { transform: translateX(100%); }
+            100% { transform: translateX(0); }
+        }
         
-        .marquee-content img,
-        .marquee-content-reverse img {
-            width: 300px;
-            height: 200px;
-            margin-right: 10px;
+        @keyframes rollingleft2 {
+            0% { transition: translateX(0); }
+            100% { transform: translateX(-200%); }
+        }
+        
+        .image-wrap {
+            width: 100%;
+            height: 100%;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 1, 0, 1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-      
-        @keyframes marquee-left {
-            0% {
-                transform: translateX(0%);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-        @keyframes marquee-right {
-            0% {
-                transform: translateX(0%);
-            }
-            100% {
-                transform: translateX(50%);
-            }
-        }
-        .image-container {
+            overflow: hidden;
             position: relative;
-            display: inline-block;
         }
         
-        .image-text {
-            position: absolute;
-            bottom: 10px; /* 아래 여백 조정 */
-            left: 10px; /* 왼쪽 여백 조정 */
-            background-color: rgba(0, 0, 0, 0); /* 투명 배경 */
-            color: white; /* 텍스트 색상 */
-            padding: 5px 10px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-        
-        .carousel-item img {
-            width: 270px;
-            height: 300px;
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 5px;
+            display: block;
         }
-         .carousel-caption {
-            bottom: 10px; /* 아래 여백 조정 */
-            left: 10px; /* 왼쪽 여백 조정 */
-            font-size: 12px;
+        
+        .image-title {
+            font-size: 15px;
+            font-weight: bold;
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            z-index: 1;
         }
-        .carousel {
-            max-width: 600px; /* Carousel의 최대 너비 설정 */
-            margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
+        
+        .image-descript {
+            font-size: 13px;
+            position: absolute;
+            bottom: 2px;
+            left: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            z-index: 1;
         }
+        
         
     </style>
 </head>
 <body>
-	<div class="container-fluid">
-        <c:set var="audiroPage" value="Audiro" scope="page" />
+	<div class="container-fluid">   
 		<%@ include file="./fragments/header.jspf" %>
 	</div>
     
-    <div class="marquee">
-        <div class="marquee-content">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>     
+    <div class="wrap">
+        <div class="rolling-list">
+            <ul>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안" />
+                        <h3 class="image-title">용머리해안</h3>
+                        <p class="image-descript">제주특별자치도 서귀포시 안덕면 산방로 218-10</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉" />
+                        <h3 class="image-title">성산일출봉</h3>
+                        <p class="image-descript">제주특별자치도 서귀포시 성산읍 일출로 284-12</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주" />
+                        <h3 class="image-title">아쿠아플라넷 제주</h3>
+                        <p class="image-descript">제주특별자치도 서귀포시 성산읍 섭지코지로 95</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202308/29/d8e383ae-c13c-4432-8f1b-6f3ed3e45ef7.jpg" alt="휴애리자연생활공원" />
+                        <h3 class="image-title">휴애리자연생활공원</h3>
+                        <p class="image-descript">제주특별자치도 서귀포시 남원읍 신례동로 256</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://www.headlinejeju.co.kr/news/photo/201604/271094_172068_5605.jpg" alt="서귀포 가시리마을" />
+                        <h3 class="image-title">서귀포 가시리마을</h3>
+                        <p class="image-descript">제주특별자치도 서귀포시 표선면 가시로565번길 20</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="image-wrap">
+                        <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcXawdc%2FbtrfZqvEU3G%2FLNkZCFfae8wTNWfNJNTHJK%2Fimg.jpg" alt="원주 소금산 출렁다리" />
+                        <h3 class="image-title">원주 소금산 출렁다리</h3>
+                        <p class="image-descript">강원특별자치도 원주시 지정면 소금산길 12</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     
     
-    <div class="marquee" style="animation-direction: reverse;">
-        <div class="marquee-content-reverse">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>  
-        </div>
-    </div>
+   
     
-    <div class="marquee">
-        <div class="marquee-content">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>     
-        </div>
-    </div>
-    
-    
-    <div class="marquee" style="animation-direction: reverse;">
-        <div class="marquee-content-reverse">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>  
-        </div>
-    </div>
-    <div class="marquee">
-        <div class="marquee-content">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>     
-        </div>
-    </div>
-    
-    
-    <div class="marquee" style="animation-direction: reverse;">
-        <div class="marquee-content-reverse">
-            <div class="image-container" >
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/bec31477-1674-4d35-b6c2-f6ec2f7fb73f.jpg" alt="용머리해안">
-                <div class="image-text">용머리해안</div>
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/17/41209f96-3700-4de3-8545-347a602229e2.jpg" alt="성산일출봉">
-                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202110/25/f468adfc-c167-4b88-b325-3a7926f40066.png" alt="아쿠아플라넷 제주">
-                <img src="https://img1.yna.co.kr/etc/inner/KR/2019/11/07/AKR20191107066900062_01_i_P4.jpg" alt="영월섶다리마을">
-            </div>  
-        </div>
-    </div>
- 
-        
-    
+
     
     <div class="container-fluid">
         <%@ include file="./fragments/footer.jspf" %>
@@ -193,5 +163,9 @@
 	<!-- js -->
 	<c:url var="destinationJS" value="/js/destination.js" />
 	<script src="${destinationJS}"></script>
+    
+    <c:url var="homeJS" value="/js/home.js" />
+    <script src="${homeJS}"></script>
+   
 </body>
 </html>

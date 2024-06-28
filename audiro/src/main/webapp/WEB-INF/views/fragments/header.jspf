@@ -12,11 +12,22 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
+    
+<style>
+    .navbar {
+        padding: 20px;      
+    }
+ 
+
+    
+</style>
+
+    
 </head>
 
     <nav class="navbar navbar-expand-lg">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto me-4">               
+            <ul class="navbar-nav me-4 mx-auto">               
                 <li class="nav-item">
                     <c:url var="signInPage" value="/user/signin" />
                     <a class="nav-link" href="${signInPage}">로그인</a>
@@ -25,20 +36,33 @@
                     <c:url var="signUpPage" value="/user/signup" />
                     <a class="nav-link" href="${signUpPage}">회원가입</a>
                 </li> 
-                <li>
-                    <c:url var="myPage" value="/user/mypage">
-                        <c:param name="userid" value="${signedInUser}"></c:param>
-                    </c:url>
-                    <a class="nav-link" href="${myPage}">♥</a>
-                </li>        
+                <li class="nav-item">
+                    <c:url var="favoritePage" value="/favorite/list" />
+                    <a class="nav-link" href="${favoritePage}">♥</a>
+                </li>  
+                
+                <li class="nav-item">
+                        <c:url var="myPage" value="/user/mypage">
+                            <c:param name="userid" value="${signedInUser}"></c:param>
+                        </c:url>
+                        <a class="nav-link" href="${myPage}">마이페이지</a>
+                </li>
+                
+                <li class="nav-item">
+                        <c:url var = "signOutPage" value="/user/signout" />
+                        <a class="nav-link" href="${signOutPage}">
+                            <span>${signedInUser} </span> 로그아웃</a>
+                </li>
+                      
             </ul>
         </div>
     </nav>
     
     <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="${audiroPage}">audiro</a>
         
+        <c:url var="audiroPage" value="/" />     
+        <a class="navbar-brand me-auto" href="${audiroPage}">audiro</a>
         <button class="navbar-toggler" type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
@@ -47,35 +71,34 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         
-            <div class="collapse navbar-collapse  justify-content-center" id="navbarNavDropdown">
-                <ul class="navbar-nav">          
-                    <!-- 여행지 찾기 -->
-                    <li class="nav-item">
-                        <c:url var="travelDestinationPage" value="/travel/destination" />
-                        <a class="nav-link" href="${travelDestinationPage}">여행지찾기</a>
-                    </li>               
-                    <!-- 여행 계획하기 (수정가능) -->
-                    <li class="nav-item">
-                        <c:url var="travelPlanPage" value="/travel/plan" />
-                        <a class="nav-link" href="${travelPlanPage}">여행 계획하기</a>
-                    </li>             
-                    <!-- 나의 여행코스 -->
-                    <li class="nav-item">
-                        <c:url var="traveCoursePage" value="/travel/course" />
-                        <a class="nav-link" href="${traveCoursePage}">나의 여행코스</a>
-                    </li>               
-                    <!-- 여행일기 -->
-                    <li class="nav-item">
-                        <c:url var="travelReviewPage" value="/travel/reivew" />
-                        <a class="nav-link" href="${travelReviewPage}">여행일기</a>
-                    </li> 
-                    <!-- 여행일기 -->
-                    <li class="nav-item">
-                        <c:url var="communityPage" value="/community" />
-                        <a class="nav-link" href="${communityPage}">커뮤니티</a>
-                    </li>           
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+            <ul class="navbar-nav">          
+                <!-- 여행지 찾기 -->
+                <li class="nav-item">
+                    <c:url var="travelDestinationPage" value="/travel/destination" />
+                    <a class="nav-link" href="${travelDestinationPage}">여행지찾기</a>
+                </li>               
+                <!-- 여행 계획하기 -->
+                <li class="nav-item">
+                    <c:url var="travelPlanPage" value="/travel/plan" />
+                    <a class="nav-link" href="${travelPlanPage}">여행 계획하기</a>
+                </li>             
+                <!-- 나의 여행코스 -->
+                <li class="nav-item">
+                    <c:url var="traveCoursePage" value="/travel/course" />
+                    <a class="nav-link" href="${traveCoursePage}">나의 여행코스</a>
+                </li>               
+                <!-- 여행일기 -->
+                <li class="nav-item">
+                    <c:url var="travelReviewPage" value="/travel/reivew" />
+                    <a class="nav-link" href="${travelReviewPage}">여행일기</a>
+                </li> 
+                <!-- 여행일기 -->
+                <li class="nav-item">
+                    <c:url var="communityPage" value="/community" />
+                    <a class="nav-link" href="${communityPage}">커뮤니티</a>
+                </li>           
+            </ul>
         </div>
     </div>
     </nav>
