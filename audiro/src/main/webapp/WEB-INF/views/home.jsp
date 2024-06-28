@@ -13,20 +13,30 @@
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
     <style>
+    		.carousel-item img {
+	        width: 100%; /* 이미지가 부모 요소인 carousel-item에 꽉 차도록 설정 */
+	        height: 400px; /* 원하는 높이로 설정 (예: 400px) */
+	        object-fit: cover; /* 이미지를 적절히 자르고 부모 요소에 맞춰 보여줍니다. */
+	    }
+	    
+        
         .wrap {
             display: flex;
             overflow: hidden;
+            margin-top: 20px;
         }
         
         .wrap .rolling-list ul {
             display:flex;
+            list-style-type: none; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
+            padding: 0; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
         }
         .wrap .rolling-list ul li { 
             width: 400px; 
             height: 300px; 
             box-sizing: border-box; 
             border-radius: 0px; 
-            margin: 0 10px; 
+            margin: 0 5px; 
             padding: 10px 0px; 
             display: flex; 
             align-items: center; 
@@ -54,7 +64,7 @@
         .image-wrap {
             width: 100%;
             height: 100%;
-            border-radius: 5px;
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
@@ -94,7 +104,33 @@
 	<div class="container-fluid">   
 		<%@ include file="./fragments/header.jspf" %>
 	</div>
-    
+	
+	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+		
+	
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+	      		<img src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/304837df-8176-44c0-997a-31befdb7dfd9.jpg" class="d-block w-100" alt="별방진">
+	    		</div>
+	    		<div class="carousel-item">
+	      		<img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg" class="d-block w-100" alt="사려니숲길">
+	    		</div>
+	    		<div class="carousel-item">
+	      		<img src="https://api.cdn.visitjeju.net/photomng/imgpath/201909/05/41ff8bc3-cf66-4231-897e-4529c4c31475.jpg" class="d-block w-100" alt="가파도">
+	    		</div>
+	    	</div>
+	  	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+	    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	    		<span class="visually-hidden">Previous</span>
+	  	</button>
+	  	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+	    		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+	    		<span class="visually-hidden">Next</span>
+	  	</button>
+	  	
+	</div>
+	
+    <div class="container">
     <div class="wrap">
         <div class="rolling-list">
             <ul>
@@ -143,11 +179,7 @@
             </ul>
         </div>
     </div>
-    
-    
-   
-    
-
+    </div>
     
     <div class="container-fluid">
         <%@ include file="./fragments/footer.jspf" %>
@@ -166,6 +198,7 @@
     
     <c:url var="homeJS" value="/js/home.js" />
     <script src="${homeJS}"></script>
+    
    
 </body>
 </html>

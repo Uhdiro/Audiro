@@ -15,8 +15,7 @@
 
 <style>  
     .title {
-         margin: 50px 0 30px 0 ;
-
+         margin: 20px 0 0 0 ;
          text-align: center;
     }
     .card-wrapper {
@@ -45,6 +44,14 @@
     
     .nav-tabs .nav-link {
         font-size: 16px; /* 필요에 따라 글꼴 크기 조절 */
+    }
+    
+    thead {
+    		font-size:16px;
+    }
+    
+    tbody {
+    		font-size: 14px;
     }
     
 </style>
@@ -78,11 +85,25 @@
                         
                         <!--Tab panes -->
                         <div class="tab-content">
-                            <div id="destination" class="tab-pane fade show active">
-                                <!-- 여행지 탭 내용 -->
-                                여행지
+                            <div id="tab-destination" class="tab-pane fade show active">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>user id</th>
+                                            <th>favorite destination</th>
+                                        </tr>    
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${favoriteDestination}" var="destination">
+                                        <tr>
+                                            <td>${destination.usersId}</td>
+                                            <td>${destination.favoriteDestination}</td>
+                                        </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div id="users" class="tab-pane fade">
+                            <div id="tab-users" class="tab-pane fade">
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
@@ -91,18 +112,32 @@
                                         </tr>    
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${favoriteUsers}" var="u">
+                                        <c:forEach items="${favoriteUsers}" var="user">
                                         <tr>
-                                            <td>${u.usersId}</td>
-                                            <td>${u.interestedUserNickname}</td>
+                                            <td>${user.usersId}</td>
+                                            <td>${user.interestedUserNickname}</td>
                                         </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
-                            <div id="post" class="tab-pane fade">
-                                <!-- 여행후기 탭 내용 -->
-                                여행후기
+                            <div id="tab-post" class="tab-pane fade">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>user id</th>
+                                            <th>favorite post</th>
+                                        </tr>    
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${favoritePost}" var="post">
+                                        <tr>
+                                            <td>${post.usersId}</td>
+                                            <td>${post.favoritePostTitle}</td>
+                                        </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
