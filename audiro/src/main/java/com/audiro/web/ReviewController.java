@@ -32,7 +32,7 @@ public class ReviewController {
 
 	}
 
-	@GetMapping("/mypage2")
+	@GetMapping("/mypage")
 	public void mypage(Model model) {
 		List<MyReviewListDto> list = reviewService.read();
 
