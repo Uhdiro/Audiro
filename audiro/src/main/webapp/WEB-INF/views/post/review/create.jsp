@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,19 +30,29 @@
 </head>
 
 <body>
+	<div class="container-fluid">
+		<c:set var="travelReviewPage" value="내 여행일기" />
+		<%@ include file="../../fragments/header.jspf"%>
+
+	<header>
+		<h3 name="usersId">로그인유저</h3>
+	</header>
 	<main>
 		<div class="mt-2 card">
 			<div class="card-header">
-				<h2>여행후기 글쓰기</h2>
+				<h4>여행후기 글쓰기</h4>
 			</div>
 			<div class="card-body">
-				<form id="createForm" method="post">
+			<c:url var="reviewPage" value="/post/review/create" />
+				<form id="createForm" method="post" calss="from-iline">
 					<div class="mt-2">
-						<label for="title" class="form-label">제목</label> <input id="title"
-							class="form-control" type="text" name="title"
-							value="${post.title}" readonly />
+                        <input id="title" class="form-control" type="text" name="title" placeholder="제목을 입력하세요" required />
 					</div>
-					<textarea id="summernote" name="editordata"></textarea>
+					<textarea id="summernote" name="content"></textarea>
+				<div class="text-right mt-3">
+                        <button type="submit" class="btn" id="savebtn">저장</button> 
+                        <button type="submit" class="btn btn-secondary ml-2" id="draftbtn" >임시저장</button>
+                    </div>
 				</form>
 
 			</div>
@@ -49,13 +60,26 @@
 		</div>
 
 	</main>
+	
+	</div>
+
+
+
+
 
 	<script>
+	//summernote
       $('#summernote').summernote({
         placeholder: '내용입력하세요',
         tabsize: 2,
         height: 300
       });
-    </script>
+      </script>
+      
+         
+    <!-- reviewMypage.js -->
+	<c:url var="mypageJS" value="../../js/review.js" />
+	<script src="${mypageJS}"></script>
+  
 </body>
 </html>

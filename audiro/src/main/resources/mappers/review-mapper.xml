@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.audiro.repository.PostDao">
+<mapper namespace="com.audiro.repository.ReviewDao">
 
 	<!-- 내 여행 후기 1개 삭제 -->
 	<delete id="deleteReview">
@@ -30,19 +30,23 @@
 	
 	
 	<!-- 나를 찜한 유저 수 -->
-	<select id="likedUsersCount" resultType="int">
+	<select id="likedUsersCount" resultType="Integer">
 		select count(*) 
 		from favorite_users fu
 		where fu.interested_user_id = 4	
 	</select>
 	
 	<!-- 여행후기 good  갯수 -->
-	<select id="countReviewGood" resultType="int">
+	<select id="countReviewGood" resultType="Integer">
 		select count(*)
 		from post
 		where post_type)id = #{postTypeId}	
 	</select>
 	
-	
+	<!-- 여행후기 글 저장하기 -->
+	<insert id="insertReview">
+		insert into post (users_id,post_type_id,title,content)
+		values (#{usersId}, 10, #{title}, #{content})
+	</insert>
 
 </mapper>

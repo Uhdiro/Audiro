@@ -15,9 +15,40 @@ document.addEventListener('DOMContentLoaded', () => {
 	       btnLike.addEventListener('click', saveLike);
 	   });
 	
+	   
+	//create.jsp 저장
+	const savebtn = document.querySelector('button#savebtn');
+	//cerate.jsp 임시저장
+	const draftbtn = document.querySelector('button#draftbtn');
 	
 	
 	/*--------------------------------------------------------------------------------------------------------- */
+
+
+	// 저장 버튼 클릭 시 실행할 함수
+	function savebtn() {
+		alert('저장 버튼 클릭!')
+		// 저장 로직을 추가할 수 있습니다.
+	}
+
+	// 임시 저장 버튼 클릭 시 실행할 함수
+	function draftbtn() {
+		alert('임시 저장 버튼 클릭!')
+		// 임시 저장 로직을 추가할 수 있습니다.
+	}
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//콤보박스
