@@ -28,6 +28,12 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <context:component-scan
-        base-package="com.audiro.web" />
+    <bean 
+        id="bcryptPasswordEncoder" 
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </bean>
+    
+	<context:component-scan
+		base-package="com.audiro.web" />
+
 </beans>

@@ -9,6 +9,7 @@
     <name>Audiro</name>
     <description>Audiro Team Project</description>
 
+<<<<<<< HEAD
     <properties>
         <jstl-version>3.0.0</jstl-version>
         <jslt-impl-version>3.0.1</jslt-impl-version>
@@ -26,6 +27,25 @@
         <spring-security-web-version>6.3.1</spring-security-web-version>
         <spring-security-config-version>6.3.1</spring-security-config-version>
     </properties>
+=======
+	<properties>
+		<jstl-version>3.0.0</jstl-version>
+		<jslt-impl-version>3.0.1</jslt-impl-version>
+		<log4j-version>2.23.1</log4j-version>
+		<slf4j-api-version>2.0.13</slf4j-api-version>
+		<junit-version>5.10.2</junit-version>
+		<ojdbc11-version>23.4.0.24.05</ojdbc11-version>
+		<hikaricp-version>5.1.0</hikaricp-version>
+		<spring-version>6.1.8</spring-version>
+		<jackson-version>2.17.1</jackson-version>
+		<lombok-version>1.18.32</lombok-version>
+		<mybatis-version>3.5.16</mybatis-version>
+		<mybatis-spring-version>3.0.3</mybatis-spring-version>
+		<spring-security-core-version>6.3.1</spring-security-core-version>
+		<spring-security-web-version>6.3.1</spring-security-web-version>
+		<spring-security-config-version>6.3.1</spring-security-config-version>
+	</properties>
+>>>>>>> develop
 
     <dependencies>
         <!-- Jakarta Standard Tag Library API -->
@@ -197,6 +217,11 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring-security-config-version}</version>
         </dependency>
+<<<<<<< HEAD
+=======
+
+	</dependencies>
+>>>>>>> develop
 
     </dependencies>
 
