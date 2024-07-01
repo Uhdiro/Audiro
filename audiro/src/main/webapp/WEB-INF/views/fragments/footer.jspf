@@ -56,7 +56,7 @@
         
         <!-- Scroll to Top Button -->
         <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
-            <c:url var="scrollToTop" value="/images/scrollToTop2.png" />
+            <c:url var="scrollToTop" value="/images/scrollToTop3.png" />
             <img src="${scrollToTop}" alt="Scroll to top">
         </button>
     </footer>

@@ -172,12 +172,6 @@
             }
         }
 
-
-        
-     
-    
-        
-        
     </style>
     
 </head>
@@ -388,7 +382,6 @@
         </div>
        
     </div>
-    <!-- ------------- container --------------- -->
     
     <div class="container-fluid">
         <%@ include file="./fragments/footer.jspf" %>
