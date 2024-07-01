@@ -6,5 +6,4 @@ public interface UserDao {
 	User selectByPhone(String phone);
 	User selectByEmail(String email);
 	int insertUser(User user);
-	User selectByIdAndPassword(User user);
 }

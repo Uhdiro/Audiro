@@ -25,7 +25,4 @@
         values (#{id}, #{passwordHash}, #{userName}, #{nickname}, #{phone}, #{email})
     </insert>
     
-    <select id="selectByIdAndPassword" resultType="User">
-        select * from users where id = #{id} and password_hash = #{passwordHash}
-    </select>
 </mapper>
