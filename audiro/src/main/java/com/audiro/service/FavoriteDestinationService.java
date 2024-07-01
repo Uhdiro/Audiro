@@ -19,4 +19,9 @@ public class FavoriteDestinationService {
 		List<FavoriteDestinationDto> list = dao.selectAllOrderById();
 		return list;
 	}
+	
+	public FavoriteDestinationDto readById(int favoriteDestinationId) {
+		FavoriteDestinationDto dto=dao.selectById(favoriteDestinationId);
+		return dto;
+	}
 }

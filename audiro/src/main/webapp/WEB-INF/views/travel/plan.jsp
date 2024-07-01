@@ -23,7 +23,7 @@
 
 	<div class="container-full mx-5 text-center">
 		<div class="row">
-			<div class="col-8 px-0">
+			<div class="card col-8 px-0">
 				<div class="border">
 				</div>
 				<div class="row g-0 border">
@@ -31,21 +31,7 @@
 						<div id="btnContainer">
 							<button id="deleteAll">전체 삭제</button>
 						</div>
-						<div id="dayContainer">
-							<div class="days click row g-0 my-1 p-2" id="index1" day-id="1">
-								<div class="col-2">
-									<c:url var="expandImg" value="/images/expand.png" />
-									<img class=collapseImg alt="collapseImg" src="${expandImg}" />
-								</div>
-								<div class="col-7">
-									<a href="#dayPlan1"> 1일차 </a>
-								</div>
-								<!-- TODO: deleteImg class가 필요하냐? 그리고 전체 div에 day-id 잇는데 또 필요하냐? -->
-								<div id="delete1" class="deleteImg col-3" day-id="1">
-									<c:url var="deleteImg" value="/images/delete.png" />
-									<img class="deleteImg" alt="deleteImg" src="${deleteImg}" />
-								</div>
-							</div>
+						<div id="dayContainer">	
 						</div>
 						<button id="createDay">일차 추가</button>
 					</div>
@@ -53,7 +39,7 @@
 					<div class="col-8">
 						<div id="dayPlan">
 						<!--  day-id 추가 -->
-							<div class="plan row g-0 m-2">
+							<div class="row g-0 m-2">
 								<div class="col-2">
 									<h2>제목</h2>
 								</div>
@@ -64,23 +50,21 @@
 									<button>저장</button>
 								</div>
 							</div>
-							<div id="dayPlan1" day-id="1" class="plans row g-0 m-2"
-								style="background-color: #F6F1B4">
-								<h5>1일차</h5>
-								<div></div>
-							</div>
+
 						</div>
 
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-4 px-0">
-				<div class="border">
+			<div class="card col-4 px-0">
+				<div class="card-body">
 					<h2>찜 목록 불러오기</h2>
-				</div>
-				<div class="row row-cols-1 row-cols-md-4 g-4 m-1"
-					id="favDestination"></div>
+			
+				<div class="content row row-cols-1 row-cols-md-4 g-4 m-1"
+					id="favDestination">
+					
+					</div>
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<li class="pages-item"><a class="page-link" href="#"
