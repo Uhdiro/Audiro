@@ -9,6 +9,7 @@
         select fu.users_id, u.nickname as interestedUserNickname
         from favorite_users fu
         join users u on fu.interested_user_id = u.users_id
+        order by fu.users_id
     </select>
     
 </mapper>

@@ -27,5 +27,22 @@ function toggleLike(element) {
         element.querySelector('img').setAttribute('src', 'images/like.png');
     } else {
         element.querySelector('img').setAttribute('src', redIconSrc);
+        animateHeart();
     }
 }
+    
+ function animateHeart() {
+    // 하트 애니메이션 요소를 가져옴
+    const heartAnimation = document.getElementById('heart-animation');
+
+    // 하트 애니메이션을 표시하고 애니메이션 재생
+    heartAnimation.style.display = 'block';
+    heartAnimation.classList.add('play-animation');
+
+    // 일정 시간이 지난 후 하트 애니메이션 숨김
+    setTimeout(() => {
+        heartAnimation.style.display = 'none';
+        heartAnimation.classList.remove('play-animation');
+    }, 2000); // 애니메이션 시간과 동일하게 설정 (2초)
+}
+

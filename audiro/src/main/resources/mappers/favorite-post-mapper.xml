@@ -9,6 +9,7 @@
         select fp.users_id, p.title as favoritePostTitle
 		from favorite_post fp
 		join post p on fp.post_id = p.post_id
+        order by fp.users_id
     </select>
     
 </mapper>

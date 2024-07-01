@@ -9,6 +9,7 @@
         select fd.users_id, td.name as favoriteDestination
 		from favorite_destination fd
 		join travel_destination td on fd.destination_id = td.travel_destination_id
+        order by fd.users_id
     </select>
     
 </mapper>

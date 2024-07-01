@@ -146,7 +146,10 @@
             </div>
         </main>
     </div>
-
+    
+    <div class="container-fluid">
+        <%@ include file="../fragments/footer.jspf" %>
+    </div>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

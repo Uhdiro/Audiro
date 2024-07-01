@@ -12,6 +12,7 @@
 	rel="stylesheet"
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
+    
     <style>
         .wrap {
             display: flex;
@@ -126,12 +127,53 @@
 	    }
 	    
 	    .like {
-	    		position: absolute;
-	    		bottom: 5px;
+	    	position: absolute;
+	    	bottom: 5px;
 		    right: 20px;
 		    width: 30px; 
-    			height: 30px;
+    		height: 30px;
 	    }
+        
+        #heart-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+        }
+        
+        #heart-animation img {
+            width: 100px; /* 적절한 크기로 설정 */
+            opacity: 0;
+            animation: fadeInOut 2s forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(0%) rotate(0deg);
+            }
+            25% {
+                opacity: 1;
+                transform: translateY(-30%) rotate(-5deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-60%) rotate(5deg);
+            }
+            75% {
+                opacity: 0.5;
+                transform: translateY(-90%) rotate(-5deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120%) rotate(5deg);
+            }
+        }
+
+
+        
      
 	
         
@@ -205,66 +247,78 @@
 					<div class="d-flex justify-content-center">
 						<div class="carousel-image">
 							<p class="review-rank">1위</p>
-							<p class="like" onclick="toggleLike(this)">
-								<img src="images/like.png" alt="like">
-							</p>
+							<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
                             <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/304837df-8176-44c0-997a-31befdb7dfd9.jpg" class="d-block w-100" alt="별방진">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">2위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
+                            <div id="heart-animation">
+                                <img src="images/heart.png" alt="heart" />
+                            </div>
+                        </div>
+                        
+                    	<div class="carousel-image">
+                    		<p class="review-rank">2위</p>
+                    		<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
                             <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg" class="d-block w-100" alt="사려니숲길">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">3위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
+                            <div id="heart-animation">
+                                <img src="images/heart.png" alt="heart" />
+                            </div>   
+                        </div>
+                        
+                    	<div class="carousel-image">
+                    		<p class="review-rank">3위</p>
+                    		<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
                             <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201909/05/41ff8bc3-cf66-4231-897e-4529c4c31475.jpg" class="d-block w-100" alt="가파도">
-                    		</div>
-                    	</div>
-		    		</div>
-		    		
-		    		<div class="carousel-item">
-					<div class="d-flex justify-content-center">
-						<div class="carousel-image">
-							<p class="review-rank">4위</p>
-							<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ecd36430-efd2-4031-8257-f2f0683d22b8" class="d-block w-100" alt="picture1">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">5위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=82173795-9c3d-4fa9-a1d0-eb55d2380f1d" class="d-block w-100" alt="picture2">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">6위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDdfMjk2/MDAxNjEyNjcyNjg1NTY1.Ub77x0uoGm9kQ9NoFVHOerBYoD1V_xsL4kVHuTrw8y8g.48kMQRmXwMMXqQzbNjGTESsGsPRzJf1-qen2pCx97EUg.JPEG.wed1204/IMG_3393-1.jpg?type=w800" class="d-block w-100" alt="가파도">
-                    		</div>
-                    	</div>
-		    		</div>
-		    		
-		    		<div class="carousel-item">
-					<div class="d-flex justify-content-center">
-						<div class="carousel-image">
-							<p class="review-rank">7위</p>
-							<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ed5c965e-1ae7-451e-9548-3c75b69c6e4d" class="d-block w-100" alt="별방진">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">8위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=997d32a4-66be-46cc-8733-22fa697a4637" class="d-block w-100" alt="사려니숲길">
-                    		</div>
-                    		<div class="carousel-image">
-                    			<p class="review-rank">9위</p>
-                    			<p class="like"><c:url var="like" value="images/like.png" /><img src="${like}" alt="like"></p>
-                            <img src="https://cdn.womennews.co.kr/news/photo/202105/211362_343480_619.jpeg" class="d-block w-100" alt="가파도">
-                    		</div>
-                    	</div>
-		    		</div>
-		    		
+                            <div id="heart-animation">
+                                <img src="images/heart.png" alt="heart" />
+                            </div>
+                    	
+                        </div>
+                        
+                    </div>
 		    	</div>
-		  	<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+		    		
+		    	<div class="carousel-item">
+                    <div class="d-flex justify-content-center">
+                        <div class="carousel-image">
+                            <p class="review-rank">4위</p>
+							<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ecd36430-efd2-4031-8257-f2f0683d22b8" class="d-block w-100" alt="picture1">
+                    	</div>
+                    	<div class="carousel-image">
+                    		<p class="review-rank">5위</p>
+                    		<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=82173795-9c3d-4fa9-a1d0-eb55d2380f1d" class="d-block w-100" alt="picture2">
+                    	</div>
+                    	<div class="carousel-image">
+                    		<p class="review-rank">6위</p>
+                    		<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDdfMjk2/MDAxNjEyNjcyNjg1NTY1.Ub77x0uoGm9kQ9NoFVHOerBYoD1V_xsL4kVHuTrw8y8g.48kMQRmXwMMXqQzbNjGTESsGsPRzJf1-qen2pCx97EUg.JPEG.wed1204/IMG_3393-1.jpg?type=w800" class="d-block w-100" alt="가파도">
+                    	</div>
+                    </div>
+		    	</div>
+		    		
+		    	<div class="carousel-item">
+    				<div class="d-flex justify-content-center">
+    					<div class="carousel-image">
+    						<p class="review-rank">7위</p>
+    						<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ed5c965e-1ae7-451e-9548-3c75b69c6e4d" class="d-block w-100" alt="별방진">
+                        </div>
+                        
+                        <div class="carousel-image">
+                        	<p class="review-rank">8위</p>
+                        	<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=997d32a4-66be-46cc-8733-22fa697a4637" class="d-block w-100" alt="사려니숲길">
+                        </div>
+                        <div class="carousel-image">
+                        	<p class="review-rank">9위</p>
+                        	<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                            <img src="https://cdn.womennews.co.kr/news/photo/202105/211362_343480_619.jpeg" class="d-block w-100" alt="가파도">
+                        </div>
+                    </div>
+                </div>
+		    </div>
+		  	
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
 		    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		    		<span class="visually-hidden">Previous</span>
 		  	</button>
@@ -282,71 +336,65 @@
 					<div class="d-flex justify-content-center">
 						<div class="carousel-image">
                             <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/304837df-8176-44c0-997a-31befdb7dfd9.jpg" class="d-block w-100" alt="별방진">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg" class="d-block w-100" alt="사려니숲길">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201909/05/41ff8bc3-cf66-4231-897e-4529c4c31475.jpg" class="d-block w-100" alt="가파도">
-                    		</div>
                     	</div>
-		    		</div>
+                    	<div class="carousel-image">
+                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg" class="d-block w-100" alt="사려니숲길">
+                    	</div>
+                    	<div class="carousel-image">
+                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201909/05/41ff8bc3-cf66-4231-897e-4529c4c31475.jpg" class="d-block w-100" alt="가파도">
+                    	</div>
+                    </div>
+		    	</div>
 		    		
-		    		<div class="carousel-item">
+		    	<div class="carousel-item">
 					<div class="d-flex justify-content-center">
 						<div class="carousel-image">
                             <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ecd36430-efd2-4031-8257-f2f0683d22b8" class="d-block w-100" alt="picture1">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=82173795-9c3d-4fa9-a1d0-eb55d2380f1d" class="d-block w-100" alt="picture2">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDdfMjk2/MDAxNjEyNjcyNjg1NTY1.Ub77x0uoGm9kQ9NoFVHOerBYoD1V_xsL4kVHuTrw8y8g.48kMQRmXwMMXqQzbNjGTESsGsPRzJf1-qen2pCx97EUg.JPEG.wed1204/IMG_3393-1.jpg?type=w800" class="d-block w-100" alt="가파도">
-                    		</div>
                     	</div>
-		    		</div>
+                    	<div class="carousel-image">
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=82173795-9c3d-4fa9-a1d0-eb55d2380f1d" class="d-block w-100" alt="picture2">
+                    	</div>
+                    	<div class="carousel-image">
+                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDdfMjk2/MDAxNjEyNjcyNjg1NTY1.Ub77x0uoGm9kQ9NoFVHOerBYoD1V_xsL4kVHuTrw8y8g.48kMQRmXwMMXqQzbNjGTESsGsPRzJf1-qen2pCx97EUg.JPEG.wed1204/IMG_3393-1.jpg?type=w800" class="d-block w-100" alt="가파도">
+                    	</div>
+                    </div>
+		    	</div>
 		    		
-		    		<div class="carousel-item">
+		    	<div class="carousel-item">
 					<div class="d-flex justify-content-center">
 						<div class="carousel-image">
                             <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ed5c965e-1ae7-451e-9548-3c75b69c6e4d" class="d-block w-100" alt="별방진">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=997d32a4-66be-46cc-8733-22fa697a4637" class="d-block w-100" alt="사려니숲길">
-                    		</div>
-                    		<div class="carousel-image">
-                            <img src="https://cdn.womennews.co.kr/news/photo/202105/211362_343480_619.jpeg" class="d-block w-100" alt="가파도">
-                    		</div>
                     	</div>
-		    		</div>
+                    	<div class="carousel-image">
+                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=997d32a4-66be-46cc-8733-22fa697a4637" class="d-block w-100" alt="사려니숲길">
+                    	</div>
+                    	<div class="carousel-image">
+                            <img src="https://cdn.womennews.co.kr/news/photo/202105/211362_343480_619.jpeg" class="d-block w-100" alt="가파도">
+                    	</div>
+                    </div>
 		    	</div>
+		    </div>
 		    	
 		    	<!-- 캐러셀 버튼 -->
-		    	<button class="carousel-control-prev" type="button" data-bs-target="#reviewControls" data-bs-slide="prev">
-		    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    		<span class="visually-hidden">Previous</span>
+		    <button class="carousel-control-prev" type="button" data-bs-target="#reviewControls" data-bs-slide="prev">
+		    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    	<span class="visually-hidden">Previous</span>
 		  	</button>
 		  	<button class="carousel-control-next" type="button" data-bs-target="#reviewControls" data-bs-slide="next">
-		    		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    		<span class="visually-hidden">Next</span>
+		    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    	<span class="visually-hidden">Next</span>
 		  	</button>
-		  
-	
+            
 		</div>
-	  	
-	  	
-	    
-	    <div class="wrap-rank">
-	    		
-	    </div>
-	    
+	   
     </div>
+    <!-- ------------- container --------------- -->
     
     <div class="container-fluid">
         <%@ include file="./fragments/footer.jspf" %>
     </div>
-
-
+    
+    <!-- script -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -359,8 +407,6 @@
     
     <c:url var="homeJS" value="/js/home.js" />
     <script src="${homeJS}"></script>
-    
-   
    
 </body>
 </html>
