@@ -379,8 +379,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
             
-        </div>
-       
+        </div>     
     </div>
     
     <div class="container-fluid">

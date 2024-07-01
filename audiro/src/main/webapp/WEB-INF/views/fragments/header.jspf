@@ -14,7 +14,7 @@
     crossorigin="anonymous">
     
 <style>
-    
+   
 </style>
     
 </head>
@@ -38,8 +38,7 @@
                             <c:param name="userid" value="${signedInUser}"></c:param>
                         </c:url>
                         <a class="nav-link" href="${myPage}">마이페이지</a>
-                </li>
-                
+                </li> 
                 <li class="nav-item">
                         <c:url var = "signOutPage" value="/user/signout" />
                         <a class="nav-link" href="${signOutPage}">
