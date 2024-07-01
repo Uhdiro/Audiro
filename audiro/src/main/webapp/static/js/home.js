@@ -13,3 +13,19 @@ document.querySelector('#roller2').style.left = document.querySelector('.rolling
 
 roller.classList.add('original');
 clone.classList.add('clone');
+
+
+function toggleLike(element) {
+    // 아이콘의 이미지 소스 경로
+    var iconSrc = element.querySelector('img').getAttribute('src');
+    
+    // 빨간색 아이콘의 이미지 소스 경로
+    var redIconSrc = 'images/like_red.png';
+    
+    // 이미지 경로가 일치하는지 확인하고 토글
+    if (iconSrc === redIconSrc) {
+        element.querySelector('img').setAttribute('src', 'images/like.png');
+    } else {
+        element.querySelector('img').setAttribute('src', redIconSrc);
+    }
+}
