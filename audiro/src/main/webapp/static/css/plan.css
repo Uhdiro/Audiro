@@ -14,6 +14,10 @@ img.deleteImg{
 	width:30%;
 }
 
-img.expandImg{
+img.collapseImg{
 	width:60%;
 }
+
+/* input#title{
+	width:90%;
+} */
