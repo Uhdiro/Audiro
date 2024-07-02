@@ -15,4 +15,5 @@ public class FavoriteDestination {
 	private Integer usersId;
 	private Integer destinationId;
 	private String favoriteDestination;
+	private String imgUrl;
 }

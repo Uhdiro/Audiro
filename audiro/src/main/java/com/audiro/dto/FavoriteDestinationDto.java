@@ -15,6 +15,8 @@ public class FavoriteDestinationDto {
 	private Integer usersId;
 	private Integer destinationId;
 	private String favoriteDestination;
+	private String imgUrl;
+	private String name;
 	
 	public static FavoriteDestinationDto fromEntity(FavoriteDestination favoritedestination) {
 		return FavoriteDestinationDto.builder()
