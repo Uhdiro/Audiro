@@ -112,11 +112,11 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-	<c:url var="desJS" value="/js/plan_fav_des.js" />
-	<script src="${desJS}"></script>
-
 	<c:url var="planJS" value="/js/plan.js" />
 	<script src="${planJS}"></script>
+
+	<c:url var="desJS" value="/js/plan_fav_des.js" />
+	<script src="${desJS}"></script>
 	
 	
 </body>

@@ -3,38 +3,31 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-	let index=1;
+	let index = 1;
 	const btnCreateDay = document.querySelector('button#createDay');
-	let imgDeleteDay=document.querySelectorAll('img.deleteImg');
+	let imgDeleteDay = document.querySelectorAll('img.deleteImg');
 	const dayContainer = document.querySelector('div#dayContainer');
-	const deleteAll=document.querySelector('button#deleteAll');
+	const deleteAll = document.querySelector('button#deleteAll');
 
-	
 	defaultDay();
-	
-	
-	
-	deleteAll.addEventListener('click',deleteAllDay);
+
+	deleteAll.addEventListener('click', deleteAllDay);
 	btnCreateDay.addEventListener('click', () => {
 		createDay();
 		createPlan();
-		index ++;
+		index++;
 	});
 
-	
-	
-	
-
 	dayContainer.addEventListener('click', (event) => {
-			clickDays(event);
-		
+		clickDays(event);
+
 	});
 
 	function clickDays(event) {
 		const clickedDay = event.target.closest('.days');
 		const days = document.querySelectorAll('.days');
-		
-		 // 모든 요소를 non-click으로 초기화
+
+		// 모든 요소를 non-click으로 초기화
 		days.forEach((d) => {
 			d.classList.remove("click");
 			d.classList.add("non-click");
@@ -44,17 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		clickedDay.classList.remove('non-click');
 		clickedDay.classList.add('click');
 
-/*		if (event.target.classList.contains('click')) {
-			event.target.classList.remove("click");
-			event.target.classList.add("non-click");
-		}
-
-		// else 로 자식 태그들도 전부 조건문에 들어가게 됨.
-		if (event.target.classList.contains('non-click')) {
-
-			event.target.classList.remove("non-click");
-			event.target.classList.add("click");
-		}*/
 	}
 
 
@@ -85,15 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 	}
-	
+
 	function addNewEvent() {
 		const target = document.querySelectorAll(`div.days`);
-		/*target.forEach((t) => {
-			if (t.classList.contains("click")) {
-				t.classList.remove("click");
-				t.classList.add("non-click");
-			}
-		})*/
 
 		// 새로운 deleteImg 요소에 이벤트 리스너 추가
 		const deleteImg = document.querySelectorAll('img.deleteImg');
@@ -115,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// 절대 경로 비교를 위해 new URL 사용
 		const currentImgSrc = new URL(event.target.src, window.location.origin).pathname;
-		
+
 		if (currentImgSrc === collapseImgPath) {
 			event.target.src = expandImgPath;
 		} else {
@@ -132,27 +108,26 @@ document.addEventListener('DOMContentLoaded', () => {
 		btnConfirm.addEventListener('click', () => {
 			dayElement.forEach((d) => d.remove());
 			planElement.forEach((p) => p.remove());
-			index=1;
+			index = 1;
 			defaultDay();
 			deleteModal.hide();
 
 		})
 
-
 	}
-	
+
 	function defaultDay() {
-		const days=document.querySelectorAll('div.days');
-		
-		if(days.length===0){
-			
-			index=1;
+		const days = document.querySelectorAll('div.days');
+
+		if (days.length === 0) {
+
+			index = 1;
 			createDay();
 			createPlan();
 			index++;
 		}
 	}
-	
+
 	function deleteDay(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
@@ -171,23 +146,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			deleteModal.hide();
 
 		});
-	
+
 	}
 
 	function createPlan() {
 		const dayContainer = document.querySelector('div#dayPlan');
 		let htmlStr = '';
 		htmlStr = `
-			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2" style="background-color: #F6F1B4">
+			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
 				<h5>${index}일차</h5>
-				 <ul class="timeline">
-				 </ul>
-			<div>
+					<ul class="timeline">
+				 	</ul>
+			</div>
 		`;
 		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
 	}
 
-	
 
 	// 삭제 시에 day 리셋
 	function resetDay() {
@@ -216,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// 한 개의 일차만 남은 경우 다시 일차 생성
 		defaultDay();
 		indexReset = 1;
-		
+
 		const plans = document.querySelectorAll('div.plans');
 		plans.forEach((plan) => {
 			plan.id = `dayPlan${indexReset}`;
@@ -226,63 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			indexReset++;
 		});
 
-		
-	
-		
-	/*	days.forEach((day) => {
-			const dayElement = day.querySelector('h5');
-			const dayLink=day.querySelector('a');
-			if (dayElement) {
-				dayElement.textContent = `${indexReset}일차`;
-			}
-			if(dayLink){
-				dayLink.textContent = `${indexReset}일차`;
-				
-			}
-			if(dayElement.id.includes('dayPlan')){
-				dayElement.id=`dayPlan${indexReset}`;
-			}
-			if(dayElement.id.includes('index')){
-				dayElement.id=`index${indexReset}`;
-			}
-				indexReset++;
-		}
-		);*/
 	}
-
-
-
-	function createPlan() {
-		const dayContainer = document.querySelector('div#dayPlan');
-		let htmlStr = '';
-		htmlStr = `
-			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2" style="background-color: #F6F1B4">
-				<h5>${index}일차</h5>
-				
-			<div>
-		`;
-		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
-	}
-
-	
-/*	function clickCheckbox(){
-		const btnConfirm = document.querySelector('button#btnConfirm');
-
-		if (this.checked) {
-			const parentDiv = this.closest('.days');
-			const id = this.getAttribute('day-id');
-			const dayPlan = document.querySelector(`div#dayPlan${id}`);
-			if (parentDiv) {
-				btnConfirm.addEventListener('click', () => {
-					parentDiv.remove();
-					dayPlan.remove();
-
-				})
-			}
-		}
-	}*/
-	
 
 
 
 });
+
