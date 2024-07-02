@@ -20,7 +20,7 @@ public class FavoriteDestinationService {
 		return list;
 	}
 	
-	public FavoriteDestinationDto readById(int favoriteDestinationId) {
+	public FavoriteDestinationDto readById(Integer favoriteDestinationId) {
 		FavoriteDestinationDto dto=dao.selectById(favoriteDestinationId);
 		return dto;
 	}
