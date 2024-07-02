@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,11 +55,11 @@
         
         <!-- Scroll to Top Button -->
         <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
-            <c:url var="scrollToTop" value="/images/scrollToTop.png" />
+            <c:url var="scrollToTop" value="/images/scrollToTop3.png" />
             <img src="${scrollToTop}" alt="Scroll to top">
         </button>
     </footer>
-
+    
     <script>
         // When the user clicks on the button, scroll to the top of the document
         function scrollToTop() {

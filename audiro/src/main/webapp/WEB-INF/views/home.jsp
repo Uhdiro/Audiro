@@ -171,12 +171,6 @@
                 transform: translateY(-120%) rotate(5deg);
             }
         }
-
-
-        
-     
-    
-        
         
     </style>
     
@@ -245,36 +239,46 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="d-flex justify-content-center">
-                        <div class="carousel-image">
-                            <p class="review-rank">1위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/304837df-8176-44c0-997a-31befdb7dfd9.jpg" class="d-block w-100" alt="별방진">
-                            <div id="heart-animation">
-                                <img src="images/heart.png" alt="heart" />
-                            </div>
-                        </div>
+                        <c:forEach items="${topDestination}" var="destination">
+                        <c:choose> 
+                            <c:when test="${destination.rank == 1}">
+                                <div class="carousel-image">
+                                    <p class="review-rank">1위</p>
+                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
+                                    <div id="heart-animation">
+                                        <img src="images/heart.png" alt="heart" class="heart" />
+                                    </div>
+                                </div>
+                            </c:when>
+                            
+                            <c:when test="${destination.rank == 2}">U
+                                <div class="carousel-image">
+                                    <p class="review-rank">2위</p>
+                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
+                                    <div id="heart-animation">
+                                        <img src="images/heart.png" alt="heart" />
+                                    </div>   
+                                </div>
+                            </c:when>
                         
-                        <div class="carousel-image">
-                            <p class="review-rank">2위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg" class="d-block w-100" alt="사려니숲길">
-                            <div id="heart-animation">
-                                <img src="images/heart.png" alt="heart" />
-                            </div>   
-                        </div>
+                            <c:when test="${destination.rank == 3}">
+                                <div class="carousel-image">
+                                    <p class="review-rank">3위</p>
+                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
+                                    <div id="heart-animation">
+                                        <img src="images/heart.png" alt="heart" />
+                                    </div>
+                                </div>
+                            </c:when>
                         
-                        <div class="carousel-image">
-                            <p class="review-rank">3위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201909/05/41ff8bc3-cf66-4231-897e-4529c4c31475.jpg" class="d-block w-100" alt="가파도">
-                            <div id="heart-animation">
-                                <img src="images/heart.png" alt="heart" />
-                            </div>
-                        
-                        </div>
-                        
+                        </c:choose>
+                        </c:forEach>
                     </div>
                 </div>
+                        
                     
                 <div class="carousel-item">
                     <div class="d-flex justify-content-center">
@@ -385,10 +389,8 @@
                 <span class="visually-hidden">Next</span>
             </button>
             
-        </div>
-       
+        </div>     
     </div>
-    <!-- ------------- container --------------- -->
     
     <div class="container-fluid">
         <%@ include file="./fragments/footer.jspf" %>

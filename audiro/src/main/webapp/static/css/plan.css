@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#dayPlan h5{
+	background-color: #F6F1B4
+}
+
+.click {
+	border-style: inset;
+	border-width: 1px;
+}
+
+.days {
+	position: relative;
+}
+
+img.deleteImg {
+	width: 30%;
+}
+
+img.collapseImg {
+	width: 60%;
+}
+
+/* input#title{
+	width:90%;
+} */
+
+.timeline {
+	list-style: none;
+}
+
