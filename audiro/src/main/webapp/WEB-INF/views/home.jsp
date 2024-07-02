@@ -171,7 +171,7 @@
                 transform: translateY(-120%) rotate(5deg);
             }
         }
-
+        
     </style>
     
 </head>
@@ -244,7 +244,7 @@
                             <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
                             <img src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/304837df-8176-44c0-997a-31befdb7dfd9.jpg" class="d-block w-100" alt="별방진">
                             <div id="heart-animation">
-                                <img src="images/heart.png" alt="heart" />
+                                <img src="images/heart.png" alt="heart" class="heart" />
                             </div>
                         </div>
                         
