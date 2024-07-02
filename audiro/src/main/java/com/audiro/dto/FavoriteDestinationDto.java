@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class FavoriteDestinationDto {
 	private Integer favoriteDestinationId;
 	private Integer usersId;
 	private Integer destinationId;
-	private String name;
+	private String favoriteDestination;
 	private String imgUrl;
+	private String name;
+	
 }

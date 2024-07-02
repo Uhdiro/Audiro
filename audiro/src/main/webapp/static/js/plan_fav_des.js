@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const favDestination = document.querySelectorAll('div.favDestination');
 		favDestination.forEach((f) => {
-			console.log(f);
+			console.log(`클릭클릭클릭${f}`);
 			f.addEventListener('click', getFavDestination);
 		})
 
@@ -52,14 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// event는 fav destination
 	function getFavDestination(event) {
-		console.log(`이벤트=${event.target.class}`);
 		const favoriteDestinationId = event.target.closest('.favDestination').getAttribute('fav-id');
-		console.log(`id=${favoriteDestinationId}`);
+		console.log(favoriteDestinationId);
 		const uri = `../api/plan/fav/${favoriteDestinationId}`;
 		axios
 			.get(uri)
 			.then((response) => {
-				favDestiToPlan(response.data);
+				favDestinationToPlan(response.data);
 
 			})
 			.catch((error) => {
@@ -69,15 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	}
 
-	function favDestiToPlan(data) {
+	function favDestinationToPlan(data) {
+		console.log(`데이터${data.favoriteDestinationId}`);
 		const dayId = document.querySelector('div.click').getAttribute('day-id');
+		console.log(`아이디 ${dayId}`);
 		const plan = document.querySelector(`div#dayPlan${dayId} ul.timeline`);
+		console.log(`계획 ${plan}`);
 		htmlStr = `
                 <li class="event" data-date="12:30 - 1:00pm">
-                    <h3>"${data.favoriteDestinationId}"</h3>
-                    <p>Get here on time, it's first come first serve. Be late, get turned away.</p>
+                    <h3>"${data.name}"</h3>
+                    <p></p>
                 </li>
-            </ul>
 		`;
 		plan.insertAdjacentHTML('beforeend', htmlStr);
 	}

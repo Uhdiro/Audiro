@@ -9,5 +9,5 @@ public interface FavoriteDestinationDao {
 
 	List<FavoriteDestinationDto> selectAllOrderById();
 	
-	FavoriteDestinationDto selectById(int favoriteDestinationId);
+	FavoriteDestinationDto selectById(Integer favoriteDestinationId);
 }
