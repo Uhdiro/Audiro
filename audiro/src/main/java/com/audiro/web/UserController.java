@@ -62,4 +62,12 @@ public class UserController {
 		
 		return "redirect:" + targetPage;
 	}
+	
+	@GetMapping("/signout")
+	public String signOut(HttpSession session) {
+		session.removeAttribute(SESSION_ATTR_USER);
+		session.invalidate();
+		
+		return "redirect:/";
+	}
 }
