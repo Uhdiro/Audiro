@@ -3,7 +3,6 @@ package com.audiro.dto;
 import java.time.LocalDateTime;
 
 import com.audiro.repository.Post;
-import com.audiro.repository.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,24 +10,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class MyReviewListDto {
+public class ListReviewDto {
 	
 	private Integer postId;
 	private Integer usersId;
 	private String nickname;
 	private String title;
+	private String content;
+	private Integer good;
+	private Integer travelPlanId;
 	private LocalDateTime modifiedTime;
 	
-	public static MyReviewListDto fromEntity(Post post) {
-		return MyReviewListDto.builder()
-				.postId(post.getPostId())
+	public static ListReviewDto fromEntity(Post post) {
+		
+		return ListReviewDto.builder().postId(post.getPostId())
 				.usersId(post.getUsersId())
 				.nickname(post.getNickname())
 				.title(post.getTitle())
+				.content(post.getContent())
+				.good(post.getGood())
+				.travelPlanId(post.getTravelPlanId())
 				.modifiedTime(post.getModifiedTime())
 				.build();
+		
 	}
+
 }

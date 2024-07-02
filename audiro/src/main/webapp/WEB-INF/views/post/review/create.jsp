@@ -43,14 +43,88 @@
 				<h4>여행후기 글쓰기</h4>
 			</div>
 			<div class="card-body">
-			<c:url var="reviewPage" value="/post/review/create" />
-				<form id="createForm" method="post" calss="from-iline">
+			<c:url var="reviewPage" value="/post/review/list" />
+				<form id="createForm" method="POST" calss="from-iline">
 					<div class="mt-2">
-                        <input id="title" class="form-control" type="text" name="title" placeholder="제목을 입력하세요" required />
+                        <input id="title" name="title" class="form-control" type="text" placeholder="제목을 입력하세요" required />
 					</div>
 					<textarea id="summernote" name="content"></textarea>
 				<div class="text-right mt-3">
-                        <button type="submit" class="btn" id="savebtn">저장</button> 
+				
+						<!--  여행코스 불러오기 모달창 -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectTravelCourseModal">
+    						여행 코스 선택하기
+						</button>
+							<div class="modal fade" id="selectTravelCourseModal"
+								tabindex="-1" role="dialog"
+								aria-labelledby="selectTravelCourseModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="selectTravelCourseModalLabel">여행 코스 선택</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<!-- 여기에 여행 코스 목록을 동적으로 불러올 수 있는 내용 추가  반복문사용-->
+											<ul class="list-group">
+												<li class="list-group-item">1111111111 ${travelPaln}</li>
+												<li class="list-group-item">여행 코스 2</li>
+												<li class="list-group-item">여행 코스 3</li>
+												<!-- 실제로는 서버에서 여행 코스 데이터를 가져와서 동적으로 생성하는 것이 좋습니다. -->
+											</ul>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">닫기</button>
+											<button type="button" class="btn btn-primary">선택 완료</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!--  임시저장 불러오기 모달창 -->
+							<form id="selectDraftForm" >
+								<button type="button" class="btn btn-primary" data-toggle="modal"
+									data-target="#selectDraftModal">임시저장 불러오기</button>
+	
+								<div class="modal fade" id="selectDraftModal" tabindex="-1"
+									role="dialog" aria-labelledby="selectDraftModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="selectDraftModalLabel">임시저장
+													후기 불러오기</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<ul id="draftList" class="list-group">
+													<!-- 동적으로 추가될 임시저장 목록 -->
+													<li class="list-group-item">1111111111 ${travelPaln}</li>
+													<li class="list-group-item">임시저장2</li>
+													<li class="list-group-item">임시서장3 추후 반복문</li>
+												</ul>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">닫기</button>
+												<button type="button" class="btn btn-primary"
+													id="loadDraftsBtn">불러오기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+
+
+
+							<button type="submit" class="btn" id="savebtn">저장</button> 
                         <button type="submit" class="btn btn-secondary ml-2" id="draftbtn" >임시저장</button>
                     </div>
 				</form>
@@ -76,9 +150,8 @@
       });
       </script>
       
-         
     <!-- reviewMypage.js -->
-	<c:url var="mypageJS" value="../../js/review.js" />
+	<c:url var="mypageJS" value="/js/create.js" />
 	<script src="${mypageJS}"></script>
   
 </body>

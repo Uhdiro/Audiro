@@ -3,37 +3,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.audiro.repository.ReviewDao">
-
-	<!-- 내 여행 후기 1개 삭제 -->
-	<delete id="deleteReview">
-		delete from post where post_id = #{postId}
-	</delete>
 	
 	<!-- 내 여행후기 전체 불러오기 (최신순)-->
 	<select id="readMyReview" resultType="Post">
-		select users_id, title, modified_time, post_id 
-		from post
-		where users_id = 4 
-		and post_type_id = 10
-		order by modified_time desc
+		select p.users_id, title, p.modified_time, p.post_id, u.nickname
+		from post p
+        join users u on p.users_id = u.users_id
+		where p.users_id = 8 
+		and p.post_type_id = 10
+		order by p.modified_time desc
 	</select>
 	
 	<!-- 내 여행후기 전체 불러오기 (좋아요순)-->
 	<select id="readMyReviewByGood" resultType="Post">
-		select users_id, title, modified_time 
-		from post
-		where users_id = 4 
-		and post_type_id = 10
+		 select p.users_id, title, p.modified_time, p.post_id, u.nickname
+		from post p
+        join users u on p.users_id = u.users_id
+		where p.users_id = 8 
+		and p.post_type_id = 10
 		order by good desc
 	</select>
 	
-	
-	
 	<!-- 나를 찜한 유저 수 -->
-	<select id="likedUsersCount" resultType="Integer">
+	<select id="countLike" resultType="Integer">
 		select count(*) 
 		from favorite_users fu
-		where fu.interested_user_id = 4	
+		where fu.interested_user_id = 8	
 	</select>
 	
 	<!-- 여행후기 good  갯수 -->
@@ -43,10 +38,15 @@
 		where post_type)id = #{postTypeId}	
 	</select>
 	
-	<!-- 여행후기 글 저장하기 -->
-	<insert id="insertReview">
-		insert into post (users_id,post_type_id,title,content)
-		values (#{usersId}, 10, #{title}, #{content})
-	</insert>
+	<!-- 내여행일기 개수 -->
+	<select id="countMyReveiw" resultType="Integer">
+	   	select count(*) as post_count
+        from post
+        where post_type_id = 10 
+        and users_id = 8
+    </select>
+
+	
+	
 
 </mapper>

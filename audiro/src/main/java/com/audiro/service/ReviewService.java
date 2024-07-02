@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
-
+import com.audiro.dto.SerachReviewDto;
+import com.audiro.repository.FavoriteUsers;
 import com.audiro.repository.Post;
 import com.audiro.repository.ReviewDao;
 
@@ -40,39 +42,86 @@ public class ReviewService {
 				.map(MyReviewListDto::fromEntity)
 				.toList();
 	}
+	
+	//나를 찜한 유저 수
+	public int countLike() {
 		
-//	//나를 찜한 유저 수
-//	public int likedUsersCount(FavoriteUsers fu, Model model) {
-//		
-//		int result = postDao.likedUsersCount();
-//		model.addAttribute("likedUsersCount",result);
-//		
-//		return result;
-//	}
-//		
+		int result = reviewDao.countLike();		
+		return result;
+	}
+
+    //내 여행일기 개수
+    public int countMyReveiw() {
+    	int result = reviewDao.countMyReveiw();
+    	return result;
+    }
+	
+    
+  //여행후기 많이작성한 유저 TOP3
+    public List<Post> selectUserTop3(){
+    	List<Post> list = reviewDao.selectReviewUserTop3();
+    	return list;
+    }
 	
 	
+    
 	
-	
-	
-	
+    
+    
 	///////////////////////////////////////////////////////
-	//내여행후기게시판 상세보기
-	public Post readById(Integer id) {
-		Post list = reviewDao.readDetailsReviewById(id);
+	//내 여행후기게시판 상세보기
+	public Post readById(Integer postId) {
+		Post list = reviewDao.readDetailsReviewById(postId);
 		
 		return list;
 	}
 	
-	//여행후기 게시글 작성
+
+	//여행후기 게시글 저장
 	public int create(CreateReviewDto dto) {
 		int result = reviewDao.insertReview(dto.toEntoty());
 		
 		return result;
 	}
 	
-	
+	//여행후기 게시글 임시저장
+	public int draft(CreateReviewDto dto) {
+		int result = reviewDao.draftReview(dto.toEntoty());
 		
+		return result;
+	}
+	
+	//여행후기 게시글 수정
+	public int update(CreateReviewDto dto) {
+		int result = reviewDao.updateReview(dto.toEntoty());
+		
+		return result;
+		
+	}
+	
+	//여행후기 삭제
+	public int delete(Integer postId) {
+		int result = reviewDao.deleteReview(postId);
+		return result;
+	}
+	
+	
+	//여행후기 모두 불러오기(최신순)
+	public List<ListReviewDto> readAll() {
+		List<Post> list = reviewDao.selectReviewAll();
+		return list.stream()
+				.map(ListReviewDto::fromEntity)
+				.toList();
+	}
+	
+	//여행후기 검색
+	public List<ListReviewDto> search(SerachReviewDto dto) {
+		log.debug("dto={}", dto);
+		List<Post> list = reviewDao.serach(dto);
+		return list.stream()
+				.map(ListReviewDto::fromEntity)
+				.toList();
+	}
 		
 		
 		

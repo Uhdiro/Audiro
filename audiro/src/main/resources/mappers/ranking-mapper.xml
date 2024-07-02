@@ -2,28 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    <mapper namespace="com.audiro.repository.PostDao">
+    <mapper namespace="com.audiro.repository.ReviewDao">
     
-	<!-- 댓글 많이 달린 여행후기 top3 -->
-	<!-- 여행후기 댓글 많이 쓴 유저 top3 -->
-        <!-- 관심user 순위 3명 뽑아오는 sql문 커뮤니티 순위에서 사용   중복 고민
-        <select id="selectUserlikeTop3" resultType="favoriteUsers" >
-            select users_id, count(*) as user_count
-            from favorite_users
-            group by users_id
-            order by user_count DESC
-            fetch first 3 rows only
-        </select>
-        -->
-
-        <!-- 여행후기 가장 많이 쓴 유저 top3 중복 고민 -->
+        <!-- 여행후기 가장 많이 쓴 유저 top3 -->
         <select id="selectReviewUserTop3" resultType="Post" >
-            select users_id, count(*) as user_count
-            from post
-            where post_type_id = 10
-            group by users_id
-            order by user_count DESC
-            fetch first 3 rows only
+        	select * from (
+		    select u.users_id, u.nickname, count(*) AS user_count
+		    from post p
+		    join users u ON p.users_id = u.users_id
+		    where p.post_type_id = 10
+		    group by u.users_id, u.nickname
+		    order by user_count DESC
+			) where rownum &lt;= 3
         </select>
         
         <!-- 댓글 많이 달린 여행후기 top3 댓글갯수 중복일경우 id순, +찜+좋아요. -->

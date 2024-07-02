@@ -43,8 +43,8 @@
 				<div class="col-md-2">
 					<div class="mt-2 card">
 						<div class="card-header d-flex justify-content-between align-items-center">
-							<span>닉네임</span>
-							<button class="btn like-btn">
+							<span id ="nickname">${nickname}닉네임</span>
+							<button class="btn" id="userLike">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
 									 fill="currentColor" class="bi bi-suit-heart-fill"
 									 viewBox="0 0 16 16">
@@ -62,9 +62,8 @@
 									<p>#여행후기왕 #힐링 #체험</p>
 								</div>
 								<ul class="list-group list-group-flush">
-									<li id="" class="list-group-item">내 여행일기 ${reviewCount}</li>
-									<li id="" class="list-group-item">나를 찜한 유저
-										${likedUsersCount}</li>
+									<li id="" class="list-group-item">내 여행일기 ${countMyReview}</li>
+									<li id="" class="list-group-item">나를 찜한 유저 ${countLike}</li>
 								</ul>
 							</div>
 						</div>
@@ -94,7 +93,7 @@
 									<div class="col">
 										<div class="card h-80">
 											<div class="card-header" style="text-align: right">
-												<button class="btn like-btn" data-review-id="${list.postId}">
+												<button class="btn" id="likeReview" data-review-id="${list.postId}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="20"
 														height="20" fill="currentColor"
 														class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
@@ -143,6 +142,8 @@
 					</div>
 				</div>
 
+
+
 			</div>
 		</main>
 	</div>
@@ -159,7 +160,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<!-- reviewMypage.js -->
-	<c:url var="mypageJS" value="/js/review.js" />
+	<c:url var="mypageJS" value="/js/mypage.js" />
 	<script src="${mypageJS}"></script>
 
 </body>
