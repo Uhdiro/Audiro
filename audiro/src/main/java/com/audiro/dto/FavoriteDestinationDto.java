@@ -2,6 +2,7 @@ package com.audiro.dto;
 
 import com.audiro.repository.FavoriteDestination;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class FavoriteDestinationDto {
 	private Integer usersId;
 	private Integer destinationId;
 	private String favoriteDestination;
+	private String imgUrl;
 	
 	public static FavoriteDestinationDto fromEntity(FavoriteDestination favoritedestination) {
 		return FavoriteDestinationDto.builder()
@@ -24,5 +26,7 @@ public class FavoriteDestinationDto {
 				.favoriteDestination(favoritedestination.getFavoriteDestination())
 				.build();
 	}
-	
 }
+	
+
+

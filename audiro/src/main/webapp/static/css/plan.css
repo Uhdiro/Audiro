@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+
+.click{
+	border-style:inset ;
+	border-width:1px;
+}
+
+.days{
+	position:relative;
+}
+
+img.deleteImg{
+	width:30%;
+}
+
+img.collapseImg{
+	width:60%;
+}
+
+/* input#title{
+	width:90%;
+} */
