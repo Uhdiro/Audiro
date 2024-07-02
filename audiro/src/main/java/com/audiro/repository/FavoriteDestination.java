@@ -13,4 +13,6 @@ public class FavoriteDestination {
 	private Integer favoriteDestinationId;
 	private Integer usersId;
 	private Integer destinationId;
+	private String favoriteDestination;
+
 }

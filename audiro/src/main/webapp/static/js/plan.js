@@ -9,10 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 
-
 	defaultDay();
-
-
 
 	deleteAll.addEventListener('click', deleteAllDay);
 	btnCreateDay.addEventListener('click', () => {
@@ -20,10 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		createPlan();
 		index++;
 	});
-
-
-
-
 
 	dayContainer.addEventListener('click', (event) => {
 		clickDays(event);
@@ -44,17 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		clickedDay.classList.remove('non-click');
 		clickedDay.classList.add('click');
 
-		/*		if (event.target.classList.contains('click')) {
-					event.target.classList.remove("click");
-					event.target.classList.add("non-click");
-				}
-		
-				// else 로 자식 태그들도 전부 조건문에 들어가게 됨.
-				if (event.target.classList.contains('non-click')) {
-		
-					event.target.classList.remove("non-click");
-					event.target.classList.add("click");
-				}*/
 	}
 
 
@@ -88,12 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function addNewEvent() {
 		const target = document.querySelectorAll(`div.days`);
-		/*target.forEach((t) => {
-			if (t.classList.contains("click")) {
-				t.classList.remove("click");
-				t.classList.add("non-click");
-			}
-		})*/
 
 		// 새로운 deleteImg 요소에 이벤트 리스너 추가
 		const deleteImg = document.querySelectorAll('img.deleteImg');
@@ -138,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		})
 
-
 	}
 
 	function defaultDay() {
@@ -180,10 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
 				<h5>${index}일차</h5>
-				<div>
 					<ul class="timeline">
 				 	</ul>
-			 	</div>
 			</div>
 		`;
 		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
@@ -227,52 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			indexReset++;
 		});
 
-
-
-
-		/*	days.forEach((day) => {
-				const dayElement = day.querySelector('h5');
-				const dayLink=day.querySelector('a');
-				if (dayElement) {
-					dayElement.textContent = `${indexReset}일차`;
-				}
-				if(dayLink){
-					dayLink.textContent = `${indexReset}일차`;
-					
-				}
-				if(dayElement.id.includes('dayPlan')){
-					dayElement.id=`dayPlan${indexReset}`;
-				}
-				if(dayElement.id.includes('index')){
-					dayElement.id=`index${indexReset}`;
-				}
-					indexReset++;
-			}
-			);*/
 	}
-
-
-
-	
-
-
-	/*	function clickCheckbox(){
-			const btnConfirm = document.querySelector('button#btnConfirm');
-	
-			if (this.checked) {
-				const parentDiv = this.closest('.days');
-				const id = this.getAttribute('day-id');
-				const dayPlan = document.querySelector(`div#dayPlan${id}`);
-				if (parentDiv) {
-					btnConfirm.addEventListener('click', () => {
-						parentDiv.remove();
-						dayPlan.remove();
-	
-					})
-				}
-			}
-		}*/
-
 
 
 

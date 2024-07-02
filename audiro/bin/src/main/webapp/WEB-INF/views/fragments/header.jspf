@@ -1,9 +1,0 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<header>
-</header>
-
-<!-- 여행 계획 페이지(수정가능) -->
-<c:url var="travelPlanPage" value="/travel/plan" />
-<a href="${travelPlanPage}">여행 계획하기</a>

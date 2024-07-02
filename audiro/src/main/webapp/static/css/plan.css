@@ -3,6 +3,7 @@
 #dayPlan h5{
 	background-color: #F6F1B4
 }
+
 .click {
 	border-style: inset;
 	border-width: 1px;
@@ -23,6 +24,8 @@ img.collapseImg {
 /* input#title{
 	width:90%;
 } */
+
 .timeline {
 	list-style: none;
 }
+
