@@ -12,7 +12,7 @@
 	rel="stylesheet"
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
-	
+
 <c:url var="planCSS" value="/css/plan.css" />
 <link rel="stylesheet" href="${planCSS}">
 </head>
@@ -24,27 +24,21 @@
 	<div class="container-full mx-5 text-center">
 		<div class="row">
 			<div class="card col-8 px-0">
-				<div class="border">
-				</div>
-				<div class="row g-0 border">
+				<div class="row g-0 ">
 					<div class="col-4 p-2 ">
 						<div id="btnContainer">
 							<button id="deleteAll">전체 삭제</button>
 						</div>
-						<div id="dayContainer">	
-						</div>
+						<div id="dayContainer"></div>
 						<button id="createDay">일차 추가</button>
 					</div>
 
 					<div class="col-8">
 						<div id="dayPlan">
-						<!--  day-id 추가 -->
+							<!--  day-id 추가 -->
 							<div class="row g-0 m-2">
-								<div class="col-2">
-									<h2>제목</h2>
-								</div>
-								<div class="col-8">
-									<input type="text" name="title" id="title" maxlength=30 />
+								<div class="col-10">
+									<input type="text" name="title" id="title" maxlength=40 placeholder="제목을 입력하세요."/>
 								</div>
 								<div class="col-2">
 									<button>저장</button>
@@ -56,33 +50,32 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="card col-4 px-0">
 				<div class="card-body">
 					<h2>찜 목록 불러오기</h2>
-			
-				<div class="content row row-cols-1 row-cols-md-4 g-4 m-1"
-					id="favDestination">
-					
-					</div>
-				<nav aria-label="Page navigation example">
-					<ul class="pagination">
-						<li class="pages-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
 
+					<div class="content row row-cols-1 row-cols-md-4 g-4 m-1"
+						id="favDestination"></div>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li class="pages-item"><a class="page-link" href="#"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li>
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 	<div class="modal" tabindex="-1">
@@ -117,7 +110,7 @@
 
 	<c:url var="desJS" value="/js/plan_fav_des.js" />
 	<script src="${desJS}"></script>
-	
-	
+
+
 </body>
 </html>

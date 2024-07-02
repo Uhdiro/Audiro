@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 	let index = 1;
 	const btnCreateDay = document.querySelector('button#createDay');
-	let imgDeleteDay = document.querySelectorAll('img.deleteImg');
+	let imgDeleteDay = document.querySelectorAll('img.deleteDay');
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				<div class="col-7">
 					<a href="#dayPlan${index}">${index}일차</a>
 				</div>
-				<div id="delete${index}" class="deleteImg col-3">
-					<img class="deleteImg" src="/audiro/images/delete.png" />
+				<div id="delete${index}" class="deleteDay col-3">
+					<img class="deleteDay" src="/audiro/images/delete.png" />
 				</div>
 			</div>
 		`;
@@ -71,17 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	function addNewEvent() {
 		const target = document.querySelectorAll(`div.days`);
 
-		// 새로운 deleteImg 요소에 이벤트 리스너 추가
-		const deleteImg = document.querySelectorAll('img.deleteImg');
-		deleteImg.forEach((d) => {
+		// 새로운 deleteDay 요소에 이벤트 리스너 추가
+		const deleteDay = document.querySelectorAll('img.deleteDay');
+		deleteDay.forEach((d) => {
+			d.removeEventListener('click', deleteDay); // 중복방지
 			d.addEventListener('click', deleteDay);
-		})
+		});
 
 		// 새로운 collapseImg 요소에 이벤트 리스너 추가
 		const collapseImg = document.querySelectorAll('img.collapseImg');
 		collapseImg.forEach((c) => {
+			c.removeEventListener('click', collapseDay);
 			c.addEventListener('click', collapseDay);
-		})
+		});
 	}
 
 	// collapse 이미지 변경
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function deleteDay(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
-		//const parentDiv=event.target.closest('div.deleteImg');  // 클릭된 요소의 부모 div.col-3 요소 찾기
+		//const parentDiv=event.target.closest('div.deleteDay');  // 클릭된 요소의 부모 요소 찾기
 		// 부모 div.col-3 요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
 		// dayPlan1과 같은 ID를 가진 요소 선택
@@ -155,8 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
 				<h5>${index}일차</h5>
-					<ul class="timeline">
+				<div class="timeline">
+					<ul>
 				 	</ul>
+				</div>
+				<div class="date">
+					
+				</div>
 			</div>
 		`;
 		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
@@ -170,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		days.forEach((day) => {
 			const dayLink = day.querySelector('a');
-			const deleteDiv = day.querySelector('div.deleteImg');
+			const deleteDiv = day.querySelector('div.deleteDay');
 
 			dayLink.textContent = `${indexReset}일차`;
 			dayLink.setAttribute('href', `#dayPlan${indexReset}`);
