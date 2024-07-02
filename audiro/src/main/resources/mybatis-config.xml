@@ -8,10 +8,10 @@
 	</settings>
 
 	<typeAliases>
+		<typeAlias type="com.audiro.dto.FavoriteDestinationDto"
+			alias="FavoriteDestinationDto" />
+		<typeAlias type="com.audiro.repository.User" alias="User" />
 		<typeAlias type="com.audiro.repository.TravelDestination"
 			alias="Destination" />
-		<typeAlias
-			type="com.audiro.dto.FavoriteDestinationDto"
-			alias="FavoriteDestinationDto" />
 	</typeAliases>
 </configuration>
