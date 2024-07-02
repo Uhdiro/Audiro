@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.audiro.dto.UserDto;
+import com.audiro.dto.UserSignUpDto;
 import com.audiro.dto.UserSigninDto;
 import com.audiro.repository.User;
 import com.audiro.service.UserService;
@@ -34,7 +34,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/signup")
-	public String signUp(UserDto dto) {
+	public String signUp(UserSignUpDto dto) {
 		userService.signup(dto);
 		
 		return "redirect:/user/signin";

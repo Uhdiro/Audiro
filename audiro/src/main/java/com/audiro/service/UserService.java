@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.audiro.dto.UserDto;
+import com.audiro.dto.UserSignUpDto;
 import com.audiro.dto.UserSigninDto;
 import com.audiro.repository.ProfileDao;
 import com.audiro.repository.User;
@@ -61,7 +61,7 @@ public class UserService {
 		}
 	}
 	
-	public int signup(UserDto dto) {
+	public int signup(UserSignUpDto dto) {
 		// 비밀번호 암호화
 		String password = passwordEncoder.encode(dto.getPasswordHash());
 		dto.setPasswordHash(password);
