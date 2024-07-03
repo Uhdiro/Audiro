@@ -21,9 +21,6 @@ public class DestinationController {
 
 	private final TravelDestinationService service;
 
-	@GetMapping("/")
-	public String getDestinations(Model model) {
-		
-		return "home";
-	}
+	
+	
 }
