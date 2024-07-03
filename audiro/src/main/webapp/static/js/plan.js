@@ -183,20 +183,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			const dayLink = day.querySelector('a');
 			const deleteDiv = day.querySelector('div.deleteDay');
 
-			dayLink.textContent = `${indexReset}일차`;
-			dayLink.setAttribute('href', `#dayPlan${indexReset}`);
+				day.id = `index${indexReset}`;
+				day.setAttribute('day-id', indexReset);
 
-			day.id = `index${indexReset}`;
-			day.setAttribute('day-id', indexReset);
+				dayLink.textContent = `${indexReset}일차`;
+				dayLink.setAttribute('href', `#dayPlan${indexReset}`);
 
-			deleteDiv.id = `delete${indexReset}`;
-			deleteDiv.setAttribute('day-id', indexReset);
+				deleteDiv.id = `delete${indexReset}`;
 
-			indexReset++;
+				indexReset++;
 
-		}
+			}
 
-		);
+			);
 		index = indexReset;
 		// 한 개의 일차만 남은 경우 다시 일차 생성
 		defaultDay();
@@ -216,3 +215,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
