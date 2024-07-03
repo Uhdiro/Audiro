@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.audiro.repository.TopDestinationDao">
+    
+    <select id="selectTopDestination" resultType="com.audiro.dto.TopDestinationDto"> 
+        with mainTopDestination as (
+		select td.travel_destination_id, td.name, td.address, td.img_url,
+		    count(fd.favorite_destination_id) as num_favorites,
+		    rank() over (order by count(fd.favorite_destination_id) desc) as rank
+		from travel_destination td
+		left join favorite_destination fd on td.travel_destination_id = fd.destination_id
+		group by td.travel_destination_id, td.name, td.address, td.img_url
+		)
+		select travel_destination_id, name, address, img_url, num_favorites, rank
+		from mainTopDestination
+		where rank &lt;=9
+		order by rank, travel_destination_id
+		fetch first 9 rows only
+    </select>
+    
+</mapper>

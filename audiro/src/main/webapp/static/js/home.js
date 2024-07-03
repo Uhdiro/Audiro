@@ -14,7 +14,7 @@ document.querySelector('#roller2').style.left = document.querySelector('.rolling
 roller.classList.add('original');
 clone.classList.add('clone');
 
-
+ 
 function toggleLike(element) {
     // 아이콘의 이미지 소스 경로
     var iconSrc = element.querySelector('img').getAttribute('src');
@@ -46,3 +46,31 @@ function toggleLike(element) {
     }, 2000); // 애니메이션 시간과 동일하게 설정 (2초)
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    // 캐러셀 초기화 함수
+    function initCarousel(carouselId, pauseButtonId) {
+        var pauseButton = document.getElementById(pauseButtonId);
+        var carouselElement = document.querySelector(`#${carouselId}`);
+        if (pauseButton && carouselElement) {
+            var carousel = new bootstrap.Carousel(carouselElement, {
+                interval: 3000 // 슬라이드 전환 시간 (밀리초)
+            });
+
+            pauseButton.addEventListener('click', function () {
+                if (pauseButton.innerHTML === '&#10074;&#10074;') { // Pause symbol
+                    carousel.pause();
+                    pauseButton.innerHTML = '&#9654;'; // Play symbol
+                } else {
+                    carousel.cycle();
+                    pauseButton.innerHTML = '&#10074;&#10074;'; // Pause symbol
+                }
+            });
+        } else {
+            console.error(`Element with ID ${pauseButtonId} or ${carouselId} not found`);
+        }
+    }
+
+    // 두 개의 캐러셀 초기화
+    initCarousel('destinationCarousel', 'pauseButton1');
+    initCarousel('reviewCarousel', 'pauseButton2');
+});

@@ -13,166 +13,8 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
     
-    <style>
-        .wrap {
-            display: flex;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-        
-        .wrap .rolling-list ul {
-            display:flex;
-            list-style-type: none; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
-            padding: 0; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
-        }
-        .wrap .rolling-list ul li { 
-            width: 350px; 
-            height: 250px; 
-            box-sizing: border-box; 
-            border-radius: 0px; 
-            margin: 0 5px; 
-            padding: 10px 0px; 
-            display: flex; 
-            align-items: center; 
-            flex-shrink: 0; 
-        }
-        .rolling-list.original {
-            animation: rollingleft1 90s linear infinite;
-        }
-        .rolling-list.clone {
-            animation: rollingleft2 90s linear infinite;
-        }
-        
-        @keyframes rollingleft1 {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(-100%); }
-            50.01% { transform: translateX(100%); }
-            100% { transform: translateX(0); }
-        }
-        
-        @keyframes rollingleft2 {
-            0% { transition: translateX(0); }
-            100% { transform: translateX(-200%); }
-        }
-        
-        .image-wrap {
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .image-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .image-title {
-            font-size: 15px;
-            font-weight: bold;
-            position: absolute;
-            bottom: 30px;
-            left: 20px;
-            color: white;
-            text-shadow: 1px 1px 2px black;
-            z-index: 1;
-        }
-        
-        .image-descript {
-            font-size: 13px;
-            position: absolute;
-            bottom: 2px;
-            left: 20px;
-            color: white;
-            text-shadow: 1px 1px 2px black;
-            z-index: 1;
-        }
-        
-        .carousel-image {
-            width: 300px;
-            min-width: 300px;
-            height: 350px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            margin: 10px 10px; /* 이미지 간 여백 조정 */
-        }
-        
-        .carousel-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .carousel-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .review-rank {
-            font-size: 15px;
-            font-weight: bold;
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: white;
-            z-index: 1;
-            padding: 5px; /* 내부 여백 설정 */
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-        
-        .like {
-            position: absolute;
-            bottom: 5px;
-            right: 20px;
-            width: 30px; 
-            height: 30px;
-        }
-        
-        #heart-animation {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            z-index: 1000;
-        }
-        
-        #heart-animation img {
-            width: 100px; /* 적절한 크기로 설정 */
-            opacity: 0;
-            animation: fadeInOut 2s forwards;
-        }
-        
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-                transform: translateY(0%) rotate(0deg);
-            }
-            25% {
-                opacity: 1;
-                transform: translateY(-30%) rotate(-5deg);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-60%) rotate(5deg);
-            }
-            75% {
-                opacity: 0.5;
-                transform: translateY(-90%) rotate(-5deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-120%) rotate(5deg);
-            }
-        }
-        
-    </style>
+   	<c:url var="homeCss" value="/css/home.css" />
+    <link href="${homeCss}" rel="stylesheet" />
     
 </head>
 
@@ -232,109 +74,62 @@
                 </ul>
             </div>
         </div>
-        
+             
         <!-- 인기 여행지 -->
         <h3 class="mt-4">Top10 인기 여행지</h3>
-        <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="d-flex justify-content-center">
-                        <c:forEach items="${topDestination}" var="destination">
-                        <c:choose> 
-                            <c:when test="${destination.rank == 1}">
-                                <div class="carousel-image">
-                                    <p class="review-rank">1위</p>
-                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
-                                    <div id="heart-animation">
-                                        <img src="images/heart.png" alt="heart" class="heart" />
-                                    </div>
-                                </div>
-                            </c:when>
-                            
-                            <c:when test="${destination.rank == 2}">U
-                                <div class="carousel-image">
-                                    <p class="review-rank">2위</p>
-                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
-                                    <div id="heart-animation">
-                                        <img src="images/heart.png" alt="heart" />
-                                    </div>   
-                                </div>
-                            </c:when>
-                        
-                            <c:when test="${destination.rank == 3}">
-                                <div class="carousel-image">
-                                    <p class="review-rank">3위</p>
-                                    <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                                    <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
-                                    <div id="heart-animation">
-                                        <img src="images/heart.png" alt="heart" />
-                                    </div>
-                                </div>
-                            </c:when>
-                        
-                        </c:choose>
-                        </c:forEach>
-                    </div>
-                </div>
-                        
-                    
-                <div class="carousel-item">
-                    <div class="d-flex justify-content-center">
-                        <div class="carousel-image">
-                            <p class="review-rank">4위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ecd36430-efd2-4031-8257-f2f0683d22b8" class="d-block w-100" alt="picture1">
-                        </div>
-                        <div class="carousel-image">
-                            <p class="review-rank">5위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=82173795-9c3d-4fa9-a1d0-eb55d2380f1d" class="d-block w-100" alt="picture2">
-                        </div>
-                        <div class="carousel-image">
-                            <p class="review-rank">6위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDdfMjk2/MDAxNjEyNjcyNjg1NTY1.Ub77x0uoGm9kQ9NoFVHOerBYoD1V_xsL4kVHuTrw8y8g.48kMQRmXwMMXqQzbNjGTESsGsPRzJf1-qen2pCx97EUg.JPEG.wed1204/IMG_3393-1.jpg?type=w800" class="d-block w-100" alt="가파도">
-                        </div>
-                    </div>
-                </div>
-                    
-                <div class="carousel-item">
-                    <div class="d-flex justify-content-center">
-                        <div class="carousel-image">
-                            <p class="review-rank">7위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=ed5c965e-1ae7-451e-9548-3c75b69c6e4d" class="d-block w-100" alt="별방진">
-                        </div>
-                        
-                        <div class="carousel-image">
-                            <p class="review-rank">8위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=997d32a4-66be-46cc-8733-22fa697a4637" class="d-block w-100" alt="사려니숲길">
-                        </div>
-                        <div class="carousel-image">
-                            <p class="review-rank">9위</p>
-                            <p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
-                            <img src="https://cdn.womennews.co.kr/news/photo/202105/211362_343480_619.jpeg" class="d-block w-100" alt="가파도">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            		<c:forEach items="${topDestination}" var="destination" varStatus="status">
+					<c:choose>
+						<c:when test="${status.index % 3 == 0}">
+							<div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+							<div class="d-flex justify-content-center">
+						</c:when>
+						
+					</c:choose>
+							        
+						<div class="carousel-image">
+							<p class="review-rank">${status.index + 1}위</p>
+							<p class="like" onclick="toggleLike(this)"><img src="images/like.png" alt="like"></p>
+							<img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
+						</div>
+							        
+					<c:choose>
+						<c:when test="${status.index % 3 == 2 || status.index == (topDestination.size() - 1)}">
+							</div>
+							</div>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+		    </div>
+			
+			<div id="heart-animation">
+			   <img src="images/heart.png" alt="heart" class="heart" />
+			</div>
             
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-            </button>
+            <div class="carousel-controls">
+			    <button class="carousel-control-btn prev" type="button" data-bs-target="#destinationCarousel" data-bs-slide="prev">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M11.854 1.646a.5.5 0 0 1 0 .708L5.707 8l6.147 5.646a.5.5 0 0 1-.708.708l-6.5-6a.5.5 0 0 1 0-.708l6.5-6a.5.5 0 0 1 .708 0z"/>
+			        </svg>
+			    </button>
+			    <button class="carousel-control-btn pause" type="button" id="pauseButton1">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M5 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9zM9 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9z"/>
+			        </svg>
+			    </button>
+			    <button class="carousel-control-btn next" type="button" data-bs-target="#destinationCarousel" data-bs-slide="next">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M4.146 1.646a.5.5 0 0 1 .708 0l6.5 6a.5.5 0 0 1 0 .708l-6.5 6a.5.5 0 0 1-.708-.708L10.293 8 4.146 2.854a.5.5 0 0 1 0-.708z"/>
+			        </svg>
+			    </button>
+			</div>
         </div>
+        
         
         <!-- 인기 여행후기 -->
         <h3 class="mt-4">Top10 인기 여행후기</h3>
-        <div id="reviewControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="d-flex justify-content-center">
@@ -379,17 +174,23 @@
                 </div>
             </div>
                 
-                <!-- 캐러셀 버튼 -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#reviewControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#reviewControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-            
-        </div>     
+            <div class="carousel-controls">
+			    <button class="carousel-control-btn prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M11.854 1.646a.5.5 0 0 1 0 .708L5.707 8l6.147 5.646a.5.5 0 0 1-.708.708l-6.5-6a.5.5 0 0 1 0-.708l6.5-6a.5.5 0 0 1 .708 0z"/>
+			        </svg>
+			    </button>
+			    <button class="carousel-control-btn pause" type="button" id="pauseButton2">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M5 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9zM9 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9z"/>
+			        </svg>
+			    </button>
+			    <button class="carousel-control-btn next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+			        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			            <path fill-rule="evenodd" d="M4.146 1.646a.5.5 0 0 1 .708 0l6.5 6a.5.5 0 0 1 0 .708l-6.5 6a.5.5 0 0 1-.708-.708L10.293 8 4.146 2.854a.5.5 0 0 1 0-.708z"/>
+			        </svg>
+			    </button>
+			</div>
     </div>
     
     <div class="container-fluid">
