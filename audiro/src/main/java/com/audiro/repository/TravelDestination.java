@@ -19,8 +19,5 @@ public class TravelDestination {
 	private Double latitude;
 	private Double longitude;
 	private String imgUrl;
-	private String region;
-	private String theme;
-	private String companion;
 
 }
