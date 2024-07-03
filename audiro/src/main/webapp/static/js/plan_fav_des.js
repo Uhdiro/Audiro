@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 	getAllFavDestination();
-	deleteFavDestinationInPlan();
 
 	function getAllFavDestination() {
 		const uri = '../api/plan/fav';
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li class="list row g-0 my-1 p-2">
                 	<div class="name col-10">${data.name}</div>
                 	<div class="deleteFav col-2">
-						<img class="deleteFav" src="/audiro/images/delete.png" />
+						<img class="deleteFavImg" src="/audiro/images/delete.png" />
 					</div>
                 </li>
 		`;
@@ -80,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	
 	function addNewEvent(){
-		const deleteFav = document.querySelectorAll('li.deleteFav');
-		deleteFav.forEach((d) => {
+		const deleteFavImg = document.querySelectorAll('.deleteFavImg');
+		deleteFavImg.forEach((d) => {
 			d.removeEventListener('click', deleteFavDestinationInPlan); // 중복 방지 위해 기존 이벤트 제거
 			d.addEventListener('click', deleteFavDestinationInPlan);
 		})

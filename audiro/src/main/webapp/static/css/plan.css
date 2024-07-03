@@ -20,7 +20,7 @@ body {
 	position: relative;
 }
 
-img.deleteDay {
+img.deleteDayImg {
 	width: 30%;
 }
 
@@ -28,7 +28,7 @@ img.collapseImg {
 	width: 60%;
 }
 
-img.deleteFav{
+img.deleteFavImg{
 	width: 20%;
 }
 

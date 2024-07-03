@@ -108,9 +108,11 @@
 	<c:url var="planJS" value="/js/plan.js" />
 	<script src="${planJS}"></script>
 
-	<c:url var="desJS" value="/js/plan_fav_des.js" />
-	<script src="${desJS}"></script>
-
+	<c:url var="destinationJS" value="/js/plan_fav_des.js" />
+	<script src="${destinationJS}"></script>
+	
+	<c:url var="calenderJS" value="/js/plan_calender.js" />
+	<script src="${calenderJS}"></script>
 
 </body>
 </html>

@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	let index = 1;
 	const btnCreateDay = document.querySelector('button#createDay');
-	let imgDeleteDay = document.querySelectorAll('img.deleteDay');
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 
@@ -24,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function clickDays(event) {
-		const clickedDay = event.target.closest('.days');
 		const days = document.querySelectorAll('.days');
+		const clickedDay = event.target.closest('.days');
 
 		// 모든 요소를 non-click으로 초기화
 		days.forEach((d) => {
@@ -52,28 +51,35 @@ document.addEventListener('DOMContentLoaded', () => {
 					<a href="#dayPlan${index}">${index}일차</a>
 				</div>
 				<div id="delete${index}" class="deleteDay col-3">
-					<img class="deleteDay" src="/audiro/images/delete.png" />
+					<img class="deleteDayImg" src="/audiro/images/delete.png" />
 				</div>
 			</div>
 		`;
 		divDay.insertAdjacentHTML('beforeend', htmlStr);
+		
+		// 모든 일차를 non-click 상태로 설정
+		const days = document.querySelectorAll('.days');
+		days.forEach((d) => {
+			d.classList.remove('click');
+			d.classList.add('non-click');
+		})
+
+
+		// 최신 일차를 click 상태로 설정
+		const newDay = document.querySelector(`#index${index}`);
+		newDay.classList.remove('non-click');
+		newDay.classList.add('click');
 
 		addNewEvent();
-
-		// 첫번째 일차가 클릭 상태 default
-		if (index === 1) {
-			document.querySelector(`#index${index}`).classList.remove('non-click');
-			document.querySelector(`#index${index}`).classList.add('click');
-		}
 
 	}
 
 	function addNewEvent() {
 		const target = document.querySelectorAll(`div.days`);
 
-		// 새로운 deleteDay 요소에 이벤트 리스너 추가
-		const deleteDay = document.querySelectorAll('img.deleteDay');
-		deleteDay.forEach((d) => {
+		// 새로운 deleteDayImg 요소에 이벤트 리스너 추가
+		const deleteDayImg = document.querySelectorAll('img.deleteDayImg');
+		deleteDayImg.forEach((d) => {
 			d.removeEventListener('click', deleteDay); // 중복방지
 			d.addEventListener('click', deleteDay);
 		});
@@ -133,10 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	function deleteDay(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
-		//const parentDiv=event.target.closest('div.deleteDay');  // 클릭된 요소의 부모 요소 찾기
-		// 부모 div.col-3 요소의 day-id 속성값 가져오기
+		// 부모요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
-		// dayPlan1과 같은 ID를 가진 요소 선택
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
 		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
 		deleteModal.show();
