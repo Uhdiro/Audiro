@@ -4,17 +4,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plan</title>
-<link
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Plan</title>
+	<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
-<c:url var="planCSS" value="/css/plan.css" />
-<link rel="stylesheet" href="${planCSS}">
+	<c:url var="planCSS" value="/css/plan.css" />
+	<link rel="stylesheet" href="${planCSS}">
 </head>
 <body>
 	<div class="container-fluid">
@@ -104,8 +105,10 @@
 		crossorigin="anonymous"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	<c:url var="planJS" value="/js/plan.js" />
+	
 	<script src="${planJS}"></script>
 
 	<c:url var="destinationJS" value="/js/plan_fav_des.js" />
