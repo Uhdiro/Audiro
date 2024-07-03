@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	let index = 1;
 	const btnCreateDay = document.querySelector('button#createDay');
-	let imgDeleteDay = document.querySelectorAll('img.deleteImg');
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 
@@ -24,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function clickDays(event) {
-		const clickedDay = event.target.closest('.days');
 		const days = document.querySelectorAll('.days');
+		const clickedDay = event.target.closest('.days');
 
 		// 모든 요소를 non-click으로 초기화
 		days.forEach((d) => {
@@ -51,37 +50,46 @@ document.addEventListener('DOMContentLoaded', () => {
 				<div class="col-7">
 					<a href="#dayPlan${index}">${index}일차</a>
 				</div>
-				<div id="delete${index}" class="deleteImg col-3">
-					<img class="deleteImg" src="/audiro/images/delete.png" />
+				<div id="delete${index}" class="deleteDay col-3">
+					<img class="deleteDayImg" src="/audiro/images/delete.png" />
 				</div>
 			</div>
 		`;
-		divDay.insertAdjacentHTML('beforeend',htmlStr);
+		divDay.insertAdjacentHTML('beforeend', htmlStr);
 		
-		addNewEvent();
+		// 모든 일차를 non-click 상태로 설정
+		const days = document.querySelectorAll('.days');
+		days.forEach((d) => {
+			d.classList.remove('click');
+			d.classList.add('non-click');
+		})
 
-		// 첫번째 일차가 클릭 상태 default
-		if (index === 1) {
-			document.querySelector(`#index${index}`).classList.remove('non-click');
-			document.querySelector(`#index${index}`).classList.add('click');
-		}
+
+		// 최신 일차를 click 상태로 설정
+		const newDay = document.querySelector(`#index${index}`);
+		newDay.classList.remove('non-click');
+		newDay.classList.add('click');
+
+		addNewEvent();
 
 	}
 
 	function addNewEvent() {
 		const target = document.querySelectorAll(`div.days`);
 
-		// 새로운 deleteImg 요소에 이벤트 리스너 추가
-		const deleteImg = document.querySelectorAll('img.deleteImg');
-		deleteImg.forEach((d) => {
+		// 새로운 deleteDayImg 요소에 이벤트 리스너 추가
+		const deleteDayImg = document.querySelectorAll('img.deleteDayImg');
+		deleteDayImg.forEach((d) => {
+			d.removeEventListener('click', deleteDay); // 중복방지
 			d.addEventListener('click', deleteDay);
-		})
+		});
 
 		// 새로운 collapseImg 요소에 이벤트 리스너 추가
 		const collapseImg = document.querySelectorAll('img.collapseImg');
 		collapseImg.forEach((c) => {
+			c.removeEventListener('click', collapseDay);
 			c.addEventListener('click', collapseDay);
-		})
+		});
 	}
 
 	// collapse 이미지 변경
@@ -131,10 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	function deleteDay(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
-		//const parentDiv=event.target.closest('div.deleteImg');  // 클릭된 요소의 부모 div.col-3 요소 찾기
-		// 부모 div.col-3 요소의 day-id 속성값 가져오기
+		// 부모요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
-		// dayPlan1과 같은 ID를 가진 요소 선택
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
 		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
 		deleteModal.show();
@@ -155,8 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
 				<h5>${index}일차</h5>
-					<ul class="timeline">
+				<div class="timeline">
+					<ul>
 				 	</ul>
+				</div>
+				<div class="date">
+					
+				</div>
 			</div>
 		`;
 		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
@@ -168,18 +179,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		const days = document.querySelectorAll('div.days');
 		let indexReset = 1;
 
-			days.forEach((day) => {
-				const dayLink = day.querySelector('a');
-				const deleteDiv = day.querySelector('div.deleteImg');
-
-				dayLink.textContent = `${indexReset}일차`;
-				dayLink.setAttribute('href', `#dayPlan${indexReset}`);
+		days.forEach((day) => {
+			const dayLink = day.querySelector('a');
+			const deleteDiv = day.querySelector('div.deleteDay');
 
 				day.id = `index${indexReset}`;
 				day.setAttribute('day-id', indexReset);
 
+				dayLink.textContent = `${indexReset}일차`;
+				dayLink.setAttribute('href', `#dayPlan${indexReset}`);
+
 				deleteDiv.id = `delete${indexReset}`;
-				deleteDiv.setAttribute('day-id', indexReset);
 
 				indexReset++;
 
