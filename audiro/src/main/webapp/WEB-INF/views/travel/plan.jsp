@@ -16,6 +16,12 @@
 
 	<c:url var="planCSS" value="/css/plan.css" />
 	<link rel="stylesheet" href="${planCSS}">
+	
+	<c:url var="timelineCSS" value="/css/plan_timeline.css" />
+	<link rel="stylesheet" href="${timelineCSS}">
+	
+	<c:url var="calenderCSS" value="/css/plan_calender.css" />
+	<link rel="stylesheet" href="${calenderCSS}">
 </head>
 <body>
 	<div class="container-fluid">
@@ -26,30 +32,40 @@
 		<div class="row">
 			<div class="card col-8 px-0">
 				<div class="row g-0 ">
-					<div class="col-4 p-2 ">
-						<div id="btnContainer">
-							<button id="deleteAll">전체 삭제</button>
+					<div class="col-3 p-2 ">
+						<div class="row g-0">
+							<div id="btnContainer" >
+								<button id="deleteAll" class="btn btn-primary">전체 삭제</button>
+								<button id="btnSave" class="btn btn-primary" type="submit">저장</button>
+							</div>
 						</div>
 						<div id="dayContainer"></div>
-						<button id="createDay">일차 추가</button>
+						<button id="createDay" class="btn btn-primary">일차 추가</button>
 					</div>
 
-					<div class="col-8">
+					<div class="col-9">
 						<div id="dayPlan">
-							<!--  day-id 추가 -->
 							<div class="row g-0 m-2">
-								<div class="col-10">
-									<input type="text" name="title" id="title" maxlength=40 placeholder="제목을 입력하세요."/>
+								<div class="col-sm-6 col-12 mb-2">
+									<div id="title" class="mb-2">
+										<input type="text" name="title" maxlength="40"
+											placeholder="제목을 입력하세요." class="form-control" />
+									</div>
 								</div>
-								<div class="col-2">
-									<button>저장</button>
+								<div class="date col-sm-3 col-6 mb-2">
+									<input type="text" id="startDate" class="form-control" placeholder="start"
+										readonly />
 								</div>
+								<div class="date col-sm-3 col-6 mb-2">
+									<input type="text" id="endDate" class="form-control" placeholder="end"
+										readonly />
+								</div>
+							
 							</div>
-
 						</div>
-
 					</div>
 				</div>
+
 			</div>
 
 			<div class="card col-4 px-0">
@@ -107,15 +123,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-	<c:url var="planJS" value="/js/plan.js" />
 	
+	<c:url var="planJS" value="/js/plan.js" />
 	<script src="${planJS}"></script>
 
 	<c:url var="destinationJS" value="/js/plan_fav_des.js" />
 	<script src="${destinationJS}"></script>
 	
-	<c:url var="calenderJS" value="/js/plan_calender.js" />
-	<script src="${calenderJS}"></script>
+	
 
 </body>
 </html>

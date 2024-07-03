@@ -2,25 +2,103 @@
  * /audiro/plan.jsp에 포함
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function () {
+	
 	let index = 1;
 	const btnCreateDay = document.querySelector('button#createDay');
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
+	const btnSave=document.querySelector('#btnSave');
 
+	// Datepicker 초기화
+	$('#startDate').datepicker({
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		startDate: '0d'
+	}).on('changeDate', function() {
+		getDateRange();
+	});
+
+	$('#endDate').datepicker({
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		startDate: '0d'
+	}).on('changeDate', function() {
+		getDateRange();
+	});
+	const startDate = document.querySelector('input#startDate');
+	const endDate = document.querySelector('input#endDate');
+
+	
 	defaultDay();
 
+	//btnSave.addEventListener('click',savePlan);
+
 	deleteAll.addEventListener('click', deleteAllDay);
+	
 	btnCreateDay.addEventListener('click', () => {
-		createDay();
-		createPlan();
-		index++;
+		createAll();
 	});
 
 	dayContainer.addEventListener('click', (event) => {
 		clickDays(event);
 
 	});
+	
+
+	function createAll(){
+		createDay();
+		createPlan();
+		index++;
+	}
+	
+
+
+	function getDateRange() {
+		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
+		if (startDate !== '' || endDate !== '') {
+			btnCreateDay.style.display='none';
+		}
+		const start = new Date(startDate.value);
+		const end = new Date(endDate.value);
+		const differenceInMillis = end - start;
+
+		// 밀리초를 일수로 변환
+		const differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24));
+		const currentDay = index - 1;
+		
+		if (differenceInDays >= 0) {
+			//TODO:
+			// 새로운 일차가 현재 일차보다 적으면 초과된 일차 삭제
+			if (differenceInDays < currentDay) {
+				for (let i = currentDay; i > differenceInDays; i--) {
+					deleteDayByIndex(i);
+				}
+			}else if(differenceInDays===currentDay){
+				return;
+			}else {
+				// 새로운 일차가 현재 일차보다 많으면 일차 추가
+				for (let i = currentDay; i <= differenceInDays; i++) {
+					createAll();
+				}
+			}
+		}
+	}
+
+
+    function deleteDayByIndex(dayIndex) {
+		const dayElement = document.querySelector(`#index${dayIndex}`);
+		const planElement = document.querySelector(`#dayPlan${dayIndex}`);
+		if (dayElement) {
+			dayElement.remove();
+		}
+        if (planElement) {
+            planElement.remove();
+        }
+        index--;
+    }
+
+	
 
 	function clickDays(event) {
 		const days = document.querySelectorAll('.days');
