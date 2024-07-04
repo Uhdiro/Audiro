@@ -35,7 +35,7 @@
 		<%@ include file="../../fragments/header.jspf"%>
 
 	<header>
-		<h3 name="usersId">로그인유저</h3>
+
 	</header>
 	<main>
 		<div class="mt-2 card">
@@ -44,15 +44,15 @@
 			</div>
 			<div class="card-body">
 			
-				<form id="modifyForm"  calss="from-iline">
+				<form id="modifyForm"  class="from-iline">
 					<div class="mt-2">
-						<label for="postId" class="col-sm-2 col-form-label">${list.postId}</label>
+						<input type="hidden" id="postId" name="postId" value="${list.postId}" />
                         <input id="title" name="title" class="form-control" value="${list.title}" type="text" required />
 					</div>
 					<textarea id="summernote" name="content">${list.content}</textarea>
-				<div class="text-right mt-3">
-                        <button type="submit" class="btn" id="modifyBtn">수정완료</button> 
-         
+					<div class="text-right mt-3">
+						<label id="modifiedTime" class="col-sm-2 col-form-label">${list.modifiedTime}</label>
+                    <button type="submit" class="btn" id="modifyBtn">수정완료</button> 
                     </div>
 				</form>
 
@@ -85,6 +85,9 @@
 		});
 		
 	</script>
+	
+	 <!-- Axios 라이브러리 포함 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<!-- reviewMypage.js -->
 	<c:url var="mypageJS" value="/js/modify.js" />

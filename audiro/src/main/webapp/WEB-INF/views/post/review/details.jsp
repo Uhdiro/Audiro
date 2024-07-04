@@ -20,39 +20,50 @@
         border-radius: 50%; /* 동그라미 형태를 만들기 위한 설정 */
         object-fit: cover; /* 이미지가 잘리지 않고 비율을 유지하도록 설정 */
     }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    
+    
+    
+    
+    
+    
+  
+
+    
 </style>
 </head>
 <body>
     <div class="container-fluid">
         <c:set var="pageTitle" value="Post Details" />
-        <%-- scope의 기본값은 page --%>
         <%@ include file="../../fragments/header.jspf"%>
 
         <main>
             <div class="mt-2 card">
                 <div class="card-header">
-                    <h2>여행후기 상세페이지</h2>
-                    <div style="text-align: right;">
-                        <button class="btn like-btn" data-review-id="${list.postId}"
-                            style="text-align: right;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" right
-                                fill="currentColor" class="bi bi-suit-heart-fill"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
-                            </svg>
-                        </button>
-                    </div>
+                    <h2 style="margin: 0;">여행후기 상세페이지</h2>
+                    <button class="btn like-btn" data-review-id="${list.postId}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="card-body">
                     <form id="modifyForm" method="post" class="form-inline">
                     	 <div class="mt-2">
-                            <label for="postId" class="col-sm-2 col-form-label">번호</label>
-                            <input id="postId" class="form-control" type="text"
+                            <label for="postId" class="col-sm-2 col-form-label">
+                            <input id="postId" name="postId" class="form-control" type="text"
                                 	value="${list.postId}" readonly />
-                            <label for="title"class="col-sm-8 col-form-label">제목</label>
+                             </label>   	
+                            <label for="title"class="col-sm-8 col-form-label">
                             <input id="title" class="form-control" type="text"
                                 value="${list.title}" readonly />
+                            </label>
                         </div>
                         <div class="mt-2">
                             <label for="content" class="form-label">내용</label>
@@ -60,28 +71,17 @@
                         </div>
 
                         <div class="mt-2">
-                            <label for="author" class="form-label">닉네임</label>
-                            <input id="author" class="form-control" type="text"
-                                value="${list.usersId}" readonly />
-                        </div>
-
-                        <div class="mt-2">
-                            <label for="createdTime" class="form-label">작성 시간</label>
-                            <input id="createdTime" class="form-control" type="text"
-                                value="${list.createdTime}" readonly />
-                        </div>
-                        <div class="mt-2">
                             <label for="modifiedTime" class="form-label">최종 수정 시간</label>
                             <input id="modifiedTime" class="form-control" type="text"
                                 value="${list.modifiedTime}" readonly />
                         </div>
+		                <div class="card-footer">
+		                    <button id="deletebtn" class="btn btn-outline-danger">삭제</button>
+		                    <button id="Modifybtn" class="btn btn-outline-success">수정</button>
+		                </div>
                     </form>
                 </div>
 
-                <div class="card-footer">
-                    <button id="deletebtn" class="btn btn-outline-danger">삭제</button>
-                    <button id="Modifybtn" class="btn btn-outline-success">수정</button>
-                </div>
 
                 <div class="card-header bg-light">
                     <i class="fa fa-comment fa"></i> 댓글

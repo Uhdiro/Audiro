@@ -1,6 +1,7 @@
 package com.audiro.repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class DraftPost {
 	private String title;
 	private String usersId;
 	private String content;
-	private LocalDate modifiedTime;
+	private LocalDateTime modifiedTime;
 	
 	
 	

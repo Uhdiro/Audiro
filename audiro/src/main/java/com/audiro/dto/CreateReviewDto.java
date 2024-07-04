@@ -8,12 +8,17 @@ import lombok.Data;
 @Data
 public class CreateReviewDto {
 	
+	private Integer usersId;
+	private Integer postTypeId;
 	private Integer postId;
 	private String title;
 	private String content;
 	
 	public Post toEntoty() {
-		return Post.builder().postTypeId(postId)
+		return Post.builder()
+				.usersId(usersId)
+				.postTypeId(postTypeId)
+				.postId(postId)
 				.title(title).content(content).build();
 		
 	}

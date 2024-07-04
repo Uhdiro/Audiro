@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		e.preventDefault();
 		const form = document.querySelector('form#modifyForm');
 		const postId= document.querySelector('input#postId').value;
-		form.action = 'modify'
-		form.method = 'get'
+		const uri = `http://localhost:8080/audiro/post/review/modify?postId=${postId}`;
+		
+		form.action = 'modify';
+		form.method = 'get';
 		form.submit();
-
 	}
 
 
@@ -41,11 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		alert('삭제버튼!');
 
 		e.preventDefault();
-		const form = document.querySelector('form#modifyForm');
-		
-		form.action = 'delete'
-		form.method = 'get';
-		form.submit();
+		const result = confirm('정말 삭제할까요?');
+		if(result){
+			const form = document.querySelector('form#modifyForm');
+			
+			form.action = 'delete';
+			form.method = 'post';
+			form.submit();
+			}
 		}
 			
 });

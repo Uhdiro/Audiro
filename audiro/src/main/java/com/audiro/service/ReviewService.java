@@ -1,7 +1,8 @@
 package com.audiro.service;
 
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import com.audiro.dto.CreateReviewDto;
 import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
+import com.audiro.repository.DraftPost;
 import com.audiro.repository.FavoriteUsers;
 import com.audiro.repository.Post;
 import com.audiro.repository.ReviewDao;
@@ -57,12 +59,18 @@ public class ReviewService {
     }
 	
     
-  //여행후기 많이작성한 유저 TOP3
+    //여행후기 많이작성한 유저 TOP3
     public List<Post> selectUserTop3(){
     	List<Post> list = reviewDao.selectReviewUserTop3();
     	return list;
     }
 	
+    
+    //여행후기 찜 담기
+    public int LikeReview(Integer postId, Set<Integer> favoriteUserIds) {
+    	int list = reviewDao.addLikeReview(postId, favoriteUserIds);
+    	return list;
+    }
 	
     
 	
@@ -85,15 +93,15 @@ public class ReviewService {
 	}
 	
 	//여행후기 게시글 임시저장
-	public int draft(CreateReviewDto dto) {
-		int result = reviewDao.draftReview(dto.toEntoty());
+	public int draft(DraftPost post) {
+		int result = reviewDao.saveDraftPost(post);
 		
 		return result;
 	}
 	
 	//여행후기 게시글 수정
 	public int update(CreateReviewDto dto) {
-		int result = reviewDao.updateReview(dto.toEntoty());
+		int result = reviewDao.updateReview(dto);
 		
 		return result;
 		
@@ -124,9 +132,31 @@ public class ReviewService {
 	}
 		
 		
-		
+	//여행후기 담아있지는 확인.			 
+	public synchronized boolean toggleFavorite(Integer usersId ,Integer postId) {
+	//여행후기 찜 담아있는 내용 불러오기.
+	Set<Integer> favoriteUserIds = reviewDao.getFavoriteUserIds(usersId, postId);
+	
+	// 현재 유저가 찜한 게시물인지 확인
+      if (favoriteUserIds.contains(usersId)) {
+          // 이미 찜한 경우 제거
+          favoriteUserIds.remove(usersId);
+          reviewDao.addLikeReview(postId, favoriteUserIds); 
+          return false; 
+      } else {
+          // 찜하지 않은 경우 추가
+          favoriteUserIds.add(usersId);
+          reviewDao.addLikeReview(postId, favoriteUserIds); 
+          return true; 
+      }
+	}	
 	
 	
+	//여행후기 임시저장 불러오기
+	public List<DraftPost> draftList() {
+		List<DraftPost> list = reviewDao.selectDraftList();
+		return list;
+	}
 	
-
 }
+	

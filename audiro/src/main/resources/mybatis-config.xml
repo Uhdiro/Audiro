@@ -11,6 +11,7 @@
 		<typeAlias type="com.audiro.repository.Post" alias="Post"/>
 		<typeAlias type="com.audiro.repository.Comments" alias="Comments"/>		
 		<typeAlias type="com.audiro.repository.ReviewDao" alias="ReviewDao"/>		
+		<typeAlias type="com.audiro.repository.DraftPost" alias="DraftPost"/>		
 	
 	</typeAliases>
 </configuration>

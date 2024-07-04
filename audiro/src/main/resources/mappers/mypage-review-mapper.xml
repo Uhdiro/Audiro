@@ -3,50 +3,167 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.audiro.repository.ReviewDao">
-	
-	<!-- 내 여행후기 전체 불러오기 (최신순)-->
+
+	<!-- 내여행후기 -->
+	<!-- 내 여행후기 전체 불러오기 (최신순) -->
 	<select id="readMyReview" resultType="Post">
-		select p.users_id, title, p.modified_time, p.post_id, u.nickname
+		select p.users_id, title,
+		p.modified_time, p.post_id, u.nickname
 		from post p
-        join users u on p.users_id = u.users_id
-		where p.users_id = 8 
+		join users u on p.users_id = u.users_id
+		where p.users_id = 8
 		and p.post_type_id = 10
 		order by p.modified_time desc
 	</select>
-	
-	<!-- 내 여행후기 전체 불러오기 (좋아요순)-->
+
+	<!-- 내 여행후기 전체 불러오기 (좋아요순) -->
 	<select id="readMyReviewByGood" resultType="Post">
-		 select p.users_id, title, p.modified_time, p.post_id, u.nickname
+		select p.users_id,
+		title, p.modified_time, p.post_id, u.nickname
 		from post p
-        join users u on p.users_id = u.users_id
-		where p.users_id = 8 
+		join users u on p.users_id = u.users_id
+		where p.users_id = 8
 		and p.post_type_id = 10
 		order by good desc
 	</select>
-	
+
 	<!-- 나를 찜한 유저 수 -->
 	<select id="countLike" resultType="Integer">
-		select count(*) 
+		select count(*)
 		from favorite_users fu
-		where fu.interested_user_id = 8	
+		where fu.interested_user_id = 8
+	</select>
+
+	<!-- 내 여행일기 개수 -->
+	<select id="countMyReveiw" resultType="Integer">
+		select count(*) as post_count
+		from post
+		where post_type_id = 10
+		and users_id = 8
 	</select>
 	
-	<!-- 여행후기 good  갯수 -->
+	<!-- 여행후기 good 갯수 -->
 	<select id="countReviewGood" resultType="Integer">
 		select count(*)
 		from post
-		where post_type)id = #{postTypeId}	
+		where post_type_id = #{postTypeId}
 	</select>
 	
-	<!-- 내여행일기 개수 -->
-	<select id="countMyReveiw" resultType="Integer">
-	   	select count(*) as post_count
-        from post
-        where post_type_id = 10 
-        and users_id = 8
-    </select>
+	
+	<!-- 여행후기 게시한 -->
+	<!-- 여행 후기 1개 상세 내용불러오기 -->
+	<select id="readDetailsReviewById" resultType="Post">
+		select * from post
+		where post_id = ${postId}
+	</select>
 
-	
-	
+	<!-- 해당 여행후기 좋아요 수 -->
+	<select id="goodCountByPostId" resultType="Integer">
+		select good
+		from post
+		where post_id = #{postId}
+	</select>
+
+	<!-- 해당 여행일기 유저 관심유저담기 -->
+	<insert id="addLikeUser">
+		insert into favorite_users (users_id, interested_user_id)
+		values (8,7)
+	</insert>
+
+	<!-- 해당 여행일기 찜하기  -->
+	<insert id="addLikeReview">
+		insert into favorite_post (users_id, post_id)
+		values (8,10)
+	</insert>
+
+	<!-- 여행 후기 1개 삭제 -->
+	<delete id="deleteReview">
+		delete from post where post_id = #{postId}
+	</delete>
+
+	<!-- 여행후기 저장하기 -->
+	<insert id="insertReview">
+		insert into post (users_id, post_type_id, title,
+		content)
+		values (8, 10, #{title}, #{content})
+	</insert>
+
+	<!-- 여행후기 글 수정하기 -->
+	<update id="updateReview">
+		update post
+		set title = #{title},
+		content = #{content},
+		modified_time = systimestamp
+		where post_id = #{postId}
+	</update>
+
+	<!-- 모든 여행후기 불러오기 -->
+	<select id="selectReviewAll" resultType="Post">
+		select * from post
+		where
+		post_type_id = 10
+		order by modified_time desc
+	</select>
+
+	<!-- 여행후기 제목, 내용, 제목+내용, 닉네임검색 -->
+	<select id="search" resultType="Post">
+		<bind name="searchKeyword" value="'%' + keyword + '%'" />
+		select * from post
+		<where>
+			<choose>
+				<when test='category.equals("t")'>
+					upper(title) like upper(#{searchKeyword})
+				</when>
+				<when test='category.equals("c")'>
+					upper(content) like upper(#{searchKeyword})
+				</when>
+				<when test='category.equals("tc")'>
+					upper(title) like upper(#{searchKeyword})
+					or
+					upper(content) like upper(#{searchKeyword})
+				</when>
+				<when test='category.equals("n")'>
+					upper(nickname) like upper(#{searchKeyword})
+				</when>
+			</choose>
+		</where>
+		order by id desc
+	</select>
+
+
+	<!-- 여행후기찜담기, 좋아요-->
+	<!-- 여행후기 찜 담아있는 내용 불러오기. -->
+	<select id="getFavoriteUserIds" resultType="Integer">
+		select fp.favorite_post_id, fp.post_Id, u.users_id
+		from favorite_post fp
+		join users u on fp.users_id= u.users_id
+		where u.users_id = 4
+	</select>
+
+
+
+	<!-- 여향후기 임시저장 -->
+	<!-- 여행후기 글 임시저장하기 -->
+	<insert id="saveDraftPost">
+		insert into draft_post (type_id, users_id, title, content)
+		values (10, 8, #{title}, #{content})
+	</insert>
+	<!-- 임시저장 목록 불러오기 -->
+	<select id="selectDraftList" resultType="DraftPost">
+		select * from draft_post
+	</select> 
+	<!-- 임시저장 파일 1개 상세내용 불러오기 -->
+	<select id="selectDrafById" resultType="DraftPost">
+		select * from draft_post where draft_post_id=#{draftPostId}
+	</select> 	
+	<!-- 임시저장 삭제 -->
+	<delete id="deleteDraftPost">
+		delete from draft_post where draft_post_id=#{draftPostId}
+	</delete>
+
+
+
+
+
 
 </mapper>

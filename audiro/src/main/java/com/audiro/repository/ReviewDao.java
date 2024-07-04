@@ -1,7 +1,9 @@
 package com.audiro.repository;
 
 import java.util.List;
+import java.util.Set;
 
+import com.audiro.dto.CreateReviewDto;
 import com.audiro.dto.SerachReviewDto;
 
 //review-mapper.xml, details-mapper.xml, ranking-mapper.xml 에서 SQL을 실행하는 메서드 작성하기.
@@ -41,23 +43,43 @@ public interface ReviewDao {
 	int addLikeUser();
 
 	// 찜 여행후기 담기
-	int addLikeReview();
+	int addLikeReview(Integer postId, Set<Integer> favoriteUserIds);
 	
 	// 여행후기 1개 삭제하기
 	int deleteReview(Integer postId);
 	
 	//여행후기 저장
 	int insertReview(Post post);
-	//여행후기 임시저장
-	int draftReview(Post post);
-	
+		
 	//여행후기 수정
-	int updateReview(Post post);
+	int updateReview(CreateReviewDto dto);
 	
 	//여행후기 모두 불러오기
 	List<Post> selectReviewAll();
 
 	//여행후기 검색
 	List<Post> serach(SerachReviewDto dto);
-
+	
+	//여행후기 찜 담아있는 내용 불러오기
+	Set<Integer> getFavoriteUserIds(Integer usersId ,Integer postId);
+	
+	
+	
+	//여행후기 임시저장
+	//여행후기 글 임시저장하기
+	int saveDraftPost(DraftPost post);
+	
+	//임시저장 목록 불러오기
+	List<DraftPost> selectDraftList();
+	
+	//임시저장 1개 상세보기
+	DraftPost selectDrafById(Integer draftPostId);
+	
+	//임시저장 삭제하기
+	int deleteDraftPost(Integer draftPostId);
+	
+	
+	
+	
+	
 }

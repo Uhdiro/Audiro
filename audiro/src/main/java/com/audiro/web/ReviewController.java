@@ -15,6 +15,7 @@ import com.audiro.dto.CreateReviewDto;
 import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
+import com.audiro.repository.DraftPost;
 import com.audiro.repository.Post;
 import com.audiro.service.ReviewService;
 
@@ -32,7 +33,9 @@ public class ReviewController {
 
 	//여행후기 작성페이지
 	@GetMapping("/create")
-	public void create() {
+	public void create(Model model) {
+		List<DraftPost> draft = reviewService.draftList();
+		model.addAttribute("drafts", draft);
 
 	}
 	
@@ -45,14 +48,14 @@ public class ReviewController {
 	
 	//여행후기 작성 임시저장후 페이지
 	@PostMapping( "/draft")
-	public String draft(CreateReviewDto dto) {
-		reviewService.draft(dto);
+	public String draft(DraftPost post) {
+		reviewService.draft(post);
 		return "redirect:/post/review/list";
 		}
 	
 
 	// 여행후기 상세보기, 수정하기하면 작성된 페이지 띄우기
-	@GetMapping({"/details", "modify"})
+	@GetMapping("/details")
 		public void reviewDetails(@RequestParam(name = "postId") Integer postId, Model model) {
 
 		//postId검색
@@ -62,7 +65,7 @@ public class ReviewController {
 	
 	
 	//여행후기 수정 업데이트
-	@GetMapping("/update")
+	@PostMapping("/update")
 	public String update(CreateReviewDto dto) {
 		reviewService.update(dto);
 		return "redirect:/post/review/details?postId=" + dto.getPostId();
@@ -86,33 +89,17 @@ public class ReviewController {
 		
 	}
 
-	// 내 여행일기 메인(최신순정렬)
-	@RequestMapping("/latest")
-	public ResponseEntity<List<MyReviewListDto>> getLatestReviews() {
-		List<MyReviewListDto> list = reviewService.read();
-		return ResponseEntity.ok(list);
-	}
-
-	// 내 여행일기 메인(좋아요순정렬)
-	@RequestMapping("/likes")
-	public ResponseEntity<List<MyReviewListDto>> getLikedReviews() {
-		List<MyReviewListDto> goodList = reviewService.readGood();
-		return ResponseEntity.ok(goodList);
-	}
-
-
 	
 	//여행후기수정페이지
-//	@GetMapping("/modify") 
-//		public String reviewModify(@RequestParam(name = "postId") Integer postId, Model model) {
-//		Post list = reviewService.readById(postId);
-//		model.addAttribute("list", list);
-//		
-//		return "redirect:/post/review/modify?postId=" + postId;
-//		
-//		
-//	}
-//	
+	@GetMapping("/modify") 
+		public void reviewModify(@RequestParam(name = "postId") Integer postId, Model model) {
+		log.debug("modify(postid={}", postId);
+		
+		Post list = reviewService.readById(postId);
+		model.addAttribute("list", list);
+				
+	}
+	
 	//여행후기 삭제
 	@PostMapping("/delete") 
 	public String delete(@RequestParam(name="postId") Integer postId) {
@@ -144,15 +131,20 @@ public class ReviewController {
 	}
 	
 	
-	//여행후기 담기
-	@PostMapping("/likeReview")
-	
-	
-	
+	//임시저장 1개 수정하기로 불러오기
+	@GetMapping("/darft")
+	public void draftList(Model model) {
+		List<DraftPost> draft = reviewService.draftList();
+		model.addAttribute("drafts", draft);
+
+	}
+
 	
 	//댓글
 	@GetMapping("/comments")
 	public void test() {
 
 	}
+
+
 }
