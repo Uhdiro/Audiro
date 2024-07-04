@@ -8,4 +8,6 @@ public interface TravelDestinationDao {
 	
 	List<TravelDestination> findAll();
 	
+	TravelDestination selectAllById(Integer id);
+	
 }

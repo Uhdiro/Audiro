@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TravelDestination {
-	private int travelDestinationId;
+	private Integer travelDestinationId;
 	private String name;
 	private String description;
 	private String phone;

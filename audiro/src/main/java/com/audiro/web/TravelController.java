@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.audiro.dto.TravelDestinationDetailsDto;
 import com.audiro.repository.TravelDestination;
 import com.audiro.service.TravelDestinationService;
 
@@ -26,6 +28,13 @@ public class TravelController {
 		List<TravelDestination> list = service.findAll();
 		
 		model.addAttribute("destinations", list);
+	}
+	
+	@GetMapping("/details")
+	public void details(@RequestParam(name = "id") int id, Model model) {
+		TravelDestinationDetailsDto dto = service.readDetails(id);
+		
+		model.addAttribute("destination", dto);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.audiro.dto.TravelDestinationDetailsDto;
 import com.audiro.repository.TravelDestination;
 import com.audiro.repository.TravelDestinationDao;
 
@@ -26,6 +27,14 @@ public class TravelDestinationService {
 
 	public List<TravelDestination> findAll() {
 		return dao.findAll();
+	}
+	
+	public TravelDestinationDetailsDto readDetails(Integer id) {
+		TravelDestination destination = dao.selectAllById(id);
+		
+		TravelDestinationDetailsDto dto = TravelDestinationDetailsDto.fromEntity(destination);
+		
+		return dto;
 	}
 
 }

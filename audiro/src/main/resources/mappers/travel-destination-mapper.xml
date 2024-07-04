@@ -16,4 +16,8 @@
 		resultType="Destination">
 		SELECT * FROM travel_destination
 	</select>
+    
+    <select id="selectAllById" resultType="Destination">
+        select * from travel_destination where travel_destination_id = #{travelDestinationId}
+    </select>
 </mapper>
