@@ -14,6 +14,7 @@
         <typeAlias type="com.audiro.repository.FavoriteDestination" alias="FavoriteDestination" />
         <typeAlias type="com.audiro.repository.FavoritePost" alias="FavoritePost" />
 		<typeAlias type="com.audiro.dto.FavoriteDestinationDto" alias="FavoriteDestinationDto" />
+		<typeAlias type="com.audiro.repository.TravelPlan" alias="TravelPlan"/>
 		
 	</typeAliases>
 </configuration>

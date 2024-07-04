@@ -31,40 +31,46 @@
 	<div class="container-full mx-5 text-center">
 		<div class="row">
 			<div class="card col-8 px-0">
-				<div class="row g-0 ">
-					<div class="col-3 p-2 ">
-						<div class="row g-0">
-							<div id="btnContainer" >
-								<button id="deleteAll" class="btn btn-primary">전체 삭제</button>
-								<button id="btnSave" class="btn btn-primary" type="submit">저장</button>
-							</div>
-						</div>
-						<div id="dayContainer"></div>
-						<button id="createDay" class="btn btn-primary">일차 추가</button>
-					</div>
+				<c:url var="createPlan" value="/api/plan/create"></c:url>
+				<form method="post" action="${createPlan}" >
+					<div class="row g-0 ">
+						<div class="col-3 p-2 ">
+							<div class="row g-0">
+								<div id="btnContainer">
 
-					<div class="col-9">
-						<div id="dayPlan">
-							<div class="row g-0 m-2">
-								<div class="col-sm-6 col-12 mb-2">
-									<div id="title" class="mb-2">
-										<input type="text" name="title" maxlength="40"
-											placeholder="제목을 입력하세요." class="form-control" />
+									<button id="deleteAll" class="btn btn-primary">전체 삭제</button>
+									<button type="submit" id="btnSave" class="btn btn-primary">저장</button>
+								</div>
+							</div>
+							<div id="dayContainer"></div>
+							<button id="createDay" class="btn btn-primary">일차 추가</button>
+						</div>
+
+						<div class="col-9">
+							<div id="dayPlan">
+								<div class="row g-0 m-2">
+								<div id="alert"></div>
+									<div class="col-sm-6 col-12 mb-2">
+										<div id="title" class="mb-2">
+											<input type="text" id="title" name="title" maxlength="40"
+												placeholder="제목을 입력하세요." class="form-control" />
+										</div>
 									</div>
+									<div class="date col-sm-3 col-6 mb-2">
+										<input type="text" id="startDate" name="startDate" class="form-control"
+											placeholder="start" readonly />
+										<input type="hidden" id="duration" name="duration" />
+									</div>
+									<div class="date col-sm-3 col-6 mb-2">
+										<input type="text" id="endDate" name="endDate" class="form-control"
+											placeholder="end" readonly />
+									</div>
+
 								</div>
-								<div class="date col-sm-3 col-6 mb-2">
-									<input type="text" id="startDate" class="form-control" placeholder="start"
-										readonly />
-								</div>
-								<div class="date col-sm-3 col-6 mb-2">
-									<input type="text" id="endDate" class="form-control" placeholder="end"
-										readonly />
-								</div>
-							
 							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 
 			</div>
 
@@ -115,14 +121,15 @@
 		</div>
 	</div>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	
 	<c:url var="planJS" value="/js/plan.js" />
 	<script src="${planJS}"></script>

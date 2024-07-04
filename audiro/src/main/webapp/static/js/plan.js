@@ -16,7 +16,7 @@ $(document).ready(function () {
 		todayHighlight: true,
 		startDate: '0d'
 	}).on('changeDate', function() {
-		getDateRange();
+		getDateRange(false); // showModal을 false로 전달
 	});
 
 	$('#endDate').datepicker({
@@ -24,18 +24,23 @@ $(document).ready(function () {
 		todayHighlight: true,
 		startDate: '0d'
 	}).on('changeDate', function() {
-		getDateRange();
+		getDateRange(false); // showModal을 false로 전달
 	});
-	const startDate = document.querySelector('input#startDate');
-	const endDate = document.querySelector('input#endDate');
+	const startDate = new Date(document.querySelector('input#startDate').value);
+	const endDate = new Date(document.querySelector('input#endDate').value);
 
-	
+
 	defaultDay();
 
-	//btnSave.addEventListener('click',savePlan);
+	btnSave.addEventListener('click', function(event) {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
+		createTravelPlan();
+		});
 
-	deleteAll.addEventListener('click', deleteAllDay);
-	
+	deleteAll.addEventListener('click', function() {
+		deleteAllDay(true); // showModal을 true로 전달
+	});
+
 	btnCreateDay.addEventListener('click', () => {
 		createAll();
 	});
@@ -44,60 +49,151 @@ $(document).ready(function () {
 		clickDays(event);
 
 	});
-	
 
-	function createAll(){
+	function createTravelPlan() {
+		//const usersId=session.getAttribute(SESSION_ATTR_USER);
+		const usersId='1';
+		const title=document.querySelector('input#title').value;
+		const start=document.querySelector('input#startDate').value;
+		const end=document.querySelector('input#endDate').value;
+		const startDate = new Date(start);
+		const endDate = new Date(end);
+
+		const millisecondsInADay = 24 * 60 * 60 * 1000;
+		const duration = (endDate - startDate) / millisecondsInADay; // duration을 일수로 계산
+		console.log(typeof (startDate));
+		console.log(endDate);
+		console.log(typeof (duration));
+		console.log(duration);
+
+		if (title === '') {
+			const alert = document.querySelector('div#alert');
+			const htmlStr = `
+				<div class="alert alert-primary d-flex align-items-center" role="alert">
+				  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+				    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+				  </svg>
+				  <div>
+				    제목을 작성해주세요.
+				  </div>
+				</div>
+			`;
+			alert.insertAdjacentHTML('beforeend', htmlStr);
+			return;
+		}
+		
+		const data={usersId, title, startDate, duration, endDate};
+		
+		const uri = '../api/plan/create';
+		axios
+			.post(uri,data)
+			.then((response) => {
+				document.querySelector('div#dayContainer').remove();
+				document.querySelector('div#dayPlan').remove();
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+
+	function createAll() {
 		createDay();
 		createPlan();
 		index++;
 	}
-	
 
 
-	function getDateRange() {
+
+	function getDateRange(showModal) {
 		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
-		if (startDate !== '' || endDate !== '') {
-			btnCreateDay.style.display='none';
+		if (startDate.value !== '' || endDate.value !== '') {
+			btnCreateDay.style.display = 'none';
 		}
+
 		const start = new Date(startDate.value);
 		const end = new Date(endDate.value);
 		const differenceInMillis = end - start;
+		
+		if(start>end){
+			startDate.value='';
+			endDate.value='';
+			deleteAllElements();
+			const alert = document.querySelector('div#alert');
+			htmlStr=`
+				<div class="alert alert-primary d-flex align-items-center" role="alert">
+				  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+				    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+				  </svg>
+				  <div>
+				    시작일과 완료일을 제대로 입력해주세요.
+				  </div>
+				</div>
+			`;
+			alert.insertAdjacentHTML('beforeend', htmlStr);
+			return;
+		}
 
 		// 밀리초를 일수로 변환
-		const differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24));
-		const currentDay = index - 1;
-		
+		const differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24)) + 1;
+		const duration=document.querySelector('input#duration');
+		duration.value=differenceInDays;
+		let currentDay = index - 1;
+
+		// 현재 생성된 일차 수와 날짜 차이를 비교하여 일차를 증가 또는 감소시킴
 		if (differenceInDays >= 0) {
-			//TODO:
-			// 새로운 일차가 현재 일차보다 적으면 초과된 일차 삭제
 			if (differenceInDays < currentDay) {
+				// 현재 일차 수가 날짜 차이보다 많으면 초과된 일차 삭제
 				for (let i = currentDay; i > differenceInDays; i--) {
 					deleteDayByIndex(i);
 				}
-			}else if(differenceInDays===currentDay){
+			} else if (differenceInDays === currentDay) {
 				return;
-			}else {
-				// 새로운 일차가 현재 일차보다 많으면 일차 추가
-				for (let i = currentDay; i <= differenceInDays; i++) {
+			} else {
+				// 현재 일차 수가 날짜 차이보다 적으면 일차 추가
+				for (let i = currentDay + 1; i <= differenceInDays; i++) {
 					createAll();
 				}
 			}
+		} else {
+			// 날짜 범위가 없는 경우 모든 일차 삭제
+			deleteAllDay(showModal); // showModal 변수를 전달
 		}
 	}
 
-
+	// 날짜 지정시 초과된 index 삭제
     function deleteDayByIndex(dayIndex) {
 		const dayElement = document.querySelector(`#index${dayIndex}`);
 		const planElement = document.querySelector(`#dayPlan${dayIndex}`);
 		if (dayElement) {
 			dayElement.remove();
 		}
-        if (planElement) {
-            planElement.remove();
-        }
-        index--;
-    }
+		if (planElement) {
+			planElement.remove();
+		}
+		index--;
+	}
 
+	// day의 deleteImg를 클릭해서 삭제
+	function deleteDay(event) {
+		// 이벤트 요소의 조상 중에서 가장 가까운 .days
+		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
+		// 부모요소의 day-id 속성값 가져오기
+		const dayId = dayElement.getAttribute('day-id');
+		const planElement = document.querySelector(`#dayPlan${dayId}`);
+		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
+		deleteModal.show();
+		const btnConfirm = document.querySelector('#btnConfirm');
+		btnConfirm.addEventListener('click', () => {
+			dayElement.remove();
+			planElement.remove();
+			resetDay();
+			deleteModal.hide();
+			index--;
+
+		});
+
+	}
 	
 
 	function clickDays(event) {
@@ -185,21 +281,30 @@ $(document).ready(function () {
 		}
 	}
 
-	function deleteAllDay(event) {
-		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
-		deleteModal.show();
-		const btnConfirm = document.querySelector('#btnConfirm');
+	function deleteAllDay(showModal) {
+		if (showModal) {
+			const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
+			deleteModal.show();
+			const btnConfirm = document.querySelector('#btnConfirm');
+			btnConfirm.addEventListener('click', () => {
+				deleteModal.hide();
+				deleteAllElements();
+				defaultDay();
+			})
+		} else {
+			deleteAllElements();
+			defaultDay();
+		}
+
+	}
+
+	function deleteAllElements() {
 		const dayElement = document.querySelectorAll('.days');
 		const planElement = document.querySelectorAll('.plans');
-		btnConfirm.addEventListener('click', () => {
-			dayElement.forEach((d) => d.remove());
-			planElement.forEach((p) => p.remove());
-			index = 1;
-			defaultDay();
-			deleteModal.hide();
-
-		})
-
+		dayElement.forEach((d) => d.remove());
+		planElement.forEach((p) => p.remove());
+		index = 1;
+		
 	}
 
 	function defaultDay() {
@@ -214,24 +319,6 @@ $(document).ready(function () {
 		}
 	}
 
-	function deleteDay(event) {
-		// 이벤트 요소의 조상 중에서 가장 가까운 .days
-		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
-		// 부모요소의 day-id 속성값 가져오기
-		const dayId = dayElement.getAttribute('day-id');
-		const planElement = document.querySelector(`#dayPlan${dayId}`);
-		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
-		deleteModal.show();
-		const btnConfirm = document.querySelector('#btnConfirm');
-		btnConfirm.addEventListener('click', () => {
-			dayElement.remove();
-			planElement.remove();
-			resetDay();
-			deleteModal.hide();
-
-		});
-
-	}
 
 	function createPlan() {
 		const dayContainer = document.querySelector('div#dayPlan');

@@ -13,12 +13,13 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/travel")
-public class PlanController {
+public class TravelPlanController {
 
 	private final FavoriteDestinationService favService;
 
 	@GetMapping("/plan")
 	public void plan() {
+		
 	}
 
 }
