@@ -67,7 +67,7 @@
             <ul class="navbar-nav">          
                 <!-- 여행지 찾기 -->
                 <li class="nav-item">
-                    <c:url var="travelDestinationPage" value="/travel/destination" />
+                    <c:url var="travelDestinationPage" value="/travel/search" />
                     <a class="nav-link" href="${travelDestinationPage}">여행지찾기</a>
                 </li>               
                 <!-- 여행 계획하기 -->

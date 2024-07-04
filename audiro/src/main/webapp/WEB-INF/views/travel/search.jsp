@@ -1,0 +1,103 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri = "jakarta.tags.core" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Insert title here</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+        crossorigin="anonymous" />
+    <c:url var="travelSearchCss" value="/css/travel-search.css" />
+    <link href="${travelSearchCss}" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <%@ include file="../fragments/header.jspf" %>
+    </header>
+    
+    <main class="container"> 
+        <div class="row">
+            <div class="col-2">
+                <div>
+                    <p>지역</p>
+                    <button class="badge text-bg-light">#서울</button>
+                    <button class="badge text-bg-light">#부산</button>
+                    <button class="badge text-bg-light">#대구</button>
+                    <button class="badge text-bg-light">#인천</button>
+                    <button class="badge text-bg-light">#광주</button>
+                    <button class="badge text-bg-light">#대전</button>
+                    <button class="badge text-bg-light">#울산</button>
+                    <button class="badge text-bg-light">#세종</button>
+                    <button class="badge text-bg-light">#경기</button>
+                    <button class="badge text-bg-light">#강원</button>
+                    <button class="badge text-bg-light">#충북</button>
+                    <button class="badge text-bg-light">#충남</button>
+                    <button class="badge text-bg-light">#경북</button>
+                    <button class="badge text-bg-light">#경남</button>
+                    <button class="badge text-bg-light">#전북</button>
+                    <button class="badge text-bg-light">#전남</button>
+                    <button class="badge text-bg-light">#제주</button>
+                </div>
+                <div>
+                    <p>테마</p>
+                    <button class="badge text-bg-light">#힐링</button>
+                    <button class="badge text-bg-light">#액티비티</button>
+                    <button class="badge text-bg-light">#문화</button>
+                    <button class="badge text-bg-light">#체험</button>
+                </div>
+                <div>
+                    <p>동행자</p>
+                    <button class="badge text-bg-light">#가족</button>
+                    <button class="badge text-bg-light">#친구</button>
+                    <button class="badge text-bg-light">#연인</button>
+                    <button class="badge text-bg-light">#혼자</button>
+                    <button class="badge text-bg-light">#반려동물</button>
+                </div>
+            </div>
+            
+            <div class="col-10">
+                <form class="row">
+                    <div class="col-10">
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" class="form-control btn btn-success" value="검색" />
+                    </div>
+                </form>
+                
+                <div id="tagContainer"></div>
+                
+                <div id="cardContainer">
+                    <div class="row">
+                        <c:forEach var="d" items="${destinations}">
+                            <div class="col-4">
+                                <c:url var="destinationDetailsPage" value="/travel/details">
+                                    <c:param name="id" value="${d.travelDestinationId}"></c:param>
+                                </c:url>
+                                <a href ="${destinationDetailsPage}">
+                                    <img src="${d.imgUrl}" alt="${d.name}" />
+                                    <p>${d.name}</p>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+        crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <c:url var="SearchJs" value="/js/travel-search.js" />
+    <script src="${SearchJs}"></script>
+</body>
+</html>
