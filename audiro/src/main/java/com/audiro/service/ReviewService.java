@@ -67,11 +67,17 @@ public class ReviewService {
 	
     
     //여행후기 찜 담기
-    public int LikeReview(Integer postId, Set<Integer> favoriteUserIds) {
-    	int list = reviewDao.addLikeReview(postId, favoriteUserIds);
+    	public int LikeReview(Integer postId, Set<Integer> usersId) {
+    	int list = reviewDao.addLikeReview(postId, usersId);
     	return list;
     }
-	
+    	/*
+    //여행후기 찜 삭제
+    public int deleteLikeReview(Integer postId, Set<Integer> usersId) {
+    	int list = reviewDao.deleteLikeReview(postId, usersId);
+    	return list;
+    }
+	*/
     
 	
     
@@ -93,8 +99,9 @@ public class ReviewService {
 	}
 	
 	//여행후기 게시글 임시저장
-	public int draft(DraftPost post) {
-		int result = reviewDao.saveDraftPost(post);
+	public int createDraft(DraftPost draftPost) {
+		log.debug("draftPost={}", draftPost);
+		int result = reviewDao.saveDraftPost(draftPost);
 		
 		return result;
 	}
@@ -141,10 +148,10 @@ public class ReviewService {
       if (favoriteUserIds.contains(usersId)) {
           // 이미 찜한 경우 제거
           favoriteUserIds.remove(usersId);
-          reviewDao.addLikeReview(postId, favoriteUserIds); 
+          reviewDao.deleteLikeReview(postId, favoriteUserIds); 
           return false; 
       } else {
-          // 찜하지 않은 경우 추가
+          // 찜하지 않은 경우 
           favoriteUserIds.add(usersId);
           reviewDao.addLikeReview(postId, favoriteUserIds); 
           return true; 
@@ -157,6 +164,15 @@ public class ReviewService {
 		List<DraftPost> list = reviewDao.selectDraftList();
 		return list;
 	}
+	
+	//여행후기 임시저장 1개 상세보기
+	public DraftPost draftPost(Integer draftPostId) {
+	
+		DraftPost draftPost = reviewDao.selectDrafById(draftPostId);
+		return draftPost;
+		
+	}
+	
 	
 }
 	

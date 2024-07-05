@@ -73,7 +73,7 @@
 		$('#summernote').summernote({
 			placeholder : '내용을 입력하세요',
 			tabsize : 2,
-			height : 300
+			height : 1500
 		// Summernote의 초기 높이 설정
 		});
 

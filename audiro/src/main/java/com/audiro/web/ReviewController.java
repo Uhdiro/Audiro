@@ -1,5 +1,6 @@
 package com.audiro.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -48,8 +49,8 @@ public class ReviewController {
 	
 	//여행후기 작성 임시저장후 페이지
 	@PostMapping( "/draft")
-	public String draft(DraftPost post) {
-		reviewService.draft(post);
+	public String draft(DraftPost draftPost) {
+		reviewService.createDraft(draftPost);
 		return "redirect:/post/review/list";
 		}
 	
@@ -78,7 +79,6 @@ public class ReviewController {
 		//내 여행일기 목록
 		List<MyReviewListDto> list = reviewService.read();
 		model.addAttribute("list", list);
-		
 	
 		//내 여행일기 수
 		int countMyReview = reviewService.countMyReveiw();
@@ -100,6 +100,12 @@ public class ReviewController {
 				
 	}
 	
+	
+	
+	
+	
+	
+	
 	//여행후기 삭제
 	@PostMapping("/delete") 
 	public String delete(@RequestParam(name="postId") Integer postId) {
@@ -114,7 +120,7 @@ public class ReviewController {
 	@GetMapping("/list")
 	public void reviewAllList(Model model, Post post) {
 		List<ListReviewDto> list = reviewService.readAll();
-		//List<Post> rank = reviewService.selectUserTop3();
+		List<Post> rank = reviewService.selectUserTop3();
 		
 		model.addAttribute("list", list);
 		//model.addAttribute("rank",rank);
@@ -132,12 +138,12 @@ public class ReviewController {
 	
 	
 	//임시저장 1개 수정하기로 불러오기
-	@GetMapping("/darft")
-	public void draftList(Model model) {
-		List<DraftPost> draft = reviewService.draftList();
-		model.addAttribute("drafts", draft);
+	//@GetMapping("/darft")
+	//public void draftList(Model model) {
+	//	List<DraftPost> draft = reviewService.draftList();
+	//	model.addAttribute("drafts", draft);
 
-	}
+	//}
 
 	
 	//댓글

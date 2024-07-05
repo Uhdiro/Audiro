@@ -42,8 +42,11 @@
 				<!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
 				<div class="col-md-2">
 					<div class="mt-2 card">
-						<div class="card-header d-flex justify-content-between align-items-center">
-							<span id ="nickname">${nickname}닉네임</span>
+						<div class="card-header d-flex justify-content-between align-items-center">				
+								<div>
+									<span id="nickname">${list[0].nickname}</span>
+								</div>
+
 							<button class="btn" id="userLike">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
 									 fill="currentColor" class="bi bi-suit-heart-fill"
@@ -55,7 +58,7 @@
 						<div class="card-body" id="profil">
 							<div class="card" style="width: 13rem;">
 								<img
-									src="https://file.notion.so/f/f/4d0dc4f1-02f9-46f4-91a0-9f52ce6ffae4/27deb1aa-b6ac-4d0b-810b-301c037c4969/defaultprofile5.png?id=91b36b7b-6527-4967-8d97-d525381995b0&table=block&spaceId=4d0dc4f1-02f9-46f4-91a0-9f52ce6ffae4&expirationTimestamp=1719468000000&signature=qNSlT7SBTNOSVupm1FZs4R9xu_5gAScBN3S_LdUOf14&downloadName=defaultprofile5.png"
+									src=https://rough-shovel-8aa.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F4d0dc4f1-02f9-46f4-91a0-9f52ce6ffae4%2Fcd884f76-676f-4f77-8695-e02ca7c5df89%2FUntitled.png?table=block&id=da27a858-6bcb-4c13-ac20-655f47e2c3eb&spaceId=4d0dc4f1-02f9-46f4-91a0-9f52ce6ffae4&width=2000&userId=&cache=v2
 									class="card-img-top" alt="프로필 이미지">
 								<div class="card-body">
 									<p class="card-text">환영해 ~~~~~~~~~</p>
@@ -78,13 +81,14 @@
 						<div class="card-body">
 							<!-- 정렬순 -->
 							<div class="d-flex justify-content-end mb-3">
-								<form id="rank" name="rank" method="POST" action="/mypage2">
-									<select class="form-select form-select-sm me-2"
+								<form id="rank" name="rank" method="POST" action="/mypage">
+									<select id="sortSelect" class="form-select form-select-sm me-2"
 										aria-label=".form-select-sm example">
 										<option value="latest">최신순</option>
 										<option value="likes">좋아요순</option>
 									</select>
 								</form>
+							
 							</div>
 
 							<div class="row row-cols-1 row-cols-md-4 g-4">

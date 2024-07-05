@@ -45,6 +45,9 @@ public interface ReviewDao {
 	// 찜 여행후기 담기
 	int addLikeReview(Integer postId, Set<Integer> favoriteUserIds);
 	
+	//찜 여행후기 삭제
+	int deleteLikeReview(Integer postId, Set<Integer> favoriteUserIds);
+	
 	// 여행후기 1개 삭제하기
 	int deleteReview(Integer postId);
 	
@@ -67,7 +70,7 @@ public interface ReviewDao {
 	
 	//여행후기 임시저장
 	//여행후기 글 임시저장하기
-	int saveDraftPost(DraftPost post);
+	int saveDraftPost(DraftPost draftPost);
 	
 	//임시저장 목록 불러오기
 	List<DraftPost> selectDraftList();

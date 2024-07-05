@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.LikeReviewDto;
 import com.audiro.dto.MyReviewListDto;
+import com.audiro.repository.DraftPost;
+import com.audiro.repository.Post;
 import com.audiro.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/review")
+@RequestMapping("api/review")
 public class ReviewRestController {
 
 
@@ -28,12 +34,24 @@ public class ReviewRestController {
 	private final ReviewService reviewService;
 	
 	//여행후기 담기
-//	@GetMapping("/likeReview")
-//	public ResponseEntity<Integer> likeReview(Integer postId, Set<Integer> favoriteUserIds) {
-//		int likeReview = reviewService.LikeReview(postId, favoriteUserIds);
-//		return ResponseEntity.ok(likeReview);
-//	}
-//	
+	@PostMapping("/likeReview/toggle")
+	public ResponseEntity<Integer> likeReview(@RequestBody LikeReviewDto request) {
+		int likeReview = reviewService.LikeReview(request.getPostId(), request.getUsersId());
+		return ResponseEntity.ok(likeReview);
+	}
+	
+	//임시저장 목록 1개 선택시 불러오기
+	@GetMapping("/draftPost")
+	public ResponseEntity<DraftPost> SelectdaraftPost (DraftPost draftPost) {
+		log.debug("draftPost(draftId={}", draftPost);
+		
+		DraftPost daraftPost =reviewService.draftPost(draftPost.getDraftPostId());
+		return ResponseEntity.ok(daraftPost);
+	
+				
+	}
+	
+	
 	//여행후기 업데이트
 	/*@PostMapping("/update")
     public String update(@ModelAttribute CreateReviewDto dto) {

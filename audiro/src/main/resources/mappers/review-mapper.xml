@@ -75,6 +75,10 @@
 		insert into favorite_post (users_id, post_id)
 		values (8,10)
 	</insert>
+	<!-- 해당 여행후기 찜 삭제하기 -->
+	<delete id="deleteLikeReview">
+		delete from draft_post where draft_post_id = #{draftPotId}
+	</delete>
 
 	<!-- 여행 후기 1개 삭제 -->
 	<delete id="deleteReview">
@@ -83,8 +87,7 @@
 
 	<!-- 여행후기 저장하기 -->
 	<insert id="insertReview">
-		insert into post (users_id, post_type_id, title,
-		content)
+		insert into post (users_id, post_type_id, title, content)
 		values (8, 10, #{title}, #{content})
 	</insert>
 
