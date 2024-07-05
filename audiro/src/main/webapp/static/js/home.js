@@ -1,52 +1,31 @@
-// 롤링 배너 복제본 생성
-let roller = document.querySelector('.rolling-list');
-roller.id = 'roller1'; // 아이디 부여
+document.addEventListener('DOMContentLoaded', () => {
+    // 롤링 배너 복제본 생성
+    let roller = document.querySelector('.rolling-list');
+    roller.id = 'roller1'; // 아이디 부여
 
-let clone = roller.cloneNode(true)
-// cloneNode : 노드 복제. 기본값은 false. 자식 노드까지 복제를 원하면 true 사용
-clone.id = 'roller2';
-document.querySelector('.wrap').appendChild(clone); // wrap 하위 자식으로 부착
+    let clone = roller.cloneNode(true);
+    clone.id = 'roller2';
+    document.querySelector('.wrap').appendChild(clone);
 
-document.querySelector('#roller1').style.left = '0px';
-document.querySelector('#roller2').style.left = document.querySelector('.rolling-list ul').offsetWidth + 'px';
-// offsetWidth : 요소의 크기 확인(margin을 제외한 padding값, border값까지 계산한 값)
+    document.querySelector('#roller1').style.left = '0px';
+    document.querySelector('#roller2').style.left = document.querySelector('.rolling-list ul').offsetWidth + 'px';
 
-roller.classList.add('original');
-clone.classList.add('clone');
+    roller.classList.add('original');
+    clone.classList.add('clone');
 
- 
-function toggleLike(element) {
-    // 아이콘의 이미지 소스 경로
-    var iconSrc = element.querySelector('img').getAttribute('src');
-    
-    // 빨간색 아이콘의 이미지 소스 경로
-    var redIconSrc = 'images/like_red.png';
-    
-    // 이미지 경로가 일치하는지 확인하고 토글
-    if (iconSrc === redIconSrc) {
-        element.querySelector('img').setAttribute('src', 'images/like.png');
-    } else {
-        element.querySelector('img').setAttribute('src', redIconSrc);
-        animateHeart();
+
+    function animateHeart() {
+        const heartAnimation = document.getElementById('heart-animation');
+
+        heartAnimation.style.display = 'block';
+        heartAnimation.classList.add('play-animation');
+
+        setTimeout(() => {
+            heartAnimation.style.display = 'none';
+            heartAnimation.classList.remove('play-animation');
+        }, 2000);
     }
-}
-    
- function animateHeart() {
-    // 하트 애니메이션 요소를 가져옴
-    const heartAnimation = document.getElementById('heart-animation');
 
-    // 하트 애니메이션을 표시하고 애니메이션 재생
-    heartAnimation.style.display = 'block';
-    heartAnimation.classList.add('play-animation');
-
-    // 일정 시간이 지난 후 하트 애니메이션 숨김
-    setTimeout(() => {
-        heartAnimation.style.display = 'none';
-        heartAnimation.classList.remove('play-animation');
-    }, 2000); // 애니메이션 시간과 동일하게 설정 (2초)
-}
-
-document.addEventListener('DOMContentLoaded', function () {
     // 캐러셀 초기화 함수
     function initCarousel(carouselId, pauseButtonId) {
         var pauseButton = document.getElementById(pauseButtonId);
@@ -73,4 +52,74 @@ document.addEventListener('DOMContentLoaded', function () {
     // 두 개의 캐러셀 초기화
     initCarousel('destinationCarousel', 'pauseButton1');
     initCarousel('reviewCarousel', 'pauseButton2');
+    
+    
+    
+	async function updateFavoriteState(travelDestinationId, isFavorite) {
+	    console.log(`Updating favorite state: travelDestinationId=${travelDestinationId}, isFavorite=${isFavorite}`);
+	    try {
+	        const response = await axios.post('/audiro/api/favorite/update', {
+	            travelDestinationId: travelDestinationId,
+	            signedInUser: signedInUser,
+	            isFavorite: isFavorite
+	        });
+	        console.log('Server response:', response.data);
+	    } catch (error) {
+	        console.error('오류가 발생했습니다:', error);
+	    }
+	}
+	
+	// 좋아요 버튼 클릭 이벤트 핸들러
+
+	window.toggleLike = async function (element) {
+	    const imgElement = element.querySelector('img');
+	    const iconSrc = imgElement.getAttribute('src');
+	    const redIconSrc = 'images/like_red.png';
+	    const travelDestinationId = element.getAttribute('data-id');
+		
+		console.log('Current signedInUser:', signedInUser); // 로그인 상태 확인
+    		console.log('Icon source:', iconSrc); // 아이콘 소스 확인
+		
+		if (signedInUser === null || signedInUser === '') {
+			if (confirm("로그인하시겠습니까?")) {
+				window.location.href = '/audiro/user/signin'; 
+			}
+			return;
+		} 
+		
+		if (iconSrc === redIconSrc) {
+		    imgElement.setAttribute('src', 'images/like.png');
+		    await updateFavoriteState(travelDestinationId, 0);
+		} else {
+		    imgElement.setAttribute('src', redIconSrc);
+		    await updateFavoriteState(travelDestinationId, 1);
+		    animateHeart();
+		}
+	    
+	}
+	
+	
+	// 로그인 유저의 찜 상태 
+	if (signedInUser !== null && signedInUser !== '') {
+	    const pLikes = document.querySelectorAll('p.like');
+	    for (const p of pLikes) {
+	        getFavoriteState(p);
+	    }
+	}
+    
+    async function getFavoriteState(el) {
+	    const travelDestinationId = el.getAttribute('data-id');
+	    try {
+	        const response = await axios.get(`api/favorite/${travelDestinationId}/${signedInUser}`);
+	        console.log(response.data);
+	        if (response.data !== -1) {
+	            el.innerHTML = '<img src="images/like_red.png" alt="like">';
+	        } else {
+	            el.innerHTML = '<img src="images/like.png" alt="like">';
+	        }
+	    } catch (error) {
+	        console.error('오류가 발생했습니다:', error);
+	    }
+	}
+	
 });
