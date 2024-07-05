@@ -41,7 +41,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/signin")
-	public void signin() {
+	public String signin() {
+		log.debug("signin()");
+		return "/user/signin";
 		
 	}
 	
@@ -60,7 +62,7 @@ public class UserController {
 			targetPage = "/user/signin?result=f&target=" + URLEncoder.encode(target, "UTF-8");
 		}
 		
-		return "redirect:" + targetPage;
+		return "redirect:/"; // + targetPage;
 	}
 	
 	@GetMapping("/signout")
