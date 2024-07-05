@@ -16,9 +16,9 @@
         <c:set var="pageTitle" value="User Profile" scope="page" />
         <%@ include file="../fragments/header.jspf" %>
         <main>
-        <div class="row">                
-        <div class="col-md-3 mt-5">
-                    <div class="card mx-auto" style="width: 18rem;">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12 mt-5">
+                    <div class="card mx-auto" style="width: 100%;">
                         <div class="card-header">
                             <h2 class="text-center my-2">프로필</h2>
                         </div>
@@ -26,35 +26,33 @@
                             <img src="../images/defaultprofile.png"
                                 class="card-img-top mt-3 mx-auto"
                                 alt="기본 프로필"
-                                style="width: 15rem; height: 15rem;">
+                                style="width: 100%; height: auto;">
                         </div>
                     </div>
-                    <div class="mx-auto" style="width: 18rem;">
-                            <div class="card mt-2" style="width: 100%;">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">닉네임</li>                                
-                                    <li class="list-group-item">자기소개</li>
-                                    <li class="list-group-item">관심</li>
-                                    <li class="list-group-item">유저 좋아요 수</li>
-                                    <li class="list-group-item">작성한 일기 수</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card mt-2" style="width: 100%;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">닉네임</li>
+                            <li class="list-group-item">자기소개</li>
+                            <li class="list-group-item">관심</li>
+                            <li class="list-group-item">유저 좋아요 수</li>
+                            <li class="list-group-item">작성한 일기 수</li>
+                        </ul>
                     </div>
-            <div class="col-md-9 mt-5" >
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="text-center my-2">수정하기</h2>
                 </div>
-                <div class="card-body">
-                    <c:url var="mypage" value="/mypage"></c:url>
+                <div class="col-lg-9 col-md-8 col-sm-12 mt-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center my-2">수정하기</h2>
+                        </div>
+                        <div class="card-body">
+                            <c:url var="mypage" value="/mypage"></c:url>
                             <form method="post" action="${mypage}" class="mx-auto" style="max-width: 800px;">
                                 <div class="row align-items-center mt-4">
                                     <div class="col-md-3">
                                         <label class="form-label" for="userid">아이디</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly disabled/>
+                                        <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly disabled />
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
@@ -63,7 +61,7 @@
                                         <label class="form-label" for="password">비밀번호</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input class="form-control" id="password" type="text" name="password" value="${user.password}"/>
+                                        <input class="form-control" id="password" type="text" name="password" value="${user.password}" />
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
@@ -146,21 +144,18 @@
                                 </div>
                                 <div class="container">
                                     <div class="row mt-5 mb-4 me-3">
-                                       
-                                            <input type="submit" class="btn btn-outline-success" value="완료" />
-                                        
+                                        <input type="submit" class="btn btn-outline-success" value="완료" />
                                     </div>
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
             <div class="container-fluid">
                 <%@ include file="../fragments/footer.jspf"%>
             </div>
         </main>
-    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 

@@ -16,75 +16,81 @@
         <%@ include file="../fragments/header.jspf" %>
         <main>
             <div class="row">
-                <div class="col-md-3 mt-5">
-                    <div class="card mx-auto" style="width: 18rem;">
+                <div class="col-md-3 col-sm-12 mt-5">
+                    <div class="card mx-auto" style="max-width: 18rem;">
                         <div class="card-header">
                             <h2 class="text-center my-2">프로필</h2>
                         </div>
                         <div class="card-body text-center">
                             <img src="./images/defaultprofile.png"
-                                class="card-img-top mt-3 mx-auto"
+                                class="card-img-top my-3 mx-auto"
                                 alt="기본 프로필"
-                                style="width: 15rem; height: 15rem;">
+                                style="width: 80%; height: 80%;">
                         </div>
                     </div>
-                    <div class="mx-auto" style="width: 18rem;">
-                            <div class="card mt-2" style="width: 100%;">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">닉네임</li>                                
-                                    <li class="list-group-item">자기소개</li>
-                                    <li class="list-group-item">관심</li>
-                                    <li class="list-group-item">유저 좋아요 수</li>
-                                    <li class="list-group-item">작성한 일기 수</li>
-                                </ul>
-                            </div>
-                            <div class="text-right">
+                    <div class="mx-auto" style="max-width: 18rem;">
+                        <div class="card mt-2">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">닉네임</li>
+                                <li class="list-group-item">자기소개</li>
+                                <li class="list-group-item">관심</li>
+                                <li class="list-group-item">유저 좋아요 수</li>
+                                <li class="list-group-item">작성한 일기 수</li>
+                            </ul>
+                        </div>
+                        <div class="text-right mt-2">
                             <c:url var="profile" value="mypage/profile"></c:url>
-                                <a href="${profile}"
-                                    class="btn btn-outline-primary mt-1"
-                                    style="width:100%;">편집</a>
-                            </div>
+                            <a href="${profile}" class="btn btn-outline-info mt-1" style="width:100%;">편집</a>
                         </div>
                     </div>
+                </div>
                 
-                <div class="col-md-9 mt-5" >
+                <div class="col-md-9 col-sm-12 mt-5">
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-center my-2">내 정보</h2>
                         </div>
                         <div class="card-body">
                             <form>
-                                <div class="mt-2">
-                                    <label class="form-label" for="userid">아이디</label>
-                                    <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly />
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="userid">아이디</label>
+                                        <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="password">비밀번호</label>
+                                        <input class="form-control" id="password" type="text" name="password" value="${user.password}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="password">비밀번호</label>
-                                    <input class="form-control" id="password" type="text" name="password" value="${user.password}" readonly />
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="name">이름</label>
+                                        <input class="form-control" id="name" type="text" name="name" value="${user.name}" readonly />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="nickname">닉네임</label>
+                                        <input class="form-control" id="nickname" type="text" name="nickname" value="${user.nickname}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="name">이름</label>
-                                    <input class="form-control" id="name" type="text" name="name" value="${user.name}" readonly />
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="phone">전화번호</label>
+                                        <input class="form-control" id="phone" type="text" name="phone" value="${user.phone}" readonly />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="email">이메일</label>
+                                        <input class="form-control" id="email" type="email" name="email" value="${user.email}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="nickname">닉네임</label>
-                                    <input class="form-control" id="nickname" type="text" name="nickname" value="${user.nickname}" readonly />
-                                </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="phone">전화번호</label>
-                                    <input class="form-control" id="phone" type="text" name="phone" value="${user.phone}" readonly />
-                                </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="email">이메일</label>
-                                    <input class="form-control" id="email" type="email" name="email" value="${user.email}" readonly />
-                                </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="bio">자기소개</label>
-                                    <input class="form-control" id="bio" type="text" name="bio" value="${user.bio}" readonly />
-                                </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="interests">관심분야</label>
-                                    <input class="form-control" id="interests" type="text" name="interests" value="${user.interests}" readonly />
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="bio">자기소개</label>
+                                        <input class="form-control" id="bio" type="text" name="bio" value="${user.bio}" readonly />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label class="form-label" for="interests">관심분야</label>
+                                        <input class="form-control" id="interests" type="text" name="interests" value="${user.interests}" readonly />
+                                    </div>
                                 </div>
                                 <div class="container">
                                     <div class="row justify-content-end mt-5">

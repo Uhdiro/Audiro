@@ -16,8 +16,8 @@
         <%@ include file="../fragments/header.jspf" %>
         <main>
             <div class="row">
-                <div class="col-md-3 mt-5">
-                    <div class="card mx-auto" style="width: 18rem;">
+                <div class="col-lg-3 col-md-4 col-sm-12 mt-5">
+                    <div class="card mx-auto" style="max-width: 18rem;">
                         <div class="card-header">
                             <h2 class="text-center my-2">프로필 수정</h2>
                         </div>
@@ -25,79 +25,86 @@
                             <img src="../images/defaultprofile.png"
                                 class="card-img-top mt-3 mx-auto"
                                 alt="기본 프로필"
-                                style="width: 15rem; height: 15rem;">
+                                style="width: 80%; height: 80%;">
                         </div>
                     </div>
-                    <div class="mx-auto" style="width: 18rem;">
+                    <div class="mx-auto" style="max-width: 18rem;">
                         <input class="mt-2 ms-2" type="file" />
                     </div>
-                    <div class="mx-auto" style="width: 18rem;">
-                            <div class="card mt-2" style="width: 100%;">
-                                <ul class="list-group list-group-flush">
+                    <div class="mx-auto" style="max-width: 18rem;">
+                        <div class="card mt-2">
+                            <ul class="list-group list-group-flush">
                                 <form>
-                                    <li class="list-group-item"><input type="text" value="닉네임" style="width: 15.8rem;"/></li>                                
-                                    <li class="list-group-item"><textarea style="width: 15.8rem;">자기소개</textarea></li>
-                                    <li class="list-group-item"><input type="text" value="관심" style="width: 15.8rem;"/></li>
+                                    <li class="list-group-item"><input type="text" value="닉네임" class="form-control" /></li>
+                                    <li class="list-group-item"><textarea class="form-control">자기소개</textarea></li>
+                                    <li class="list-group-item"><input type="text" value="관심" class="form-control" /></li>
                                     <li class="list-group-item">유저 좋아요 수</li>
                                     <li class="list-group-item">작성한 일기 수</li>
                                 </form>
-                                </ul>
-                            </div>
-                            <div class="text-right">
+                            </ul>
+                        </div>
+                        <div class="text-right">
                             <c:url var="mypage" value="/mypage" />
-                                <a href="${mypage}"
-                                    class="btn btn-outline-success mt-1"
-                                    style="width:100%;">완료</a>
-                            </div>
+                            <a href="${mypage}"
+                                class="btn btn-outline-success mt-1"
+                                style="width:100%;">완료</a>
                         </div>
                     </div>
-                
-                <div class="col-md-9 mt-5" >
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-sm-12 mt-5">
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-center my-2">내 정보</h2>
                         </div>
                         <div class="card-body">
                             <form>
-                                <div class="mt-2">
-                                    <label class="form-label" for="userid">아이디</label>
-                                    <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="userid">아이디</label>
+                                        <input class="form-control" id="userid" type="text" name="userid" value="${user.userid}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="password">비밀번호</label>
-                                    <input class="form-control" id="password" type="text" name="password" value="${user.password}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="password">비밀번호</label>
+                                        <input class="form-control" id="password" type="text" name="password" value="${user.password}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="name">이름</label>
-                                    <input class="form-control" id="name" type="text" name="name" value="${user.name}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="name">이름</label>
+                                        <input class="form-control" id="name" type="text" name="name" value="${user.name}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="nickname">닉네임</label>
-                                    <input class="form-control" id="nickname" type="text" name="nickname" value="${user.nickname}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="nickname">닉네임</label>
+                                        <input class="form-control" id="nickname" type="text" name="nickname" value="${user.nickname}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="phone">전화번호</label>
-                                    <input class="form-control" id="phone" type="text" name="phone" value="${user.phone}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="phone">전화번호</label>
+                                        <input class="form-control" id="phone" type="text" name="phone" value="${user.phone}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="email">이메일</label>
-                                    <input class="form-control" id="email" type="email" name="email" value="${user.email}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="email">이메일</label>
+                                        <input class="form-control" id="email" type="email" name="email" value="${user.email}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="bio">자기소개</label>
-                                    <input class="form-control" id="bio" type="text" name="bio" value="${user.bio}" readonly />
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="bio">자기소개</label>
+                                        <input class="form-control" id="bio" type="text" name="bio" value="${user.bio}" readonly />
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <label class="form-label" for="interests">관심분야</label>
-                                    <input class="form-control" id="interests" type="text" name="interests" value="${user.interests}" readonly />
-                                </div>
-                                <div class="container">
-                                    <div class="row justify-content-end mt-5">
-                                        <div class="col-auto">
-                                            <c:url var="modifypage" value="mypage/modifypage"></c:url>
-                                            <a class="btn btn-outline-info" href="${modifypage}">수정하기</a>
-                                            <a class="btn btn-outline-danger" href="${postModifyPage}">회원탈퇴</a>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <label class="form-label" for="interests">관심분야</label>
+                                        <input class="form-control" id="interests" type="text" name="interests" value="${user.interests}" readonly />
                                     </div>
                                 </div>
                             </form>
