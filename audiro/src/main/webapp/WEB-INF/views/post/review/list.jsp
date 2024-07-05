@@ -42,10 +42,23 @@
 }
 
 
+/* 여행후기 게시판 제목에 마우스 오버 시 포인트 스타일 변경 */
+.card-link {
+    cursor: pointer;
+    color: #000; /* 기본 텍스트 색상 */
+    transition: color 0.3s; /* 색상 변경 트랜지션 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.card-link:hover {
+    color: #007bff; /* 마우스 호버 시 텍스트 색상 변경 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
 </style>
 </head>
 
-
+ 
 <body>
     <div class="container-fluid">
         <c:set var="travelReviewPage" value="여행후기" />
@@ -56,16 +69,21 @@
             <div class="col-md-8">
                 <div class="mt-2 card" id="list">
                     <div class="card-body">
-                    
-                    <!-- 여행후기 게시판 제목 -->
-                        <div class="mb-3">
-                            <h3>여행 후기 게시판</h3>
-                        </div>
-                    
-                        <!-- 정렬순 -->
+						<div class="mb-3">
+							<h3>
+								<a href="<c:url value='/post/review/list' />"
+								   class="card-link">여행 후기 게시판</a>
+							</h3>
+						</div>
+						<div>
+							<c:set var="createUrl" value="create" />
+							<a href="${createUrl}"><button>여행 후기 작성하러 가기</button></a>
+						</div>
+
+						<!-- 여행후기 게시판 제목 --><!-- 정렬순 -->
                         <div class="d-flex justify-content-end mb-3">
-                            <form id="rank" name="rank" method="POST" action="list">
-                                <select class="form-select form-select-sm me-2"
+                            <form id="rank" name="rank" method="get" action="/api/review/list">
+                                <select id="sortSelect" class="form-select form-select-sm me-2"
                                     aria-label=".form-select-sm example">
                                     <option value="latest">최신순</option>
                                     <option value="likes">좋아요순</option>
@@ -91,7 +109,7 @@
                         </div>
 
 						<div class="row row-cols-1 row-cols-md-4 g-4">
-							<!-- 여행후기 카드 반복문  db에서불러올꺼임 추후에 변경해야함 -->
+							<!-- 여행후기 카드 반복문  이미지변경하기 -->
 							<c:forEach var="list" items="${list}">
 								<div class="col">
 									<div class="card h-80">
@@ -147,7 +165,7 @@
                 
                 
                     <div class="card-body">
-                        <h5 class="card-title">여형후기 많이 작성한 유저 TOP3</h5>
+                        <h5 class="card-title">여행후기 많이 작성한 유저 TOP3</h5>
 
                         <ul class="list-group list-group-flush">
                              <li class="list-group-item"><a href="/post/1">1등</a></li>
@@ -193,8 +211,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- reviewMypage.js -->
-    <c:url var="mypageJS" value="/js/mypage.js" />
-    <script src="${mypageJS}"></script>
+    <c:url var="listJS" value="/js/list.js" />
+    <script src="${listJS}"></script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
 
 //review-mapper.xml, details-mapper.xml, ranking-mapper.xml 에서 SQL을 실행하는 메서드 작성하기.
@@ -11,10 +12,10 @@ public interface ReviewDao {
 
 	// 내여행일기
 	// 내 여행일기 목록 불러오기 (최신순)
-	List<Post> readMyReview();
+	List<MyReviewListDto> readMyReview();
 
 	// 내 여행일기 목록 불러오기 (좋아요순)
-	List<Post> readMyReviewByGood();
+	List<MyReviewListDto> readMyReviewByGood();
 
 	// 나를 찜한 유저 수
 	int countLike();
@@ -57,14 +58,18 @@ public interface ReviewDao {
 	//여행후기 수정
 	int updateReview(CreateReviewDto dto);
 	
-	//여행후기 모두 불러오기
+	//여행후기 모두 불러오기(최신순)
 	List<Post> selectReviewAll();
+	
+	//여행후기 모두 불러오기(좋아요순)
+	List<Post> rankingGoodReview();
 
-	//여행후기 검색
+	//여행후기 검색하기
 	List<Post> searchKeyword(SerachReviewDto dto);
 	
 	//여행후기 찜 담아있는 내용 불러오기
 	Set<Integer> getFavoriteUserIds(Integer usersId ,Integer postId);
+	
 	
 	
 	

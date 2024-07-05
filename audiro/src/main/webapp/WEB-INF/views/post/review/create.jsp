@@ -32,12 +32,6 @@ body {
 	margin-right: 5px;
 }
 
-#thumbnailPreview {
-	display: none;
-	max-width: 100%;
-	height: 200px;
-	margin-top: 20px;
-}
 #thumbnailDeleteButton {
 	display: none;
 }

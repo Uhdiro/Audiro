@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 썸네일 선택 버튼 클릭 시 파일 입력 요소 클릭
 	const thumbnailButton = document.querySelector('#thumbnailButton');
 	const thumbnailInput = document.querySelector('#thumbnailInput');
-	//const thumbnailPreview = document.querySelector('#thumbnailPreview');
-
 	thumbnailButton.addEventListener('click', () => {
 		thumbnailInput.click();
 	});
@@ -35,31 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 	/*--------------------------------------------------------------------------------------------------------- */
-
-
-	//썸네일 이미지 추가하기
-	thumbnailInput.addEventListener('change', (event) => {
-		const input = event.target;
-		if (input.files && input.files[0]) {
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				const imgSrc = e.target.result;
-				// 썸네일 이미지 미리보기 업데이트
-				//const thumbnailPreview = document.querySelector('#thumbnailPreview');
-				//thumbnailPreview.src = imgSrc;
-				//thumbnailPreview.style.display = 'block';
-
-				// Summernote 에디터에 이미지 삽입
-				$('#summernote').summernote('focus');
-				const imgNode = $('<img>').attr('src', imgSrc).css('max-width', '100%');
-				$('#summernote').summernote('pasteHTML', imgNode[0].outerHTML);
-
-				// 이미지 선택 후 파일 입력 요소 초기화
-				input.value = '';
-			};
-			reader.readAsDataURL(input.files[0]);
-		}
-	});
 
 	// 여행 코스 선택 버튼 클릭 시 모달 표시
 	const selectTravelCourseButton = document.querySelector('#selectTravelCourseButton');
@@ -116,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		form.action = 'draft';
 		form.method = 'POST';
 		form.submit();
-		
+
 		// 임시 저장 완료 알림창 표시
-		alert('임시 저장되었습니다.' 
-		+ '여행 후기 게시글로 이동합니다.');
-	
+		alert('임시 저장되었습니다.'
+			+ '여행 후기 게시글로 이동합니다.');
+
 	}
 
 
@@ -145,72 +118,100 @@ document.addEventListener('DOMContentLoaded', () => {
 				const draft = response.data; // response.data에서 draft 객체를 가져옴
 				console.log('draft=' + draft.title);
 				const inputTitle = document.querySelector('input#title');
-				const summernote = document.querySelector('textarea#summernote');
+				//const summernote = document.querySelector('textarea#summernote');
 
 				inputTitle.value = draft.title; // input의 value 속성을 설정
-				summernote.value = draft.content; // textarea의 value 속성을 설정
+				$('#summernote').summernote('code', draft.content); // Summernote에 내용 설정
 
-
-
-				// 모달 닫기 (Bootstrap 모달 사용 시)
+				// 모달 닫기
 				$('#selectDraftModal').modal('hide');
-
 			})
 			.catch(error => {
-				// 요청이 실패한 경우 처리
 				console.error('Error:', error);
 			});
 	}
 
+	
+	
+	
+	
+	// 썸네일 이미지 1개만 추가하기
+	$('#thumbnailInput').on('change', function(event) {
+	    const file = event.currentTarget.files[0];
+	    const currentThumbnail = $('#thumbnailPreview').attr('src');
 
+	    // 이미 썸네일 이미지가 등록되어 있을 경우 처리
+	    if (currentThumbnail && currentThumbnail !== '#') {
+	        if (!confirm('이미 썸네일 이미지가 등록되어 있습니다. 새로운 썸네일 이미지로 교체하시겠습니까?')) {
+	            event.currentTarget.value = ''; // 파일 선택 초기화
+	            return;
+	        }
+	    }
 
+	    // FileReader를 이용하여 새로운 썸네일 이미지 추가
+	    if (file) {
+	        const reader = new FileReader();
+	        reader.onload = function(e) {
+	            // 기존 썸네일 이미지 삭제
+	            const existingThumbnail = $('#thumbnailImage');
+	            if (existingThumbnail.length > 0) {
+	                existingThumbnail.remove();
+	            }
 
-
-	//썸네일 이미지
-	$('#thumbnailInput').on('change', function() {
-		const file = this.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				$('#thumbnailPreview').attr('src', e.target.result).show();
-				$('#thumbnailDeleteButton').show();
-				// 썸네일 이미지를 Summernote content에 추가
-				const img = '<img src="' + e.target.result + '" alt="썸네일 이미지">';
-				$('#summernote').summernote('pasteHTML', img);
-			}
-			reader.readAsDataURL(file);
-		}
+	            // 새로운 썸네일 이미지 추가
+	            $('#thumbnailPreview').attr('src', e.target.result).show();
+	            $('#thumbnailDeleteButton').show();
+	            const img = '<img src="' + e.target.result + '" alt="썸네일 이미지" id="thumbnailImage">';
+	            $('#summernote').summernote('pasteHTML', img);
+	        };
+	        reader.readAsDataURL(file);
+	    }
 	});
 
-
+	
+	// 썸네일 삭제하기
 	$('#thumbnailDeleteButton').on('click', function() {
-		$('#thumbnailPreview').attr('src', '#').hide();
-		$('#thumbnailInput').val('');
-		$(this).hide();
+	    // 썸네일 미리보기 초기화
+	    $('#thumbnailPreview').attr('src', '#').hide();
+	    // 파일 입력 초기화
+	    $('#thumbnailInput').val('');
+	    // 삭제 버튼 숨기기
+	    $(this).hide();
 
-		// Summernote 콘텐츠에서 썸네일 이미지 제거
-		const content = $('#summernote').summernote('code');
-		const cleanedContent = content.replace(/<img[^>]+>/g, ''); // 모든 img 태그 제거
-		$('#summernote').summernote('code', cleanedContent);
+	    // Summernote 콘텐츠에서 썸네일 이미지 제거
+	    const existingThumbnail = $('#thumbnailImage');
+	    if (existingThumbnail.length > 0) {
+	        existingThumbnail.remove();
+	    }
 	});
 
 
 
-	$('#thumbnailDeleteButton').on('click', function() {
-		$('#thumbnailPreview').attr('src', '#').hide();
-		$('#thumbnailInput').val('');
-		$(this).hide();
-		// Summernote content에서 썸네일 이미지 제거
-		const imgRegex = /<img[^>]+src="([^">]+)"/g;
-		const content = $('#summernote').summernote('code');
-		const cleanedContent = content.replace(imgRegex, function(match, capture) {
-			if (capture !== $('#thumbnailPreview').attr('src')) {
-				return match;
-			}
-			return '';
-		});
-		$('#summernote').summernote('code', cleanedContent);
-	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 

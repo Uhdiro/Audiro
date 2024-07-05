@@ -1,3 +1,79 @@
 /**
  * post/review/list에 포함
  */
+
+document.addEventListener('DOMContentLoaded', function() {
+	
+	const rankForm = document.getElementById('rank');
+	const selectElement = rankForm.querySelector('select');
+
+	// select 요소 변경 시 이벤트 리스너 추가
+	selectElement.addEventListener('change', function() {
+		// 선택된 정렬 옵션 값 가져오기
+		const selectedOption = selectElement.value;
+		console.log('Selected option:', selectedOption);
+
+		// FormData 객체를 사용하여 선택된 값을 전송
+		const formData = new FormData();
+		formData.append('sort', selectedOption);
+
+		// Axios를 사용하여 서버로부터 데이터를 가져오기
+		axios.get(`/audiro/api/review/list?sort=${selectedOption}`)
+			.then(response => {
+				const data = response.data;
+				updateReviewList(data);
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	});
+
+
+// 리뷰 목록을 업데이트하는 함수
+function updateReviewList(data) {
+    const reviewContainer = document.querySelector('.row.row-cols-1.row-cols-md-4.g-4'); // 리뷰 목록 컨테이너 요소
+    reviewContainer.innerHTML = ''; // 기존 리뷰 목록 제거
+    
+    data.forEach(review => {
+        const reviewCard = document.createElement('div');
+        reviewCard.className = 'col';
+        reviewCard.innerHTML = `
+            <div class="card h-80">
+                <div class="card-header" style="text-align: right">
+                    <button class="btn like-btn" data-review-id="${review.postId}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <img src="${review.imageUrl}" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="details?postId=${review.postId}" class="card-link">${review.title}</a>
+                    </h5>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small>${review.modifiedTime}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        `;
+        reviewContainer.appendChild(reviewCard);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+});

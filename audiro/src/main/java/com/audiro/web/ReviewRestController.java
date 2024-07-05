@@ -47,38 +47,17 @@ public class ReviewRestController {
 		
 		DraftPost daraftPost =reviewService.draftPost(draftPost.getDraftPostId());
 		return ResponseEntity.ok(daraftPost);
-	
 				
 	}
 	
+	// 여행후기 최신순, 좋아요순 정렬
+	@GetMapping("/list")
+	public ResponseEntity<List<Post>> getReviews(@RequestParam("sort") String sort) {
+		// sort 파라미터에 따라 리뷰 목록을 가져오는 로직 구현
+		List<Post> review = reviewService.getReviewsSortedBy(sort);
+		return ResponseEntity.ok(review);
+	}
 	
-	//여행후기 업데이트
-	/*@PostMapping("/update")
-    public String update(@ModelAttribute CreateReviewDto dto) {
-        reviewService.update(dto);
-        log.debug("update={}",dto);
-        return "redirect:/post/review/details?postId=" + dto.getPostId();
-    }
-		
-*/
-	
-	/*
-	// 내 여행일기 메인(최신순정렬)
-		@RequestMapping("/latest")
-		public ResponseEntity<List<MyReviewListDto>> getLatestReviews() {
-			List<MyReviewListDto> list = reviewService.read();
-			return ResponseEntity.ok(list);
-		}
 
-		// 내 여행일기 메인(좋아요순정렬)
-		@RequestMapping("/likes")
-		public ResponseEntity<List<MyReviewListDto>> getLikedReviews() {
-			List<MyReviewListDto> goodList = reviewService.readGood();
-			return ResponseEntity.ok(goodList);
-		}
-		
-		
-		*/
-		
 		
 }
