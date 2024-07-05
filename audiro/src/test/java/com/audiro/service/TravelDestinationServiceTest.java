@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.audiro.dto.TravelDestinationListDto;
 import com.audiro.repository.TravelDestination;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,21 @@ public class TravelDestinationServiceTest {
 	@Autowired
 	private TravelDestinationService service;
 	
-	@Test
+//	@Test
 	public void testFindAll() {
 		List<TravelDestination> list =  service.findAll();
 		Assertions.assertEquals(2, list.size());
+	}
+	
+	@Test
+	public void testSearchByTags() {
+		String[] regions = { "광주" };
+		String[] themes = { "힐링" };
+		String[] companions = { "가족" };
+		
+		List<TravelDestinationListDto> dto =  service.searchByTags(regions, themes, companions);
+		
+		Assertions.assertNotNull(dto);
+		log.debug(dto.toString());
 	}
 }

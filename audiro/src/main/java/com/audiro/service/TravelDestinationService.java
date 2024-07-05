@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.audiro.dto.TravelDestinationDetailsDto;
+import com.audiro.dto.TravelDestinationListDto;
 import com.audiro.repository.TravelDestination;
 import com.audiro.repository.TravelDestinationDao;
 
@@ -36,5 +37,12 @@ public class TravelDestinationService {
 		
 		return dto;
 	}
+	
+	public List<TravelDestinationListDto> searchByTags(String[] regions, String[] themes, String[] companions) {
+        List<TravelDestination> destinations = dao.selectNameAndImgUrlByTags(regions, themes, companions);
+        List<TravelDestinationListDto> dto = TravelDestinationListDto.fromEntities(destinations);
+		
+		return dto;
+    }
 
 }
