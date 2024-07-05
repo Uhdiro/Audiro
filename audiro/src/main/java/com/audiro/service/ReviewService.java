@@ -132,7 +132,7 @@ public class ReviewService {
 	//여행후기 검색
 	public List<ListReviewDto> search(SerachReviewDto dto) {
 		log.debug("dto={}", dto);
-		List<Post> list = reviewDao.serach(dto);
+		List<Post> list = reviewDao.searchKeyword(dto);
 		return list.stream()
 				.map(ListReviewDto::fromEntity)
 				.toList();

@@ -8,8 +8,8 @@ public class User {
 	private Integer usersId;
 	private Integer id;
 	private Integer password;
-	private String userName;
-	private String nickName;
+	private String username;
+	private String nickname;
 
 
 }

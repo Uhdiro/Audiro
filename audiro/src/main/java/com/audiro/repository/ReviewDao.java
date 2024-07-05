@@ -61,7 +61,7 @@ public interface ReviewDao {
 	List<Post> selectReviewAll();
 
 	//여행후기 검색
-	List<Post> serach(SerachReviewDto dto);
+	List<Post> searchKeyword(SerachReviewDto dto);
 	
 	//여행후기 찜 담아있는 내용 불러오기
 	Set<Integer> getFavoriteUserIds(Integer usersId ,Integer postId);

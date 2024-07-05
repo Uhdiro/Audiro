@@ -109,30 +109,30 @@
 	</select>
 
 	<!-- 여행후기 제목, 내용, 제목+내용, 닉네임검색 -->
-	<select id="search" resultType="Post">
+	<select id="searchKeyword" resultType="Post">
 		<bind name="searchKeyword" value="'%' + keyword + '%'" />
-		select * from post
+			select p.*, u.nickname as userNickname
+			from post p
+			inner join users u on p.users_id = u.users_id
 		<where>
 			<choose>
 				<when test='category.equals("t")'>
-					upper(title) like upper(#{searchKeyword})
+					and upper(p.title) like upper(#{searchKeyword})
 				</when>
 				<when test='category.equals("c")'>
-					upper(content) like upper(#{searchKeyword})
+					and upper(p.content) like upper(#{searchKeyword})
 				</when>
 				<when test='category.equals("tc")'>
-					upper(title) like upper(#{searchKeyword})
-					or
-					upper(content) like upper(#{searchKeyword})
+					and (upper(p.title) like upper(#{searchKeyword}) or upper(p.content)
+					like upper(#{searchKeyword}))
 				</when>
 				<when test='category.equals("n")'>
-					upper(nickname) like upper(#{searchKeyword})
+					and upper(u.nickname) like upper(#{searchKeyword})
 				</when>
 			</choose>
 		</where>
-		order by id desc
+		order by p.post_id desc
 	</select>
-
 
 	<!-- 여행후기찜담기, 좋아요-->
 	<!-- 여행후기 찜 담아있는 내용 불러오기. -->

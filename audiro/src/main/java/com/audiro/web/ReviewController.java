@@ -128,12 +128,12 @@ public class ReviewController {
 	}
 	
 	//여행후기 검색
-	@GetMapping("/serach")
+	@GetMapping("/search")
 	public String search(SerachReviewDto dto, Model model) {
 		List<ListReviewDto> list = reviewService.search(dto);
 		model.addAttribute("list", list);
 		
-		return "/post/review/list";
+		return "post/review/list";
 	}
 	
 	
