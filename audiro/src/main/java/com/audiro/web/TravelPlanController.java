@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.audiro.service.FavoriteDestinationService;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -15,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/travel")
 public class TravelPlanController {
 
-	private final FavoriteDestinationService favService;
 
 	@GetMapping("/plan")
 	public void plan() {

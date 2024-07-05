@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.audiro.dto.DetailedPlanDto;
 import com.audiro.dto.FavoriteDestinationDto;
+import com.audiro.dto.TravelPlanDto;
+import com.audiro.repository.DetailedPlan;
 import com.audiro.repository.FavoriteDestination;
-import com.audiro.repository.TravelPlan;
 import com.audiro.service.FavoriteDestinationService;
 import com.audiro.service.TravelPlanService;
 
@@ -41,9 +43,15 @@ public class TravelPlanRestController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Integer> savePlan(TravelPlan plan){
-		int result=planService.createPlan(plan);
+	@PostMapping("/create/travelPlan")
+	public ResponseEntity<Integer> createPlan(@RequestBody TravelPlanDto dto){
+		int result=planService.createPlan(dto);
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/create/detailedPlan")
+	public ResponseEntity<Integer> createDetailedPlan(@RequestBody List<DetailedPlanDto> dto){
+		int result=planService.createDetailedPlan(dto);
 		return ResponseEntity.ok(result);
 	}
 	

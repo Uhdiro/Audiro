@@ -1,7 +1,10 @@
 package com.audiro.repository;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.sql.Date;
+import java.util.List;
+
+import com.audiro.dto.DetailedPlanDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

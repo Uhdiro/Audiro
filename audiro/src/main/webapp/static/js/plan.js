@@ -9,6 +9,9 @@ $(document).ready(function () {
 	const dayContainer = document.querySelector('div#dayContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 	const btnSave=document.querySelector('#btnSave');
+	let startToTimestamp;
+	let endToTimestamp;
+
 
 	// Datepicker 초기화
 	$('#startDate').datepicker({
@@ -17,6 +20,7 @@ $(document).ready(function () {
 		startDate: '0d'
 	}).on('changeDate', function() {
 		getDateRange(false); // showModal을 false로 전달
+		
 	});
 
 	$('#endDate').datepicker({
@@ -26,8 +30,6 @@ $(document).ready(function () {
 	}).on('changeDate', function() {
 		getDateRange(false); // showModal을 false로 전달
 	});
-	const startDate = new Date(document.querySelector('input#startDate').value);
-	const endDate = new Date(document.querySelector('input#endDate').value);
 
 
 	defaultDay();
@@ -50,21 +52,28 @@ $(document).ready(function () {
 
 	});
 
+
+	function createAll() {
+		createDay();
+		createPlan();
+		index++;
+	}
+
+
 	function createTravelPlan() {
 		//const usersId=session.getAttribute(SESSION_ATTR_USER);
-		const usersId='1';
-		const title=document.querySelector('input#title').value;
-		const start=document.querySelector('input#startDate').value;
-		const end=document.querySelector('input#endDate').value;
-		const startDate = new Date(start);
-		const endDate = new Date(end);
+		const usersId = '1';
+		const title = document.querySelector('input#title').value;
+		const startDate = document.querySelector('input#startDate').value;
+		const endDate = document.querySelector('input#endDate').value;
+
+		const startDateToDate = new Date(startDate);
+		const endDateToDate = new Date(endDate);
+		startToTimestamp = startDateToDate.toISOString();
+		endToTimestamp = endDateToDate.toISOString();
 
 		const millisecondsInADay = 24 * 60 * 60 * 1000;
-		const duration = (endDate - startDate) / millisecondsInADay; // duration을 일수로 계산
-		console.log(typeof (startDate));
-		console.log(endDate);
-		console.log(typeof (duration));
-		console.log(duration);
+		const duration = (endDateToDate - startDateToDate) / millisecondsInADay; // duration을 일수로 계산
 
 		if (title === '') {
 			const alert = document.querySelector('div#alert');
@@ -81,46 +90,87 @@ $(document).ready(function () {
 			alert.insertAdjacentHTML('beforeend', htmlStr);
 			return;
 		}
+
+
 		
-		const data={usersId, title, startDate, duration, endDate};
-		
-		const uri = '../api/plan/create';
+		const data = { usersId, title, startDate, duration, endDate};
+		let travelPlanId=0;
+		const uri = '../api/plan/create/travelPlan';
 		axios
-			.post(uri,data)
+			.post(uri, data)
 			.then((response) => {
-				document.querySelector('div#dayContainer').remove();
-				document.querySelector('div#dayPlan').remove();
+				travelPlanId=response.data;
+				console.log('야호');
+				console.log(travelPlanId);
+			createrDetailedPlan(travelPlanId);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+
+		
 	}
+	
+	function createrDetailedPlan(travelPlanId){
+		const detailedPlans = [];
+		const detailedPlanElement = document.querySelectorAll(`div.plans`);
 
+		detailedPlanElement.forEach((d) => {
+			const favoriteDestinationElement = document.querySelectorAll('.list');
+			favoriteDestinationElement.forEach((list) => {
 
-	function createAll() {
-		createDay();
-		createPlan();
-		index++;
+				const destinationId = list.getAttribute("des-id");
+				const day = d.getAttribute('day-id');
+				console.log(`destinationId${destinationId}`);
+				console.log(`day${day}`);
+				const startTime = startToTimestamp;
+				const endTime = endToTimestamp;
+				console.log(`start${startTime}`);
+				console.log(`end${endTime}`);
+				const detailedPlanData = {travelPlanId, destinationId, day, startTime, endTime};
+				detailedPlans.push(detailedPlanData);
+			});
+
+		});
+		
+		const uri = '../api/plan/create/detailedPlan';
+				console.log('야호2');
+		axios
+			.post(uri, detailedPlans)
+			.then((response) => {
+				document.querySelector('div#dayContainer').remove();
+				document.querySelector('div#dayPlan').remove();
+				console.log('야호3');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
 	}
-
 
 
 	function getDateRange(showModal) {
+		const alert=document.querySelector('div#alert');
+		
+		alert.innerHTML='';
+		
+		let startDate = document.querySelector('input#startDate').value;
+		let endDate = document.querySelector('input#endDate').value;
+
 		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
-		if (startDate.value !== '' || endDate.value !== '') {
+		if (startDate !== '' || endDate !== '') {
 			btnCreateDay.style.display = 'none';
 		}
 
-		const start = new Date(startDate.value);
-		const end = new Date(endDate.value);
-		const differenceInMillis = end - start;
-		
-		if(start>end){
-			startDate.value='';
-			endDate.value='';
+		const startDateToDate = new Date(startDate);
+		const endDateToDate = new Date(endDate);
+
+
+		if (startDateToDate > endDateToDate) {
+			startDate = '';
+			endDate = '';
 			deleteAllElements();
-			const alert = document.querySelector('div#alert');
-			htmlStr=`
+			const htmlStr = `
 				<div class="alert alert-primary d-flex align-items-center" role="alert">
 				  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
 				    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -134,9 +184,10 @@ $(document).ready(function () {
 			return;
 		}
 
+		const differenceInMillis = endDateToDate - startDateToDate;
 		// 밀리초를 일수로 변환
 		const differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24)) + 1;
-		const duration=document.querySelector('input#duration');
+		const duration =document.querySelector('input#duration');
 		duration.value=differenceInDays;
 		let currentDay = index - 1;
 
@@ -286,6 +337,7 @@ $(document).ready(function () {
 			const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
 			deleteModal.show();
 			const btnConfirm = document.querySelector('#btnConfirm');
+			btnConfirm.removeEventListener(); // 중복 제거
 			btnConfirm.addEventListener('click', () => {
 				deleteModal.hide();
 				deleteAllElements();
