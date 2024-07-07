@@ -38,8 +38,8 @@ public class TravelDestinationService {
 		return dto;
 	}
 	
-	public List<TravelDestinationListDto> searchByTags(String[] regions, String[] themes, String[] companions) {
-        List<TravelDestination> destinations = dao.selectNameAndImgUrlByTags(regions, themes, companions);
+	public List<TravelDestinationListDto> searchByTagsAndKeyword(String[] regions, String[] themes, String[] companions, String keyword) {
+        List<TravelDestination> destinations = dao.selectNameAndImgUrlByTagsAndKeyword(regions, themes, companions, keyword);
         List<TravelDestinationListDto> dto = TravelDestinationListDto.fromEntities(destinations);
 		
 		return dto;

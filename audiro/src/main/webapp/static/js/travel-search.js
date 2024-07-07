@@ -11,10 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const divTagContainer = document.querySelector('div#tagContainer');
     divTagContainer.addEventListener('click', clickTagContainer);
     
+    const btnSearch = document.querySelector('button#btnSearch');
+    btnSearch.addEventListener('click', clickBtnSearch);
+    
     let baseUri = `../api/travel/search-tags?`;
     let regionTags = [];
     let themeTags = [];
     let companionTags = [];
+    let keyword = '';
 
     const tagCategories = {};
 
@@ -79,7 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (companionTags.length > 0) {
             uri += `companion=${companionTags.join('&companion=')}&`;
         }
-
+        if (keyword) {
+            uri += `keyword=${keyword}&`;
+        }
+        
         uri = uri.slice(0, -1);
         console.log(uri);
         
@@ -102,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cardContainer.innerHTML = '';
 
         destinations.forEach(d => {
-            const destinationDetailsPage = `/travel/details?id=${d.travelDestinationId}`;
+            const destinationDetailsPage = `./details?id=${d.travelDestinationId}`;
             const html = `
                 <div class="col-4">
                     <a href="${destinationDetailsPage}">
@@ -113,6 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             cardContainer.innerHTML += html;
         });
+    }
+    
+    function clickBtnSearch() {
+        keyword = document.querySelector('input#inputSearch').value;
+        updateUri();
     }
 
 });

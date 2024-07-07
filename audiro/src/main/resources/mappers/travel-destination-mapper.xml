@@ -21,8 +21,8 @@
         select * from travel_destination where travel_destination_id = #{travelDestinationId}
     </select>
     
-    <select id="selectNameAndImgUrlByTags" resultType="Destination">
-        select distinct td.name, td.img_url
+    <select id="selectNameAndImgUrlByTagsAndKeyword" resultType="Destination">
+        select distinct td.travel_destination_id, td.name, td.img_url
         from travel_destination td
         <where>
             <if test="region != null and region.length > 0">
@@ -58,6 +58,12 @@
                     </foreach>
                 )
             </if>
+            <if test="keyword != null and keyword != ''">
+            and (
+                td.name like '%' || #{keyword} || '%'
+                or td.description like '%' || #{keyword} || '%'
+            )
+        </if>
         </where>
     </select>
     

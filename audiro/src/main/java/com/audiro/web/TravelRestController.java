@@ -28,9 +28,10 @@ public class TravelRestController {
 	public ResponseEntity<List<TravelDestinationListDto>> searchByTags(
 			@RequestParam(name = "region", required = false) String[] regions,
 			@RequestParam(name = "theme", required = false) String[] themes,
-			@RequestParam(name = "companion", required = false) String[] companions) {
+			@RequestParam(name = "companion", required = false) String[] companions,
+			@RequestParam(name = "keyword", required = false) String keyword) {
 		
-		List<TravelDestinationListDto> dto = destiService.searchByTags(regions, themes, companions);
+		List<TravelDestinationListDto> dto = destiService.searchByTagsAndKeyword(regions, themes, companions, keyword);
 		
 		return ResponseEntity.ok(dto);
 	}

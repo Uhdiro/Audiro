@@ -62,14 +62,14 @@
                 </div>
                 
                 <div class="col-10">
-                    <form class="row">
+                    <div class="row">
                         <div class="col-10">
-                            <input type="text" class="form-control" />
+                            <input type="text" id="inputSearch" class="form-control" />
                         </div>
                         <div class="col-2">
-                            <input type="submit" class="form-control btn btn-success" value="검색" />
+                            <button class="form-control btn btn-success" id="btnSearch">검색</button>
                         </div>
-                    </form>
+                    </div>
                     
                     <div id="tagContainer"></div>
                     

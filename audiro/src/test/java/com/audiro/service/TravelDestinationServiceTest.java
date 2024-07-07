@@ -34,12 +34,13 @@ public class TravelDestinationServiceTest {
 	@Test
 	public void testSearchByTags() {
 		String[] regions = { "광주" };
-		String[] themes = { "힐링" };
-		String[] companions = { "가족" };
+		String[] themes = { };
+		String[] companions = { };
+		String keyword = "펭귄";
 		
-		List<TravelDestinationListDto> dto =  service.searchByTags(regions, themes, companions);
+		List<TravelDestinationListDto> dto =  service.searchByTagsAndKeyword(regions, themes, companions, keyword);
 		
-		Assertions.assertNotNull(dto);
+		Assertions.assertEquals(1, dto.size());;
 		log.debug(dto.toString());
 	}
 }

@@ -12,7 +12,7 @@ public interface TravelDestinationDao {
 	
 	TravelDestination selectAllById(Integer id);
 	
-	List<TravelDestination> selectNameAndImgUrlByTags(
-			String[] region, String[] theme, String[] companion
+	List<TravelDestination> selectNameAndImgUrlByTagsAndKeyword(
+			String[] region, String[] theme, String[] companion, String keyword
 	);
 }
