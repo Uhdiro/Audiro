@@ -13,5 +13,7 @@
 		<typeAlias type="com.audiro.dto.FavoriteDestinationDto" alias="FavoriteDestinationDto" />
 		<typeAlias type="com.audiro.repository.TravelPlan" alias="TravelPlan"/>
 		<typeAlias type="com.audiro.repository.DetailedPlan" alias="DetailedPlan"/>
+		<typeAlias type="com.audiro.dto.DetailedPlanDto" alias="DetailedPlanDto"/>
+		
 	</typeAliases>
 </configuration>

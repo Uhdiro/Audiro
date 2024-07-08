@@ -42,4 +42,23 @@ public class TravelPlanService {
 		return result;
 	}
 	
+	public List<TravelPlan> readAllTravelPlan() {
+		List<TravelPlan> list=travelPlanDao.selectAllTrvaelPlan();
+		return list;
+	}
+	
+	public TravelPlan readTravelPlanById(int travelPlanId) {
+		TravelPlan plan=travelPlanDao.selectTravelPlanById(travelPlanId);
+		return plan;
+	}
+	
+	public List<DetailedPlanDto> readDetailedPlanByTravelPlanId(int travelPlanId) {
+		List<DetailedPlanDto> list=travelPlanDao.selectDetailedPlan(travelPlanId);
+		return list;
+	}
+	
+	public int getMaxDay(int travelPlanId) {
+		int result=travelPlanDao.selectMaxDay(travelPlanId);
+		return result;
+	}
 }

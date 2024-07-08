@@ -375,7 +375,7 @@ $(document).ready(function () {
 
 
 	function createPlan() {
-		const dayContainer = document.querySelector('div#dayPlan');
+		const planContainer = document.querySelector('div#dayPlan');
 		let htmlStr = '';
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
@@ -389,7 +389,7 @@ $(document).ready(function () {
 				</div>
 			</div>
 		`;
-		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
+		planContainer.insertAdjacentHTML('beforeend', htmlStr);
 	}
 
 

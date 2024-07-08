@@ -26,81 +26,81 @@
 <body>
 	<div class="container-fluid">
 		<%@ include file="../fragments/header.jspf"%>
-	</div>
 
-	<div class="container-full mx-5 text-center">
-		<div class="row">
-			<div class="card col-8 px-0">
-				<c:url var="createPlan" value="/api/plan/create"></c:url>
-				<form method="post" action="${createPlan}" >
-					<div class="row g-0 ">
-						<div class="col-3 p-2 ">
-							<div class="row g-0">
-								<div id="btnContainer">
 
-									<button id="deleteAll" class="btn btn-primary">전체 삭제</button>
-									<button type="submit" id="btnSave" class="btn btn-primary">저장</button>
+		<div class="container-full mx-5 text-center">
+			<div class="row">
+				<div class="card col-8 px-0">
+					<c:url var="createPlan" value="/api/plan/create"></c:url>
+					<form method="post" action="${createPlan}">
+						<div class="row g-0 ">
+							<div class="col-3 p-2 ">
+								<div class="row g-0">
+									<div id="btnContainer">
+
+										<button id="deleteAll" class="btn btn-primary">전체 삭제</button>
+										<button type="submit" id="btnSave" class="btn btn-primary">저장</button>
+									</div>
 								</div>
+								<div id="dayContainer"></div>
+								<button id="createDay" class="btn btn-primary">일차 추가</button>
 							</div>
-							<div id="dayContainer"></div>
-							<button id="createDay" class="btn btn-primary">일차 추가</button>
-						</div>
 
-						<div class="col-9">
-							<div id="dayPlan">
-								<div class="row g-0 m-2">
-								<div id="alert"></div>
-									<div class="col-sm-6 col-12 mb-2">
-										<div id="title" class="mb-2">
-											<input type="text" id="title" name="title" maxlength="40"
-												placeholder="제목을 입력하세요." class="form-control" />
+							<div class="col-9">
+								<div id="dayPlan">
+									<div class="row g-0 m-2">
+										<div id="alert"></div>
+										<div class="col-sm-6 col-12 mb-2">
+											<div id="title" class="mb-2">
+												<input type="text" id="title" name="title" maxlength="40"
+													placeholder="제목을 입력하세요." class="form-control" />
+											</div>
 										</div>
-									</div>
-									<div class="date col-sm-3 col-6 mb-2">
-										<input type="text" id="startDate" name="startDate" class="form-control"
-											placeholder="start" readonly />
-										<input type="hidden" id="duration" name="duration" />
-									</div>
-									<div class="date col-sm-3 col-6 mb-2">
-										<input type="text" id="endDate" name="endDate" class="form-control"
-											placeholder="end" readonly />
-									</div>
+										<div class="date col-sm-3 col-6 mb-2">
+											<input type="text" id="startDate" name="startDate"
+												class="form-control" placeholder="start" readonly /> <input
+												type="hidden" id="duration" name="duration" />
+										</div>
+										<div class="date col-sm-3 col-6 mb-2">
+											<input type="text" id="endDate" name="endDate"
+												class="form-control" placeholder="end" readonly />
+										</div>
 
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
 
-			</div>
-
-			<div class="card col-4 px-0">
-				<div class="card-body">
-					<h2>찜 목록 불러오기</h2>
-
-					<div class="content row row-cols-1 row-cols-md-4 g-4 m-1"
-						id="favDestination"></div>
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="pages-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
 				</div>
-			</div>
 
+				<div class="card col-4 px-0">
+					<div class="card-body">
+						<h2>찜 목록 불러오기</h2>
+
+						<div class="content row row-cols-1 row-cols-md-4 g-4 m-1"
+							id="favDestination"></div>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="pages-item"><a class="page-link" href="#"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a></li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">4</a></li>
+								<li class="page-item"><a class="page-link" href="#">5</a></li>
+								<li class="page-item"><a class="page-link" href="#"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
-
 	<div class="modal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">

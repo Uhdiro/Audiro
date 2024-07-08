@@ -1,20 +1,47 @@
 package com.audiro.web;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.audiro.dto.DetailedPlanDto;
+import com.audiro.repository.DetailedPlan;
+import com.audiro.repository.TravelPlan;
+import com.audiro.service.TravelPlanService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/travel")
+@RequestMapping("/travel/plan")
 public class TravelPlanController {
 
+	private final TravelPlanService service;
 
-	@GetMapping("/plan")
+	@GetMapping("")
 	public void plan() {
 		
 	}
 
+	@GetMapping("/list")
+	public String couse(Model model) {
+		List<TravelPlan> list= service.readAllTravelPlan();
+		model.addAttribute("travelPlan", list);
+		return "travel/plan_list";
+	}
+	
+	@GetMapping("/details")
+	public String details(@RequestParam(name="id") int id, Model model) {
+		TravelPlan plan=service.readTravelPlanById(id);
+		List<DetailedPlanDto> list=service.readDetailedPlanByTravelPlanId(id);
+		model.addAttribute("travelPlan",plan);
+		log.debug("dp={}",list);
+		return "travel/plan_details";
+	}
 }
