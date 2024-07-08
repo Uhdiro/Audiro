@@ -19,12 +19,12 @@
         <!-- 댓글 많이 달린 여행후기 top3 댓글갯수 중복일경우 id순, +찜+좋아요. -->
         <select id="selectCommentToReiviewTop3" resultType="Post">
         	select c.post_id, count(*) as c_count
-		from comments c
-		join post p on c.post_id = p.post_id
-		where p.post_type_id = 10
-		group by c.post_id
-		order by c_count desc
-		fetch first 3 rows only;    
+			from comments c
+			join post p on c.post_id = p.post_id
+			where p.post_type_id = 10
+			group by c.post_id
+			order by c_count desc
+			fetch first 3 rows only;    
         </select>     
         
 		<!-- 여행후기 댓글 많이 쓴 유저 top3 중복 고민

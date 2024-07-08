@@ -43,7 +43,7 @@
 				<h4>여행후기 수정페이지</h4>
 			</div>
 			<div class="card-body">
-			
+			   
 				<form id="modifyForm"  class="from-iline">
 					<div class="mt-2">
 						<input type="hidden" id="postId" name="postId" value="${list.postId}" />

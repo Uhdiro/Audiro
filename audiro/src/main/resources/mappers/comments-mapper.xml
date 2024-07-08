@@ -2,8 +2,74 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.audiro.repository.CommentsDao">
+<mapper namespace="com.audiro.repository.CommentDao">
 
+	<select id="selectByCommentsId" resultType="Comment">
+        select 
+        	c.comments_id 
+        	,c.post_id
+        	,c.content 
+        	,c.modified_time 
+        	,c.is_private
+        	,c.parent_comment_id
+        	,u.nickname 
+        	,p.path
+        from comments c
+        left join users u  on c.users_id = u.users_id
+        left join profile p on c.users_id = p.users_id
+        where post_id =#{postId}
+        order by comments_id desc
+    </select>
+    
+    <!-- 대댓글추가 -->
+    <insert id="insert" parameterType="com.audiro.dto.CommentCreateDto">
+        insert into comments (post_id, users_id, content, parent_comment_id)
+        values (#{postId}, #{usersId}, #{content}, #{parentCommentId}) 
+    </insert> 
+    
+    <!-- 새 댓글 추가 -->
+     <insert id="newInsert" parameterType="com.audiro.dto.CommentCreateDto">
+        insert into comments (post_id, users_id, content)
+        values (#{postId}, #{usersId}, #{content})
+    </insert>
+    
+    <update id="update">
+        update comments
+        set content = #{content}, modified_time = systimestamp
+        where users_id = #{users_id}
+    </update>
+    
+    <delete id="deleteById">
+        delete from comments where comments_id = #{commentsId}
+    </delete>
+    
+    <delete id="deleteByPostId">
+        delete from comments where post_id = #{postId}
+    </delete>
+    
+    <select id="selectCommentCount" resultType="integer">
+        select count(*) from comments where post_id = #{postId}
+    </select>
+    
+    <select id="selectById" resultType="Comment">
+        select * from comments where comments_id = #{commentsId}
+    </select>
+    
+   
+    <!-- 대댓글 삭제하기 -->
+    <delete id="deleteByIdReply">
+        delete from comments where praent_comment_id = #{praentCommentId}
+    </delete>
+
+	<!-- 대댓글 수정하기 -->
+	 <update id="updateReply">
+        update comments
+        set content = #{content}, modified_time = systimestamp
+        where users_id = #{users_id}
+    </update>
+    
+    
+	
 
 
 </mapper>

@@ -1,23 +1,25 @@
 package com.audiro.web;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.DetailsReviewDto;
 import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
 import com.audiro.repository.DraftPost;
 import com.audiro.repository.Post;
+
 import com.audiro.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewController {
 
 	private final ReviewService reviewService;
+	
 
 	// 여행후기 작성페이지
 	@GetMapping("/create")
@@ -55,33 +58,49 @@ public class ReviewController {
 
 	// 여행후기 상세보기, 수정하기하면 작성된 페이지 띄우기
 	@GetMapping("/details")
-	public void reviewDetails(@RequestParam(name = "postId") Integer postId, Model model) {
+	public void reviewDetails(DetailsReviewDto dto,
+							  Model model) {
 
-		// postId검색
-		Post list = reviewService.readById(postId);
-		model.addAttribute("list", list);
+		//@RequestParam(name = "postId") Integer postId, 
+		 // @RequestParam(name= "usersId") Integer usersId, 
+		// post 객체
+		Post post = reviewService.readById(dto.getPostId());
+		//굿 수
+		int countLike = reviewService.countGood(dto.getPostId());
+		//찜 수
+		int countFavorite = reviewService.countFavorite(dto.getPostId());
+		//프로필 이미지
+		String profile = reviewService.img(dto.getUsersId());
+		
+		model.addAttribute("post", post);
+		model.addAttribute("countLike", countLike);
+		model.addAttribute("countFavorite", countFavorite);
+		model.addAttribute("profile", profile);
+		
 	}
 
 	// 여행후기 수정 업데이트
 	@PostMapping("/update")
-	public String update(CreateReviewDto dto) {
+	public String update(@ModelAttribute  CreateReviewDto dto) {
 		reviewService.update(dto);
 		return "redirect:/post/review/details?postId=" + dto.getPostId();
 	}
 
 	// 내 여행일기 페이지
 	@GetMapping("/mypage")
-	public void mypage(Model model) {
+	public String mypage(Model model, MyReviewListDto dto) {
 		// 내 여행일기 목록
-		List<MyReviewListDto> list = reviewService.myReviewList();
+		List<MyReviewListDto> list = reviewService.myReviewList(dto);
 		model.addAttribute("list", list);
 
 		// 내 여행일기 수
-		int countMyReview = reviewService.countMyReveiw();
+		int countMyReview = reviewService.countMyReveiw(dto.getUsersId());
 		model.addAttribute("countMyReview", countMyReview);
-		// 나를찜한 유저 수
-		int countLike = reviewService.countLike();
+		// 나를 찜한 유저 수
+		int countLike = reviewService.countLike(dto.getUsersId());
 		model.addAttribute("countLike", countLike);
+		
+		return "redirect:/post/review/mypage?usersId=" + dto.getUsersId();
 
 	}
 

@@ -1,5 +1,6 @@
 package com.audiro.dto;
 
+import java.sql.Clob;
 import java.time.LocalDateTime;
 
 import com.audiro.repository.Post;
@@ -24,6 +25,8 @@ public class DetailsReviewDto {
 	private Integer good;
 	private Integer travelPlanId;
 	private LocalDateTime modifiedTime;
+	private Integer favoritePost;
+	private Integer favoriteUserId;
 	
 	public static DetailsReviewDto fromEntity(Post post) {
 		
@@ -35,6 +38,8 @@ public class DetailsReviewDto {
 				.good(post.getGood())
 				.travelPlanId(post.getTravelPlanId())
 				.modifiedTime(post.getModifiedTime())
+				.favoriteUserId(post.getFavoriteUserId())
+				.favoritePost(post.getFavoritePost())
 				.build();
 		
 	}

@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class FavoriteUsers {
 	
-	private Integer favoritedUserId; 
+	private Integer favoritedUsersId; 
 	private Integer usersId; 
-	private Integer interesteduserId; 
+	private Integer interestedUserId; 
 
 
 }

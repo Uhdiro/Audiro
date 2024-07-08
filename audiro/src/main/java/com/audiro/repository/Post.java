@@ -1,5 +1,6 @@
 package com.audiro.repository;
 
+import java.sql.Clob;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -24,4 +25,9 @@ public class Post {
 	private Integer good;					//게시글 좋아요 갯수.
 	private Integer travelPlanId;			//Foregin Key: travel_plan테이블의 travel_plan_id(pk) 컬럼을 참조.
 	private String nickname;                //닉네임
+	private Integer favoritePost;           //관심후기담아있는지 확인
+	private Integer commentId;
+	private String formattedModifiedTime;   //포맷팅된 수정 시간
+	private Integer favoriteUserId;         //관심유저인지 확인 
+      
 }

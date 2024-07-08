@@ -21,6 +21,8 @@ public class MyReviewListDto {
 	private String nickname;
 	private String title;
 	private LocalDateTime modifiedTime;
+	private Integer favoritePost;
+	private Integer favoriteUserId;
 	
 	public static MyReviewListDto fromEntity(Post post) {
 		return MyReviewListDto.builder()
@@ -29,6 +31,8 @@ public class MyReviewListDto {
 				.nickname(post.getNickname())
 				.title(post.getTitle())
 				.modifiedTime(post.getModifiedTime())
+				.favoritePost(post.getFavoritePost())
+				.favoriteUserId(post.getFavoriteUserId())
 				.build();
 	}
 }

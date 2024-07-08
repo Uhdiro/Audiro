@@ -18,7 +18,7 @@ public class FavoriteReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @PostMapping("/toggle")
+    @PostMapping("/toggleeee")
     public ResponseEntity<String> toggleFavorite(@RequestParam(name= "usersId") Integer usersId, @RequestParam(name="postId") Integer postId) {
         boolean isFavorite = reviewService.toggleFavorite(usersId, postId);
         log.debug("usersId={},postId={}",usersId, postId);

@@ -20,14 +20,30 @@
 	width: 100%;
 }
 
-.heart-icon {
+.likeReview {
 	width: 70px;
 	height: 70px;
+	border-color:white !important;
 }
 
-.heart-icon.active {
+.likeReview.active {
 	filter: grayscale(0%) brightness(100%); /* 클릭 후 색이 변하도록 필터 적용 */
+	color: red !important;
+	border-color:white !important;
 }
+
+.userLike {
+	width: 70px;
+	height: 70px;
+	border-color:white !important;
+}
+
+.userLike.active {
+	filter: grayscale(0%) brightness(100%); /* 클릭 후 색이 변하도록 필터 적용 */
+	color: red !important;
+	border-color:white !important;
+}
+
 </style>
 </head>
 
@@ -46,8 +62,8 @@
 								<div>
 									<span id="nickname">${list[0].nickname}</span>
 								</div>
-
-							<button class="btn" id="userLike">
+ 
+							<button id="userLike" class="btn ${list.favoriteUserId != null ? 'active' : ''}" data-user-id="${list.usersId}"> 
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
 									 fill="currentColor" class="bi bi-suit-heart-fill"
 									 viewBox="0 0 16 16">
@@ -97,7 +113,7 @@
 									<div class="col">
 										<div class="card h-80">
 											<div class="card-header" style="text-align: right">
-												<button class="btn likeReview" data-review-id="${list.postId}">
+												<button class="btn likeReview ${list.favoritePost != null ? 'active' : ''}" data-review-id="${list.postId}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="20"
 														height="20" fill="currentColor"
 														class="bi bi-suit-heart-fill" viewBox="0 0 16 16">

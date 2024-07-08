@@ -7,5 +7,5 @@ public class FavoritePost {
 
 	private Integer favoritePostId;
 	private Integer usersId;
-	private Integer posstId;
+	private Integer postId;
 }

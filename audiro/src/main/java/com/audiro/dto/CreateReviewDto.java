@@ -14,12 +14,13 @@ public class CreateReviewDto {
 	private String title;
 	private String content;
 	
-	public Post toEntoty() {
+	public Post toEntity() {
 		return Post.builder()
-				.usersId(usersId)
-				.postTypeId(postTypeId)
-				.postId(postId)
-				.title(title).content(content).build();
+					.usersId(usersId)
+					.postTypeId(postTypeId)
+					.postId(postId)
+					.title(title)
+					.content(content).build();
 		
 	}
 

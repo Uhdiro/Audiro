@@ -3,15 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-	
+	 
 	<typeAliases>
-		<typeAlias type="com.audiro.repository.Post" alias="Post"/>
-		<typeAlias type="com.audiro.repository.Comments" alias="Comments"/>		
+		<typeAlias type="com.audiro.repository.Post" alias="Post"/>   
+		<typeAlias type="com.audiro.repository.Comment" alias="Comment"/>		
 		<typeAlias type="com.audiro.repository.ReviewDao" alias="ReviewDao"/>		
 		<typeAlias type="com.audiro.repository.DraftPost" alias="DraftPost"/>		
+		<typeAlias type="com.audiro.dto.CreateReviewDto" alias="CreateReviewDto"/>		
+		<typeAlias type="com.audiro.dto.MyReviewListDto" alias="MyReviewListDto"/>		
 	
 	</typeAliases>
 </configuration>

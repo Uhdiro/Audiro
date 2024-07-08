@@ -1,5 +1,6 @@
 package com.audiro.dto;
 
+import java.sql.Clob;
 import java.time.LocalDateTime;
 
 import com.audiro.repository.Post;

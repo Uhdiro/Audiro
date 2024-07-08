@@ -130,7 +130,7 @@
 										<div class="card-body">
 											<!-- 클릭 시 상세페이지로 이동하는 링크 -->
 											<h5 class="card-title">
-												<a href="details?postId=${list.postId}" class="card-link">${list.title}</a>
+												<a href="details?postId=${list.postId}&usersId=${list.usersId}"class="card-link">${list.title}</a>
 											</h5>
 											<a href="#" class="list-group-item list-group-item-action">
 												<div class="d-flex w-100 justify-content-between">

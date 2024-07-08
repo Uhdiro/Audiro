@@ -1,13 +1,16 @@
 package com.audiro.service;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.LikeReviewPostDto;
+import com.audiro.dto.LikeUserFavoriteDto;
 import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
@@ -41,25 +44,44 @@ public class ReviewService {
 		return reviews = reviewDao.selectReviewAll();
 	}
 
-	// 내여행일기 리스트 불러오기
-	public List<MyReviewListDto> myReviewList() {
-		List<MyReviewListDto> list = reviewDao.readMyReview();
+	// 내 여행일기 리스트 불러오기
+	public List<MyReviewListDto> myReviewList(MyReviewListDto dto) {
+		List<MyReviewListDto> list = reviewDao.readMyReview(dto.getUsersId());
+		log.debug("myReviewList={}", list);
 		return list;
 
 	}
+	//프로필 이미지 가져오기
+	public String img(Integer usersId) {
+		String profileimg = reviewDao.profileImg(usersId);
+		return profileimg;
+	}
 
 	// 나를 찜한 유저 수
-	public int countLike() {
+	public int countLike(Integer postId) {
 
-		int result = reviewDao.countLike();
+		int result = reviewDao.countLike(postId);
 		return result;
 	}
 
-	// 내 여행일기 개수
-	public int countMyReveiw() {
-		int result = reviewDao.countMyReveiw();
+	// 내 여행일기 갯수
+	public int countMyReveiw(Integer postId) {
+		int result = reviewDao.countMyReveiw(postId);
 		return result;
 	}
+	
+	//여행후기 찜 수
+	public int countFavorite(Integer postId) {
+		int result = reviewDao.countFavoriteReveiw(postId);
+		return result;
+	}
+	
+	//여행후기 굿 수
+	public int countGood(Integer postId) {
+		int result = reviewDao.countGoodByPostId(postId);
+		return result;
+	}
+	
 
 	// 여행후기 많이작성한 유저 TOP3
 	public List<Post> selectUserTop3() {
@@ -67,27 +89,42 @@ public class ReviewService {
 		return list;
 	}
 
-	// 여행후기 찜 담기
-	public int LikeReview(Integer postId, Set<Integer> usersId) {
-		int list = reviewDao.addLikeReview(postId, usersId);
+	// 여행후기 찜 담기// 
+	public int LikeReview(LikeReviewPostDto dto) {
+		int list = reviewDao.addLikeReview(dto);
 		return list;
 	}
-	/*
-	 * //여행후기 찜 삭제 public int deleteLikeReview(Integer postId, Set<Integer> usersId)
-	 * { int list = reviewDao.deleteLikeReview(postId, usersId); return list; }
-	 */
+	
+	  //여행후기 찜 삭제 
+	public int deleteLikeReview(LikeReviewPostDto dto) { 
+		int list = reviewDao.deleteLikeReview(dto); 
+		return list; 
+		}
+	 
 
 	///////////////////////////////////////////////////////
 	// 내 여행후기게시판 상세보기
 	public Post readById(Integer postId) {
 		Post list = reviewDao.readDetailsReviewById(postId);
+		
+
+        // 날짜 포맷팅을 위한 패턴 설정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // LocalDateTime 객체를 포맷팅된 문자열로 변환
+        String formattedModifiedTime = list.getModifiedTime().format(formatter);
+
+        // 변환된 문자열을 설정
+        list.setFormattedModifiedTime(formattedModifiedTime);
+
+     
 
 		return list;
 	}
 
 	// 여행후기 게시글 저장
 	public int create(CreateReviewDto dto) {
-		int result = reviewDao.insertReview(dto.toEntoty());
+		int result = reviewDao.insertReview(dto.toEntity());
 
 		return result;
 	}
@@ -127,24 +164,48 @@ public class ReviewService {
 		return list.stream().map(ListReviewDto::fromEntity).toList();
 	}
 
+	
 	// 여행후기 담아있지는 확인.
-	public synchronized boolean toggleFavorite(Integer usersId, Integer postId) {
+	public boolean toggleFavorite(LikeReviewPostDto dto) {
 		// 여행후기 찜 담아있는 내용 불러오기.
-		Set<Integer> favoriteUserIds = reviewDao.getFavoriteUserIds(usersId, postId);
+		
+		List<LikeReviewPostDto> favoritePostIds = reviewDao.getFavoritePostIds(dto);
 
 		// 현재 유저가 찜한 게시물인지 확인
-		if (favoriteUserIds.contains(usersId)) {
+		if (favoritePostIds.size() > 0) {
 			// 이미 찜한 경우 제거
-			favoriteUserIds.remove(usersId);
-			reviewDao.deleteLikeReview(postId, favoriteUserIds);
+			favoritePostIds.stream().forEach(ids->{
+				reviewDao.deleteLikeReview(ids);
+			});
 			return false;
 		} else {
 			// 찜하지 않은 경우
-			favoriteUserIds.add(usersId);
-			reviewDao.addLikeReview(postId, favoriteUserIds);
+			reviewDao.addLikeReview(dto);
 			return true;
 		}
 	}
+	
+	
+	// 관심유저 담아있지는 확인.
+	public boolean togglUserFavorite(LikeUserFavoriteDto dto) {
+		// 여행후기 찜 담아있는 내용 불러오기.
+		List<LikeUserFavoriteDto> favoriteUserIds = reviewDao.getFavoriteUserIds(dto);
+
+		// 현재 유저가 관심유저 담았는지 확인
+		if (favoriteUserIds.size() > 0) {
+			// 이미 찜한 경우 제거
+			favoriteUserIds.stream().forEach(ids->{
+				reviewDao.deleteLikeUser(ids);
+			});
+			return false;
+		} else {
+			// 찜하지 않은 경우
+			reviewDao.addLikeUser(dto);
+			return true;
+		}
+	}
+	
+	
 
 	// 여행후기 임시저장 불러오기
 	public List<DraftPost> draftList() {

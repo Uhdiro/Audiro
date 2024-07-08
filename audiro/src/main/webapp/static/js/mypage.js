@@ -25,64 +25,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	////////////////////////////////////////////////////////////
 
-	//유저 관심 담기
-	function likeBtn() {
-		alert('유저 좋아요');
+	// 유저 관심 담기(담고 삭제하기)
+	async function favoriteUser(event) {
+	    const tag = event.currentTarget;
+	    const userId = tag.attributes['data-user-id'].nodeValue; // 클릭된 버튼의 data-post-id 값 가져오기
+	    try {
+	        const response = await axios.post('/audiro/api/likeUser/toggle', { userId });
+	        if (response.data) {
+	            tag.classList.add('active'); // 관심 담기 추가된 경우 UI 업데이트
+	        } else if (!response.data) {
+	            tag.classList.remove('active'); // 관심 담기 제거된 경우 UI 업데이트
+	        }
+	    } catch (error) {
+	        console.error('Error toggling like:', error);
+	    }
 	}
 
-
-	/*
-	//여행후기 찜 담기
-	function favoriteReview(){
-		alert('후기 담기!!!')
-		const uri= `/audiro/api/review/likeReview`;
-					axios
-					.get(uri)
-					.then((response) => {
-						console.log("담기성공!!!");
-					})
-					.catch((error) => {
-					console.log(error);
-					});
-					}
-	*/
-
-
-
-
+	//여행후기 찜담기(찜담고 삭제기능)
 	async function favoriteReview(event) {
-		const postId = event.target.dataset.reviewId; // 클릭된 버튼의 data-review-id 값 가져오기
+		const tag = event.currentTarget;
+		const postId = tag.attributes['data-review-id'].nodeValue; // 클릭된 버튼의 data-review-id 값 가져오기
 		try {
-			const response = await axios.post('/api/review/likeReview/toggle', { postId });
-			if (response.data === 'Added to favorites') {
-				event.target.classList.add('active'); // 좋아요 추가된 경우 UI 업데이트
-			} else if (response.data === 'Removed from favorites') {
-				event.target.classList.remove('active'); // 좋아요 제거된 경우 UI 업데이트
+			const response = await axios.post('/audiro/api/review/likeReview/toggle', { postId });
+			if (response.data) {
+				tag.classList.add('active'); // 좋아요 추가된 경우 UI 업데이트
+			} else if (!response.data) {
+				tag.classList.remove('active'); // 좋아요 제거된 경우 UI 업데이트
 			}
 		} catch (error) {
 			console.error('Error toggling favorite:', error);
 		}
 	}
-
-
-	/*
-	// axios를 사용하여 서버에 POST 요청 보내기
-				axios.post('/likeReview', {
-					message: '후기를 저장합니다.'
-				})
-				.then(function (response) {
-					console.log('후기가 성공적으로 저장되었습니다.');
-					// 여기에 필요한 처리를 추가할 수 있습니다.
-				})
-				.catch(function (error) {
-					console.error('후기 저장 중 오류가 발생했습니다.', error);
-					// 오류 발생 시 처리할 내용을 추가할 수 있습니다.
-				});
-			*/
-
-
-
-
+	
 
 
 	//콤보박스
