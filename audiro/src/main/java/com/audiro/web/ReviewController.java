@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
 import com.audiro.repository.DraftPost;
 import com.audiro.repository.Post;
-
+import com.audiro.repository.User;
 import com.audiro.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class ReviewController {
 		//@RequestParam(name = "postId") Integer postId, 
 		 // @RequestParam(name= "usersId") Integer usersId, 
 		// post 객체
-		Post post = reviewService.readById(dto.getPostId());
+		Post post = reviewService.readById(dto.getPostId(),dto.getUsersId());
 		//굿 수
 		int countLike = reviewService.countGood(dto.getPostId());
 		//찜 수
@@ -87,30 +88,35 @@ public class ReviewController {
 	}
 
 	// 내 여행일기 페이지
-	@GetMapping("/mypage")
-	public String mypage(Model model, MyReviewListDto dto) {
-		// 내 여행일기 목록
-		List<MyReviewListDto> list = reviewService.myReviewList(dto);
-		model.addAttribute("list", list);
+	@GetMapping("/mypage/{usersId}")
+	public void mypage(Model model, MyReviewListDto dto, @PathVariable("usersId") User usersId) {
+	    // dto에 usersId 설정
+	    //dto.setUsersId(usersId);
+	    
+	    // 내 여행일기 목록
+	    List<MyReviewListDto> list = reviewService.myReviewList(dto);
+	    model.addAttribute("list", list);
 
-		// 내 여행일기 수
-		int countMyReview = reviewService.countMyReveiw(dto.getUsersId());
-		model.addAttribute("countMyReview", countMyReview);
-		// 나를 찜한 유저 수
-		int countLike = reviewService.countLike(dto.getUsersId());
-		model.addAttribute("countLike", countLike);
-		
-		return "redirect:/post/review/mypage?usersId=" + dto.getUsersId();
-
+	    // 내 여행일기 수
+	    int countMyReview = reviewService.countMyReveiw(usersId);
+	    model.addAttribute("countMyReview", countMyReview);
+	    // 나를 찜한 유저 수
+	    int countLike = reviewService.countLike(usersId);
+	    model.addAttribute("countLike", countLike);
 	}
+
 
 	// 여행후기수정페이지
 	@GetMapping("/modify")
-	public void reviewModify(@RequestParam(name = "postId") Integer postId, Model model) {
+	public String reviewModify(@RequestParam(name = "postId") Integer postId, 
+							   @RequestParam(name = "usersId") Integer usersId,
+							   Model model) {
 		log.debug("modify(postid={}", postId);
 
-		Post list = reviewService.readById(postId);
+		Post list = reviewService.readById(postId, usersId);
 		model.addAttribute("list", list);
+		
+		return "/post/review/modify?postId=" + postId;
 
 	}
 
@@ -123,11 +129,12 @@ public class ReviewController {
 
 	// 여행후기 목록 랭킹모델함께 보냄.
 	@GetMapping("/list")
-	public void reviewAllList(Model model, Post post) {
+	public void reviewAllList(Model model, Post post,  @PathVariable("usersId") Integer usersId) {
 		List<ListReviewDto> list = reviewService.readAll();
 		List<Post> rank = reviewService.selectUserTop3();
 
 		model.addAttribute("list", list);
+		model.addAttribute("user", usersId);
 		// model.addAttribute("rank",rank);
 
 	}

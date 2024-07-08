@@ -20,10 +20,10 @@ public interface ReviewDao {
 	List<MyReviewListDto> readMyReviewByGood();
 
 	// 나를 찜한 유저 수
-	int countLike(Integer postId);
+	int countLike(User usersId);
 
 	//내 여행일기 수
-	int countMyReveiw(Integer postId);
+	int countMyReveiw(User usersId);
 	
 	//여행후기 찜 수
 	int countFavoriteReveiw(Integer postId);

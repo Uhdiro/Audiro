@@ -43,20 +43,21 @@
 				<h4>여행후기 수정페이지</h4>
 			</div>
 			<div class="card-body">
-			   
-				<form id="modifyForm"  class="from-iline">
-					<div class="mt-2">
-						<input type="hidden" id="postId" name="postId" value="${list.postId}" />
-                        <input id="title" name="title" class="form-control" value="${list.title}" type="text" required />
-					</div>
-					<textarea id="summernote" name="content">${list.content}</textarea>
-					<div class="text-right mt-3">
-						<label id="modifiedTime" class="col-sm-2 col-form-label">${list.modifiedTime}</label>
-                    <button type="submit" class="btn" id="modifyBtn">수정완료</button> 
-                    </div>
-				</form>
 
-			</div>
+					<form id="modifyForm" action="/audiro/post/review/update"
+						method="post" class="form-inline">
+						<input type="hidden" id="postId" name="postId" value="${list.postId}" /> 
+					    <input type="hidden" id="usersId" name="usersId" value="${list.usersId}" /> 
+					    <input id="title" class="form-control" name="title" value="${list.title}"
+							   type="text" required />
+						<textarea id="summernote" name="content">${list.content}</textarea>
+						<div class="text-right mt-3">
+							<label id="modifiedTime" class="col-sm-2 col-form-label">${list.modifiedTime}</label>
+							<button class="btn btn-primary" id="modifyBtn">수정완료</button>
+						</div>
+					</form>
+
+				</div>
 
 		</div>
 

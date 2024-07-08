@@ -72,7 +72,7 @@
 			<div class="main-class mt-2 card">
 				
 					<input id="postId" name="postId" type="hidden" value="${post.postId}" /> 
-						<input id="usersId" name="usersId" type="hidden" value="${post.usersId}" />
+					<input id="usersId" name="usersId" type="hidden" value="${post.usersId}" />
 
 					<table class="table table-bordered">
 						<tbody>
@@ -115,6 +115,7 @@
 										</div>
 									</div>
 									<div>
+									<form class="reviewBtn">
 										<button id="deletebtn" class="btn btn-outline-danger"
 											style="margin-left: auto;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -122,6 +123,7 @@
 											</svg>	
 										</button>
 										<button id="modifybtn" class="btn btn-outline-success">수정</button>
+									</form>
 									</div>
 								</td>
 							</tr>

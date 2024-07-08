@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.audiro.dto.CreateReviewDto;
 import com.audiro.dto.LikeReviewPostDto;
@@ -18,6 +19,7 @@ import com.audiro.repository.DraftPost;
 import com.audiro.repository.FavoriteUsers;
 import com.audiro.repository.Post;
 import com.audiro.repository.ReviewDao;
+import com.audiro.repository.User;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,15 +60,15 @@ public class ReviewService {
 	}
 
 	// 나를 찜한 유저 수
-	public int countLike(Integer postId) {
+	public int countLike(User userId) {
 
-		int result = reviewDao.countLike(postId);
+		int result = reviewDao.countLike(userId);
 		return result;
 	}
 
 	// 내 여행일기 갯수
-	public int countMyReveiw(Integer postId) {
-		int result = reviewDao.countMyReveiw(postId);
+	public int countMyReveiw(User userId) {
+		int result = reviewDao.countMyReveiw(userId);
 		return result;
 	}
 	
@@ -104,10 +106,10 @@ public class ReviewService {
 
 	///////////////////////////////////////////////////////
 	// 내 여행후기게시판 상세보기
-	public Post readById(Integer postId) {
+	public Post readById(@RequestParam(name="postId") Integer postId, 
+						 @RequestParam(name="usersId") Integer usersId) {
 		Post list = reviewDao.readDetailsReviewById(postId);
 		
-
         // 날짜 포맷팅을 위한 패턴 설정
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -116,9 +118,7 @@ public class ReviewService {
 
         // 변환된 문자열을 설정
         list.setFormattedModifiedTime(formattedModifiedTime);
-
      
-
 		return list;
 	}
 

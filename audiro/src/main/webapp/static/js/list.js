@@ -3,7 +3,40 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+
+
+	//여행후기 찜 담기 클릭 이벤트
+	const btnReviewLike = document.querySelectorAll('.likeReview');
+	btnReviewLike.forEach(btn => {
+		btn.addEventListener('click', favoriteReview);
+	});
 	
+	
+	//여행후기 찜담기(찜담고 삭제기능)
+		async function favoriteReview(event) {
+			alert('찜!!!!!!!!!!!!!!!');
+			const tag = event.currentTarget;
+			const postId = tag.attributes['data-review-id'].nodeValue; // 클릭된 버튼의 data-review-id 값 가져오기
+			const usersId = document.querySelector('input#usersId').value;
+			
+			console.log('Post ID:', postId); // 디버깅을 위해 콘솔에 출력
+			console.log('Users ID:', usersId); // 디버깅을 위해 콘솔에 출력
+			
+			try {
+				const response = await axios.post('/audiro/api/review/likeReview/toggle', { postId });
+				if (response.data) {
+					tag.classList.add('active'); // 좋아요 추가된 경우 UI 업데이트
+				} else if (!response.data) {
+					tag.classList.remove('active'); // 좋아요 제거된 경우 UI 업데이트
+				}
+			} catch (error) {
+				console.error('Error toggling favorite:', error);
+			}
+		}
+
+
+
+	//정렬
 	const rankForm = document.getElementById('rank');
 	const selectElement = rankForm.querySelector('select');
 
@@ -29,15 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 
-// 리뷰 목록을 업데이트하는 함수
-function updateReviewList(data) {
-    const reviewContainer = document.querySelector('.row.row-cols-1.row-cols-md-4.g-4'); // 리뷰 목록 컨테이너 요소
-    reviewContainer.innerHTML = ''; // 기존 리뷰 목록 제거
-    
-    data.forEach(review => {
-        const reviewCard = document.createElement('div');
-        reviewCard.className = 'col';
-        reviewCard.innerHTML = `
+	// 리뷰 목록을 업데이트하는 함수
+	function updateReviewList(data) {
+		const reviewContainer = document.querySelector('.row.row-cols-1.row-cols-md-4.g-4'); // 리뷰 목록 컨테이너 요소
+		reviewContainer.innerHTML = ''; // 기존 리뷰 목록 제거
+
+		data.forEach(review => {
+			const reviewCard = document.createElement('div');
+			reviewCard.className = 'col';
+			reviewCard.innerHTML = `
             <div class="card h-80">
                 <div class="card-header" style="text-align: right">
                     <button class="btn like-btn" data-review-id="${review.postId}">
@@ -61,9 +94,9 @@ function updateReviewList(data) {
                 </div>
             </div>
         `;
-        reviewContainer.appendChild(reviewCard);
-    });
-}
+			reviewContainer.appendChild(reviewCard);
+		});
+	}
 
 
 
