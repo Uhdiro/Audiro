@@ -22,29 +22,4 @@
 
 </insert>
 
-	<!-- detailed_plan 테이블에 데이터 삽입 <insert id="insertDetailedPlan" parameterType="java.util.List"> 
-		<foreach collection="list" item="detailedPlan" separator=";"> insert into 
-		detailed_plan (travel_plan_id, destination_id, day, start_time, end_time) 
-		values (#{detailedPlan.travelPlanId}, #{detailedPlan.destinationId}, #{detailedPlan.day}, 
-		#{detailedPlan.startTime}, #{detailedPlan.endTime}) </foreach> </insert> 
-		<insert id="insertDetailedPlan" parameterType="java.util.List"> <foreach 
-		collection="list" item="item" close="select * from dual" separator=" "> insert 
-		into detailed_plan (travel_plan_id, destination_id, day, start_time, end_time) 
-		values (#{item.travelPlanId}, #{item.destinationId}, #{item.day}, #{item.startTime}, 
-		#{item.endTime}) </foreach> </insert> -->
-
-	<!-- 
-	<insert id="insertDetailedPlan"  parameterType="java.util.List"
-		keyProperty="item.detailedPlanId" keyColumn="detailed_plan_id"
-		useGeneratedKeys="true">
-		<foreach collection="list" item="item" separator=";">
-			insert into
-			detailed_plan (travel_plan_id, destination_id, day, start_time,
-			end_time)
-			values (#{item.travelPlanId}, #{item.destinationId},
-			#{item.day},
-			#{item.startTime}, #{item.endTime})
-		</foreach>
-	</insert>
-	-->
 </mapper>
