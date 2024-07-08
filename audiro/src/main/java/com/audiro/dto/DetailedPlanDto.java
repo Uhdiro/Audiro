@@ -1,21 +1,18 @@
 package com.audiro.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import com.audiro.repository.DetailedPlan;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class DetailedPlanDto {
 	private Integer travelPlanId;
 	private Integer destinationId;
 	private Integer day;
-	private Timestamp startTime;
-	private Timestamp endTime;
+	private LocalDate startTime;
+	private LocalDate endTime;
 	
 	public DetailedPlan toEntity() {
 		return DetailedPlan.builder()

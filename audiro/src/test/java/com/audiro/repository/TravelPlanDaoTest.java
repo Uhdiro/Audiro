@@ -1,7 +1,7 @@
 package com.audiro.repository;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,14 +21,14 @@ public class TravelPlanDaoTest {
 	@Autowired
 	private TravelPlanDao travelPlanDao;
 	
-	//@Test
+	@Test
 	public void testInsertTravelPlanDao() {
 		TravelPlan plan = TravelPlan.builder()
 				.usersId(1)
 				.title("JUnit test")
-				.startDate(new Date(Timestamp.valueOf("2024-07-05 00:00:00").getTime()))
+				.startDate(LocalDate.of(2020, 1, 8))
 				.duration(2)
-				.endDate(new Date(Timestamp.valueOf("2024-07-06 23:59:59").getTime()))
+				.endDate(LocalDate.of(2020, 1, 8))
 				.build();
 		Long result = travelPlanDao.insertTravelPlan(plan);
 		log.debug("result={}, id={}", 

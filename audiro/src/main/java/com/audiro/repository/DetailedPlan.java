@@ -1,6 +1,6 @@
 package com.audiro.repository;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +16,6 @@ public class DetailedPlan {
 	private Integer travelPlanId;
 	private Integer destinationId;
 	private Integer day;
-	private Timestamp startTime;
-	private Timestamp endTime;
+	private LocalDate startTime;
+	private LocalDate endTime;
 }

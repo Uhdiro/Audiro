@@ -1,8 +1,6 @@
 package com.audiro.dto;
 
-import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 import com.audiro.repository.TravelPlan;
 
@@ -13,9 +11,9 @@ public class TravelPlanDto {
 	private int travelPlanId; // travel_plan_id
 	private Integer usersId;
 	private String title;
-	private Date startDate;
+	private LocalDate startDate;
 	private Integer duration;
-	private Date endDate;
+	private LocalDate endDate;
 	
 	public TravelPlan toEntity() {
 		return TravelPlan.builder()

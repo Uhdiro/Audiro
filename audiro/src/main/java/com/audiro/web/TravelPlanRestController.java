@@ -51,6 +51,7 @@ public class TravelPlanRestController {
 	
 	@PostMapping("/create/detailedPlan")
 	public ResponseEntity<Integer> createDetailedPlan(@RequestBody List<DetailedPlanDto> dto){
+		log.debug("rest");
 		int result=planService.createDetailedPlan(dto);
 		return ResponseEntity.ok(result);
 	}

@@ -1,10 +1,7 @@
 package com.audiro.repository;
 
 import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.List;
-
-import com.audiro.dto.DetailedPlanDto;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +16,9 @@ public class TravelPlan {
 	private Integer travelPlanId;
 	private Integer usersId;
 	private String title;
-	private Date startDate;
+	private LocalDate startDate;
 	private Integer duration;
-	private Date endDate;
+	private LocalDate endDate;
 	private Integer isReviewed;
 	private Timestamp createdTime;
 	private Timestamp modifiedTime;
