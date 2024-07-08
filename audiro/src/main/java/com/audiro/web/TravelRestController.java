@@ -1,6 +1,8 @@
 package com.audiro.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +27,22 @@ public class TravelRestController {
 	
 	@GetMapping("/search-tags")
 	@ResponseBody
-	public ResponseEntity<List<TravelDestinationListDto>> searchByTags(
+	public Map<String, Object> getDestinations(
 			@RequestParam(name = "region", required = false) String[] regions,
 			@RequestParam(name = "theme", required = false) String[] themes,
 			@RequestParam(name = "companion", required = false) String[] companions,
-			@RequestParam(name = "keyword", required = false) String keyword) {
+			@RequestParam(name = "keyword", required = false) String keyword,
+			@RequestParam(defaultValue = "1") int currentPage) {
 		
-		List<TravelDestinationListDto> dto = destiService.searchByTagsAndKeyword(regions, themes, companions, keyword);
+		int itemsPerPage = 15;
+		int totalPages = destiService.getTotalPages(regions, themes, companions, keyword, itemsPerPage);
+		List<TravelDestinationListDto> dto = 
+				destiService.searchByTagsAndKeyword(regions, themes, companions, keyword, currentPage, itemsPerPage);
 		
-		return ResponseEntity.ok(dto);
+		Map<String, Object> response = new HashMap<>();
+		response.put("destinations", dto);
+		response.put("totalPages", totalPages);
+		
+		return response;
 	}
 }

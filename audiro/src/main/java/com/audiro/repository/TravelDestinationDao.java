@@ -13,6 +13,12 @@ public interface TravelDestinationDao {
 	TravelDestination selectAllById(Integer id);
 	
 	List<TravelDestination> selectNameAndImgUrlByTagsAndKeyword(
+			String[] region, String[] theme, String[] companion, String keyword,
+			int offset, int limit
+	);
+	
+	int countDestinations(
 			String[] region, String[] theme, String[] companion, String keyword
 	);
+
 }

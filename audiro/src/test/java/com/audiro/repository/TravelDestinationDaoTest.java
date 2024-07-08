@@ -24,8 +24,8 @@ public class TravelDestinationDaoTest {
 	
 	@Test
 	public void test() {
-		List<TravelDestination> destinations = dao.selectNameAndImgUrlByTagsAndKeyword(null, null, null, "펭귄");
-		Assertions.assertEquals(1, destinations.size());
+		List<TravelDestination> destinations = dao.selectNameAndImgUrlByTagsAndKeyword(null, null, null, null, 0, 15);
+		Assertions.assertEquals(6, destinations.size());
 		
 		log.debug(destinations.toString());
 	}

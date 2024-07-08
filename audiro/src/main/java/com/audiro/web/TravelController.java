@@ -24,10 +24,8 @@ public class TravelController {
 	private final TravelDestinationService service;
 	
 	@GetMapping("/search")
-	public void search(Model model) {
-		List<TravelDestination> list = service.findAll();
+	public void search() {
 		
-		model.addAttribute("destinations", list);
 	}
 	
 	@GetMapping("/details")

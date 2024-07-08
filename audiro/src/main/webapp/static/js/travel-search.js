@@ -19,9 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let themeTags = [];
     let companionTags = [];
     let keyword = '';
+    let currentPage = 1;
 
     const tagCategories = {};
+    
+    loadInitialData();
 
+    function loadInitialData() {
+        const initialUri = baseUri.slice(0, -1);
+        sendRequest(initialUri);
+    }
+    
     function clickTag(event) {
         const tag = event.target.textContent.substring(2);
         const category = event.target.parentElement.querySelector('p').textContent;
@@ -39,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tagList.push(tag);
             tagCategories[tag] = category;
         }
-
+        
+        currentPage = 1;
+        
         updateUri();
     }
 
@@ -55,8 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
             target.remove();
             tagList.splice(tagList.indexOf(tag), 1);
             delete tagCategories[tag];
+        } else {
+            return
         }
-
+        
+        currentPage = 1;
+        
         updateUri();
     }
     
@@ -87,7 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
             uri += `keyword=${keyword}&`;
         }
         
-        uri = uri.slice(0, -1);
+        uri += `currentPage=${currentPage}`;
+        
         console.log(uri);
         
         sendRequest(uri);
@@ -97,7 +112,11 @@ document.addEventListener('DOMContentLoaded', function() {
         axios.get(uri)
         .then(response => {
             console.log(response.data);
-            updateDestinations(response.data);
+            const destinations = response.data.destinations;
+            const totalPages = response.data.totalPages;
+            
+            updateDestinations(destinations);
+            updatePagination(totalPages);
         })
         .catch(error => {
             console.log(error);
@@ -124,7 +143,71 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function clickBtnSearch() {
         keyword = document.querySelector('input#inputSearch').value;
+        
+        currentPage = 1;
+        
         updateUri();
+    }
+    
+    function updatePagination(totalPages) {
+        const pagination = document.querySelector('ul#pagination');
+        pagination.innerHTML = '';
+    
+        const firstPage = `
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        `;
+        pagination.innerHTML += firstPage;
+    
+        for (let i = 1; i <= totalPages; i++) {
+            const btnPage = `
+                <li class="page-item ${currentPage === i ? 'active' : ''}">
+                    <a class="page-link" href="#" data-page="${i}">${i}</a>
+                </li>
+            `;
+            pagination.innerHTML += btnPage;
+        }
+    
+        // 오른쪽 화살표 버튼 (마지막 페이지로 이동)
+        const lastPage = `
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        `;
+        pagination.innerHTML += lastPage;
+    
+        const pageLinks = pagination.querySelectorAll('.page-link');
+        pageLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const ariaLabel = event.target.getAttribute('aria-label');
+                if (ariaLabel === 'First') {
+                    currentPage = 1; // 첫 번째 페이지로 이동
+                } else if (ariaLabel === 'Last') {
+                    currentPage = totalPages; // 마지막 페이지로 이동
+                } else {
+                    const page = parseInt(event.target.dataset.page);
+                    if (!isNaN(page)) {
+                        currentPage = page;
+                    }
+                }
+                updateUri();
+            });
+        });
+        
+        const firstArrow = pagination.querySelector('[aria-label="First"]');
+        const lastArrow = pagination.querySelector('[aria-label="Last"]');
+        if (currentPage === 1) {
+            firstArrow.parentElement.classList.add('disabled');
+        }
+        if (currentPage === totalPages) {
+            lastArrow.parentElement.classList.add('disabled');
+        }
     }
 
 });

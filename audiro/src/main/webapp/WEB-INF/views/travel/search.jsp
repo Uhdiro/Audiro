@@ -75,20 +75,13 @@
                     
                     <div id="cardContainer">
                         <div class="row">
-                            <c:forEach var="d" items="${destinations}">
-                                <div class="col-4">
-                                    <c:url var="destinationDetailsPage" value="/travel/details">
-                                        <c:param name="id" value="${d.travelDestinationId}"></c:param>
-                                    </c:url>
-                                    <a href ="${destinationDetailsPage}">
-                                        <img src="${d.imgUrl}" alt="${d.name}" />
-                                        <p>${d.name}</p>
-                                    </a>
-                                </div>
-                            </c:forEach>
                         </div>
                     </div>
                     
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="pagination">
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </main>

@@ -38,11 +38,26 @@ public class TravelDestinationService {
 		return dto;
 	}
 	
-	public List<TravelDestinationListDto> searchByTagsAndKeyword(String[] regions, String[] themes, String[] companions, String keyword) {
-        List<TravelDestination> destinations = dao.selectNameAndImgUrlByTagsAndKeyword(regions, themes, companions, keyword);
+	public List<TravelDestinationListDto> searchByTagsAndKeyword(
+			String[] regions, String[] themes, String[] companions, String keyword,
+			int currentPage, int itemsPerPage) {
+		
+		int offset = (currentPage - 1) * itemsPerPage;
+		
+        List<TravelDestination> destinations = 
+        		dao.selectNameAndImgUrlByTagsAndKeyword(regions, themes, companions, keyword, offset, itemsPerPage);
         List<TravelDestinationListDto> dto = TravelDestinationListDto.fromEntities(destinations);
 		
 		return dto;
     }
+	
+	public int getTotalPages(
+			String[] regions, String[] themes, String[] companions, String keyword, int itemsPerPage) {
+		
+		int totalDestinations = dao.countDestinations(regions, themes, companions, keyword);
+		int totalPages = (int) Math.ceil((double) totalDestinations / itemsPerPage);
+		
+		return totalPages;
+	}
 
 }
