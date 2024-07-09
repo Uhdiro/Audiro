@@ -1,5 +1,7 @@
 package com.audiro.dto;
 
+import java.time.LocalDateTime;
+
 import com.audiro.repository.FavoriteUsers;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ public class FavoriteUsersDto {
 		private Integer favoriteUsersId;
 		private Integer usersId;
 		private Integer interestedUserId;
+		private LocalDateTime createdTime;
 		private String interestedUserNickname;
 		
 		public static FavoriteUsersDto fromEntity(FavoriteUsers favoriteusers) {
@@ -23,6 +26,7 @@ public class FavoriteUsersDto {
 					.favoriteUsersId(favoriteusers.getFavoriteUsersId())
 					.usersId(favoriteusers.getUsersId())
 					.interestedUserId(favoriteusers.getInterestedUserId())
+					.createdTime(favoriteusers.getCreatedTime())
 					.interestedUserNickname(favoriteusers.getInterestedUserNickname())
 					.build();
 		}

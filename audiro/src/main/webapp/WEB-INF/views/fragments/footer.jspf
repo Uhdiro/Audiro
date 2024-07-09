@@ -14,6 +14,7 @@
     crossorigin="anonymous">
     
     <style>
+    		
         .footer {
             position: relative;
             left: 0;
@@ -22,13 +23,14 @@
             color: #333;
             text-align: center;
             padding: 50px;
+            z-index: 100;
         }
         
         #scrollToTopBtn {
             display: none; /* initially hide the button */
             position: fixed;
-            bottom: 20px;
-            right: 30px;
+            bottom: 15px;
+            right: 100px;
             z-index: 99;
             border: none;
             outline: none;
@@ -59,7 +61,7 @@
             <img src="${scrollToTop}" alt="Scroll to top">
         </button>
     </footer>
-
+    
     <script>
         // When the user clicks on the button, scroll to the top of the document
         function scrollToTop() {

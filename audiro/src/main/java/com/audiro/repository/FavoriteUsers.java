@@ -1,5 +1,7 @@
 package com.audiro.repository;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,6 +16,7 @@ public class FavoriteUsers {
 	private Integer favoriteUsersId;
 	private Integer usersId;
 	private Integer interestedUserId;
+	private LocalDateTime createdTime;
 	private String interestedUserNickname;
 
 }
