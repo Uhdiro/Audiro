@@ -41,19 +41,21 @@
 									<div class="row g-0 m-2">
 										<div class="col-sm-6 col-12 mb-2">
 											<div id="title" class="mb-2">
-												<input type="text" id="title" name="title" maxlength="40"
+												<input type="text" id="title" maxlength="40"
 													value="${travelPlan.title}" class="form-control" />
 											</div>
 										</div>
 										<div class="date col-sm-3 col-6 mb-2">
-											<input type="text" id="startDate" name="startDate"
-												class="form-control" value="${travelPlan.startDate}" readonly /> <input
-												type="hidden" id="duration" name="duration" />
+											<input type="text" id="startDate"
+												class="form-control" value="${travelPlan.startDate}" readonly /> 
+											<input type="hidden" id="duration" />
 										</div>
 										<div class="date col-sm-3 col-6 mb-2">
-											<input type="text" id="endDate" name="endDate"
+											<input type="text" id="endDate"
 												class="form-control" value="${travelPlan.endDate}" readonly />
 										</div>
+										<!-- hidden input for travelPlanId -->
+										<input type="hidden" id="travelPlanId" name="travelPlanId" value="${travelPlan.travelPlanId}" />
 										
 
 									</div>

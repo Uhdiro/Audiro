@@ -10,7 +10,6 @@ $(document).ready(function () {
 	const deleteAll = document.querySelector('button#deleteAll');
 	const btnSave=document.querySelector('#btnSave');
 	
-
 	// Datepicker 초기화
 	$('#startDate').datepicker({
 		format: 'yyyy-mm-dd',
@@ -29,9 +28,8 @@ $(document).ready(function () {
 		getDateRange(false); // showModal을 false로 전달
 	});
 
-
 	defaultDay();
-
+	
 	btnSave.addEventListener('click', function(event) {
 		event.preventDefault(); // 폼 제출 기본 동작 막기
 		createTravelPlan();

@@ -73,6 +73,10 @@
 					</form>
 
 				</div>
+				<div>
+					<!-- hidden input for travelPlanId -->
+                	<input type="hidden" id="travelPlanIdForModify" name="travelPlanIdForModify" value="${travelPlanIdForModify}" />
+				</div>
 
 				<div class="card col-4 px-0">
 					<div class="card-body">
@@ -131,13 +135,14 @@
 	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	
-	<c:url var="planJS" value="/js/plan.js" />
-	<script src="${planJS}"></script>
-
 	<c:url var="destinationJS" value="/js/plan_fav_des.js" />
 	<script src="${destinationJS}"></script>
 	
-	
+	<c:url var="planJS" value="/js/plan.js" />
+	<script src="${planJS}"></script>
+
+	<c:url var="modifyJS" value="/js/plan_modify.js" />
+	<script src="${modifyJS}"></script>
 
 </body>
 </html>

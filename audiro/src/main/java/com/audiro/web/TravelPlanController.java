@@ -47,7 +47,8 @@ public class TravelPlanController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify() {
+	public String modify(@RequestParam("travelPlanId") int travelPlanIdForModify, Model model) {
+		model.addAttribute("travelPlanIdForModify", travelPlanIdForModify);
 		return "travel/plan";
 	}
 }
