@@ -30,6 +30,19 @@ $(document).ready(function () {
 
 	defaultDay();
 	
+	const currentPath = window.location.pathname;
+	console.log(currentPath);
+
+	// 수정 용
+	if (currentPath === "/audiro/travel/plan/modify") {
+		modify();
+	}
+
+	function modify() {
+		const travelPlanIdForModify = document.querySelector('#travelPlanIdForModify').value;
+
+	}
+	
 	btnSave.addEventListener('click', function(event) {
 		event.preventDefault(); // 폼 제출 기본 동작 막기
 		createTravelPlan();

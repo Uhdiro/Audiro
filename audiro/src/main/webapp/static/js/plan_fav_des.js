@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	getAllFavDestination();
 
 	function getAllFavDestination() {
-		const uri = '../api/plan/fav';
+		const uri = '/audiro/api/plan/fav';
 		axios
 			.get(uri)
 			.then((response) => {

@@ -34,7 +34,7 @@ public class TravelPlanController {
 	public String couse(Model model) {
 		List<TravelPlan> list= service.readAllTravelPlan();
 		model.addAttribute("travelPlan", list);
-		return "travel/plan_list";
+		return "/travel/plan_list";
 	}
 	
 	@GetMapping("/details")
@@ -43,12 +43,12 @@ public class TravelPlanController {
 		List<DetailedPlanDto> list=service.readDetailedPlanByTravelPlanId(id);
 		model.addAttribute("travelPlan",plan);
 		log.debug("dp={}",list);
-		return "travel/plan_details";
+		return "/travel/plan_details";
 	}
 	
 	@PostMapping("/modify")
 	public String modify(@RequestParam("travelPlanId") int travelPlanIdForModify, Model model) {
 		model.addAttribute("travelPlanIdForModify", travelPlanIdForModify);
-		return "travel/plan";
+		return "/travel/plan";
 	}
 }

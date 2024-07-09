@@ -12,8 +12,8 @@ $(document).ready(function() {
 		modify();
 	}
 
-});
 	function modify() {
 		const travelPlanIdForModify = document.querySelector('#travelPlanIdForModify').value;
 
 	}
+});
