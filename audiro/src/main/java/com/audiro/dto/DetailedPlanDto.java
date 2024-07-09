@@ -16,6 +16,7 @@ public class DetailedPlanDto {
 	private LocalDate endTime;
 	private String name;
 	private String imgUrl;
+	private Integer favoriteDestinationId;
 	
 	public DetailedPlan toEntity() {
 		return DetailedPlan.builder()

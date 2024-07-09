@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// 이미 해당 day-id를 가진 요소가 있는지 체크
 
 		for (let i = 1; i <= maxDay; i++) {
-			dayStr += `
+			dayStr = `
                         <div class="days non-click row g-0 my-1 p-2" id="index${i}" day-id="${i}">
                             <div class="col-2">
                                 <img class="collapseImg" alt="collapseImg" src="/audiro/images/collapse.png" />
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                     `;
-			planStr += `
+			planStr = `
                 	<div id="dayPlan${i}" day-id="${i}" class="plans row g-0 m-2">
 						<h5>${i}일차</h5>
 						<div class="timeline">
@@ -50,30 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
 						</div>
 					</div>
                 `;
-		}
 		dayContainer.insertAdjacentHTML('beforeend', dayStr);
 		planContainer.insertAdjacentHTML('beforeend', planStr);
+		}
 	}
 
 	function getDetailedPlans(data) {
 		detailedPlans = data.list;
 		maxDay = data.maxDay;
 		detailedPlans.forEach((d) => {
-			let htmlStr='';
-			let li='';
-			for (let i = 1; i <= maxDay; i++) {
-				li=document.querySelector(`#dayPlan${i} ul`);
-				htmlStr = `
-	                <div class="favDestination col" fav-id="${d.detailedPlanId}">
-							<div class="card">
-								<img src="${d.imgUrl}" class="card-img-top" alt="${d.name}"/>
-								<div class="card-body">
-									<h5 class="cardTitle">${d.name}</h5>
-								</div>
-							</div>
-					</div>
+			const li=document.querySelector(`#dayPlan${d.day} ul`);
+			let htmlStr = `
+                <li id="list${d.favoriteDestinationId}" class="list row g-0 my-1 p-2" des-id="${d.destinationId}">
+	            	<div class="name col-10">${d.name}</div>
+	            	
+                </li>
 		`;
-			}
+			
 			li.insertAdjacentHTML('beforeend', htmlStr);
 		});
 	}

@@ -24,22 +24,12 @@
 				<div class="card-header">
 					<c:url var="planSearchPage" value="/list/search" />
 					<form method="get" action="${planSearchPage}"> <!-- 검색바 -->
-						<div class="row">
+						<div class="row justify-content-end">
 							<div class="col-3">
 								<select class="form-control" name="category">
-									<option value="t">제목</option>
+									<option value="t">최신순</option>
 									<option value="c">내용</option>
-									<option value="tc">제목+내용</option>
-									<option value="a">작성자</option>
 								</select>
-							</div>
-							<div class="col-7">
-								<input class="form-control"
-								type="text" name="keyword" placeholder="검색어 입력" required/>
-							</div>
-							<div class="col-2">
-								<input class="form-control btn btn-outline-secondary" 
-								type="submit" value="검색" />
 							</div>
 						</div>
 					</form>
@@ -63,9 +53,19 @@
 	                                	</c:url>
 	                               		<a href="${planDetailsPage}">${t.title}</a>
 									</td>
-									<td>${t.duration}</td>
+									<c:set var="days" value="${t.duration+1}"></c:set>
+									<td>${t.duration}박 ${days}일</td>
 									<td>${t.startDate}~${t.endDate}</td>
-									<td>${t.isReviewed}</td>
+									<td>
+										<c:choose>
+											<c:when test="${t.isReviewed==0}">
+												No
+											</c:when>
+											<c:when test="${t.isReviewed==1}">
+												Yes
+											</c:when>
+										</c:choose>
+										</td>
 								</tr>
 							</c:forEach>
 						</tbody>

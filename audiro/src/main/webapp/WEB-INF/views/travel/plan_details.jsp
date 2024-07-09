@@ -15,16 +15,17 @@
 	
 	<c:url var="planCSS" value="/css/plan.css" />
 	<link rel="stylesheet" href="${planCSS}">
+	
+	<c:url var="timelineCSS" value="/css/plan_timeline.css" />
+	<link rel="stylesheet" href="${timelineCSS}">
 </head>
 <body>
 	<div class="container-fluid">
 		<%@ include file="../fragments/header.jspf"%>
-		<div class="container-full mx-5 text-center">
-			<div class="row">
-				<div class="card col-8 px-0">
+		<div class="container-full mx-5 text-center card px-0">
 					<c:url var="modifyPlan" value="/api/plan/modify"></c:url>
 					<form method="post" action="${modifyPlan}">
-						<div class="row g-0 ">
+						<div class="row">
 							<div class="col-3 p-2 ">
 								<div class="row g-0">
 									<div id="btnContainer">
@@ -62,8 +63,7 @@
 					</form>
 				</div>
 			</div>
-		</div>
-	</div>
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
