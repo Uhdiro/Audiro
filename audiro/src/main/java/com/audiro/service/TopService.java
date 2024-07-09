@@ -23,10 +23,12 @@ public class TopService {
 		return topDestinationDao.selectTopDestination();
 	}
 	
+	// 찜 상태
 	public Integer getFavoriteState(FavoriteStateReqDto dto) {
 		return topDestinationDao.selectFavoriteState(dto);
 	}
 	
+	// 찜 추가
 	public void addFavorite(FavoriteUpdateReqDto dto) {
 		log.debug("Adding favorite for user: {} and destination: {}", dto.getSignedInUser(), dto.getTravelDestinationId());
         
@@ -36,7 +38,8 @@ public class TopService {
             log.error("Error inserting favorite", e);
         }
     }
-
+	
+	// 찜 삭제
     public void removeFavorite(FavoriteUpdateReqDto dto) {
     		log.debug("Removing favorite for user: {} and destination: {}", dto.getSignedInUser(), dto.getTravelDestinationId());
         try {

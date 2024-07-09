@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.audiro.dto.UserSignUpDto;
+import com.audiro.dto.UserSigninDto;
 import com.audiro.repository.ProfileDao;
 import com.audiro.repository.User;
 import com.audiro.repository.UserDao;
@@ -75,5 +76,16 @@ public class UserService {
 		profileDao.insertProfileByUsersId(user.getUsersId());
 		
 		return result;
+	}
+	
+	public User signin(UserSigninDto dto) {
+		User user = userDao.selectById(dto.getId());
+		
+		if (user != null && passwordEncoder.matches(dto.getPasswordHash(), user.getPasswordHash())) {
+			return user;
+		} else {
+			return null;
+		}
+		
 	}
 }

@@ -12,6 +12,7 @@ import com.audiro.dto.TopDestinationDto;
 public interface TopDestinationDao {
 	List<TopDestinationDto> selectTopDestination();
 	
+	// 메인 인기 여행지 찜 상태, 업데이트 
 	Integer selectFavoriteState(FavoriteStateReqDto dto);
 	void insertFavorite(FavoriteUpdateReqDto dto);
     void deleteFavorite(FavoriteUpdateReqDto dto);

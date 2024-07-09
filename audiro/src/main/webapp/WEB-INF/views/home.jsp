@@ -1,3 +1,5 @@
+<%@page import="com.audiro.dto.TopDestinationDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -19,6 +21,7 @@
 </head>
 
 <body>
+
 	<div class="container-fluid">
 		<%@ include file="./fragments/header.jspf"%>
 	</div>
@@ -92,31 +95,33 @@
 		<div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
 				<c:forEach items="${topDestination}" var="destination" varStatus="status">
-					<c:choose>
-						<c:when test="${status.index % 3 == 0}">
-							<div class="carousel-item ${status.index == 0 ? 'active' : ''}">
-								<div class="d-flex justify-content-center">
-						</c:when>
-					</c:choose>
-
-					<div class="carousel-image">
-						<p class="review-rank">${status.index + 1}위</p>
-						
-						<p class="like" onclick="toggleLike(this)" data-id="${destination.travelDestinationId}">
-							 <img src="images/like.png" alt="like">
-						</p>
-						
-						<img src="${destination.imgUrl}" class="d-block w-100"
-							alt="${destination.name}">
-					</div>
-
-					<c:choose>
-						<c:when
-							test="${status.index % 3 == 2 || status.index == (topDestination.size() - 1)}">
-								</div>
-							</div>
-						</c:when>
-					</c:choose>
+				    <c:choose>
+				        <c:when test="${status.index % 3 == 0}">
+				            <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+				                <div class="d-flex justify-content-center">
+				        </c:when>
+				        <c:otherwise>
+				            <!-- 기본 동작을 정의할 필요가 없다면 이 블록은 비워둘 수 있습니다 -->
+				        </c:otherwise>
+				    </c:choose>
+				
+				    <div class="carousel-image">
+				        <p class="review-rank">${status.index + 1}위</p>
+				        <img src="${destination.imgUrl}" class="d-block w-100" alt="${destination.name}">
+				        <p class="like" onclick="toggleLike(this)" data-id="${destination.travelDestinationId}">
+				            <img src="images/like.png" alt="like" />
+				        </p>
+				    </div>
+				
+				    <c:choose>
+				        <c:when test="${status.index % 3 == 2 || status.index == (topDestination.size() - 1)}">
+				                </div>
+				            </div>
+				        </c:when>
+				        <c:otherwise>
+				            <!-- 기본 동작을 정의할 필요가 없다면 이 블록은 비워둘 수 있습니다 -->
+				        </c:otherwise>
+				    </c:choose>
 				</c:forEach>
 			</div>
 
@@ -129,25 +134,25 @@
 			data-bs-target="#destinationCarousel" data-bs-slide="prev">
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
 				xmlns="http://www.w3.org/2000/svg">
-			            <path fill-rule="evenodd"
+				<path fill-rule="evenodd"
 					d="M11.854 1.646a.5.5 0 0 1 0 .708L5.707 8l6.147 5.646a.5.5 0 0 1-.708.708l-6.5-6a.5.5 0 0 1 0-.708l6.5-6a.5.5 0 0 1 .708 0z" />
-			        </svg>
+			</svg>
 		</button>
 		<button class="carousel-control-btn pause" type="button"
-			id="pauseButton1">
+			data-bs-target="#destinationCarousel" id="pauseButton1">
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
 				xmlns="http://www.w3.org/2000/svg">
-			            <path fill-rule="evenodd"
+				<path fill-rule="evenodd"
 					d="M5 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9zM9 3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-9z" />
-			        </svg>
+			</svg>
 		</button>
 		<button class="carousel-control-btn next" type="button"
 			data-bs-target="#destinationCarousel" data-bs-slide="next">
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
 				xmlns="http://www.w3.org/2000/svg">
-			            <path fill-rule="evenodd"
+				<path fill-rule="evenodd"
 					d="M4.146 1.646a.5.5 0 0 1 .708 0l6.5 6a.5.5 0 0 1 0 .708l-6.5 6a.5.5 0 0 1-.708-.708L10.293 8 4.146 2.854a.5.5 0 0 1 0-.708z" />
-			        </svg>
+			</svg>
 		</button>
 	</div>
 	</div>
@@ -260,22 +265,20 @@
 	<!-- js -->
 	<c:url var="destinationJS" value="/js/destination.js" />
 	<script src="${destinationJS}"></script>
-	
+
 	<script>
 		window.embeddedChatbotConfig = {
-		chatbotId: "pgf573bMUX-3poQ0E4AMT",
-		domain: "www.chatbase.co"
+			chatbotId : "pgf573bMUX-3poQ0E4AMT",
+			domain : "www.chatbase.co"
 		}
 	</script>
-	<script
-		src="https://www.chatbase.co/embed.min.js"
-		chatbotId="pgf573bMUX-3poQ0E4AMT"
-		domain="www.chatbase.co"
-		defer>
+	<script src="https://www.chatbase.co/embed.min.js"
+		chatbotId="pgf573bMUX-3poQ0E4AMT" domain="www.chatbase.co" defer>
+		
 	</script>
 
 	<script>
-	const signedInUser = `${signedInUser}`;
+		const signedInUser = `${signedInUser}`;
 	</script>
 	<c:url var="homeJS" value="/js/home.js" />
 	<script src="${homeJS}"></script>

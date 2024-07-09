@@ -33,19 +33,27 @@
                         <!--Nav tabs -->
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#tab-destination">여행지</a>
+                                <a class="nav-link ${activeTab == '#tab-destination' ? 'active' : ''}" data-bs-toggle="tab" href="#tab-destination">여행지</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#tab-users">관심유저</a>
+                                <a class="nav-link ${activeTab == '#tab-users' ? 'active' : ''}" data-bs-toggle="tab" href="#tab-users">관심유저</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#tab-post">여행후기</a>
+                                <a class="nav-link ${activeTab == '#tab-post' ? 'active' : ''}" data-bs-toggle="tab" href="#tab-post">여행후기</a>
                             </li>
                         </ul>
                         
+                        <!-- Sort Options -->
+						<div id="sort-container" class="mt-3">
+						    <select id="sort-select" onchange="sortFavorites()">
+						        <option value="created_time" ${currentSort == 'created_time' ? 'selected' : ''}>최근 ♥순</option>
+						        <option value="name" ${currentSort == 'name' ? 'selected' : ''}>이름순</option>
+						    </select>
+						</div>
+                        
                         <!--Tab panes -->
                         <div class="tab-content">
-                            <div id="tab-destination" class="tab-pane fade show active">
+                            <div id="tab-destination" class="tab-pane fade ${activeTab == '#tab-destination' ? 'show active' : ''}">
                                 <div id="favorite-list">
 						            <c:forEach items="${favoriteDestination}" var="destination">
 						                <c:if test="${destination.usersId == sessionScope.signedInUsersId}">
@@ -63,7 +71,7 @@
 						            </c:forEach>
 						        </div>
                             </div>
-                            <div id="tab-users" class="tab-pane fade">
+                            <div id="tab-users" class="tab-pane fade ${activeTab == '#tab-users' ? 'show active' : ''}">
                                 <div id="favorite-list">
 						            <c:forEach items="${favoriteUsers}" var="user">
 						                <c:if test="${user.usersId == sessionScope.signedInUsersId}">
@@ -79,7 +87,7 @@
 						            </c:forEach>
 						        </div>
                             </div>
-                            <div id="tab-post" class="tab-pane fade">
+                            <div id="tab-post" class="tab-pane fade ${activeTab == '#tab-post' ? 'show active' : ''}">
                                 <div id="favorite-list">
 						            <c:forEach items="${favoritePost}" var="post">
 						                <c:if test="${post.usersId == sessionScope.signedInUsersId}">

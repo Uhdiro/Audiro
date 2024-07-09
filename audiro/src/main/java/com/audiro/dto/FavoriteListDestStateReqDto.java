@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor
-public class FavoriteStateReqDto {
+public class FavoriteListDestStateReqDto {
 	private Integer destinationId;
 	private String userId;
-	
 }
-
-
