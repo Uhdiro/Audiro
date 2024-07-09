@@ -162,6 +162,8 @@
                 </div>
                 <!-- 비밀번호 확인 입력 필드 -->
                 <div class="mb-3" id="passwordConfirmContainer">
+                    <!-- 숨겨진 사용자 ID 필드 -->
+                    <input type="hidden" id="id" value="${m.id}" name="id" />
                     <label class="form-label mt-4" for="modalPassword2">비밀번호 확인</label>
                     <input type="password" class="form-control" id="modalPassword2" name="password2" placeholder="비밀번호 확인" disabled/>
                     <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -268,63 +270,88 @@
             <!-- 모달 끝 -->
         </main>
     </div>
-    
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <!-- JavaScript 코드 추가 -->
 <!-- 비밀번호 변경 모달 자바스크립트 -->
 <!-- JavaScript 코드 추가 -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const newPassword = document.getElementById('modalPassword');
-        const confirmPassword = document.getElementById('modalPassword2');
-        const submitButton = document.getElementById('submitButton');
-        const passwordContainer = document.getElementById('passwordContainer');
-        const passwordConfirmContainer = document.getElementById('passwordConfirmContainer');
+<!-- JavaScript 코드 추가 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const usersId = document.getElementById('id').value;
+            const newPassword = document.getElementById('modalPassword');
+            const confirmPassword = document.getElementById('modalPassword2');
+            const submitButton = document.getElementById('submitButton');
 
-        // 비밀번호 조건 확인 함수
-        function validatePassword() {
-            const password = newPassword.value;
-            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            // 비밀번호 조건 확인 함수
+            function validatePassword() {
+                const password = newPassword.value;
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-            if (regex.test(password)) {
-                newPassword.classList.remove('is-invalid');
-                newPassword.classList.add('is-valid');
-                confirmPassword.disabled = false; // 조건이 충족되면 확인 필드 활성화
-                return true;
-            } else {
-                newPassword.classList.remove('is-valid');
-                newPassword.classList.add('is-invalid');
-                confirmPassword.disabled = true; // 조건이 충족되지 않으면 확인 필드 비활성화
-                return false;
-            }
-        }
-
-        // 비밀번호 확인 필드에 입력 이벤트 리스너 추가
-        function checkPasswordMatch() {
-            if (newPassword.value === confirmPassword.value) {
-                confirmPassword.classList.remove('is-invalid');
-                confirmPassword.classList.add('is-valid');
-                if (validatePassword()) {
-                    submitButton.disabled = false; // 조건과 일치하면 수정 버튼 활성화
+                if (regex.test(password)) {
+                    newPassword.classList.remove('is-invalid');
+                    newPassword.classList.add('is-valid');
+                    confirmPassword.disabled = false; // 조건이 충족되면 확인 필드 활성화
+                    return true;
+                } else {
+                    newPassword.classList.remove('is-valid');
+                    newPassword.classList.add('is-invalid');
+                    confirmPassword.disabled = true; // 조건이 충족되지 않으면 확인 필드 비활성화
+                    return false;
                 }
-            } else {
-                confirmPassword.classList.remove('is-valid');
-                confirmPassword.classList.add('is-invalid');
-                submitButton.disabled = true; // 일치하지 않으면 수정 버튼 비활성화
             }
-        }
 
-        // 새 비밀번호 필드에 입력 이벤트 리스너 추가
-        newPassword.addEventListener('input', function () {
-            validatePassword();
+            // 비밀번호 확인 필드에 입력 이벤트 리스너 추가
+            function checkPasswordMatch() {
+                if (newPassword.value === confirmPassword.value) {
+                    confirmPassword.classList.remove('is-invalid');
+                    confirmPassword.classList.add('is-valid');
+                    if (validatePassword()) {
+                        submitButton.disabled = false; // 조건과 일치하면 수정 버튼 활성화
+                    }
+                } else {
+                    confirmPassword.classList.remove('is-valid');
+                    confirmPassword.classList.add('is-invalid');
+                    submitButton.disabled = true; // 일치하지 않으면 수정 버튼 비활성화
+                }
+            }
+
+            // 새 비밀번호 필드에 입력 이벤트 리스너 추가
+            newPassword.addEventListener('input', function () {
+                validatePassword();
+            });
+
+            // 비밀번호 확인 필드에 입력 이벤트 리스너 추가
+            confirmPassword.addEventListener('input', checkPasswordMatch);
+
+            // 수정 버튼 클릭 이벤트 리스너 추가
+            submitButton.addEventListener('click', function () {
+                const passwordHash = newPassword.value;
+                if (validatePassword() && newPassword.value === confirmPassword.value) {
+                    // 비밀번호 조건과 일치 여부가 모두 충족되면 Axios 요청 보내기
+                    axios.post('/mypage/updatePassword', {
+                        usersId: usersId,
+                        passwordHash: passwordHash
+                    })
+                    .then(function (response) {
+                        // 요청이 성공했을 때 처리할 내용
+                        alert('비밀번호가 성공적으로 변경되었습니다.');
+                        $('#passwordModal').modal('hide');
+                    })
+                    .catch(function (error) {
+                        // 요청이 실패했을 때 처리할 내용
+                        console.error(error); // 콘솔에 오류 메시지 출력
+                        alert('비밀번호 변경 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    });
+                }
+            });
         });
-
-        // 비밀번호 확인 필드에 입력 이벤트 리스너 추가
-        confirmPassword.addEventListener('input', checkPasswordMatch);
-    });
-</script>
+    </script>
 <!-- 비밀번호 변경 모달 자바스크립트 끝 -->
+
+    <c:url var="mypage" value="/js/mypage.js" />
+    <script src="${mypage}"></script>
 
 </body>
 </html>
