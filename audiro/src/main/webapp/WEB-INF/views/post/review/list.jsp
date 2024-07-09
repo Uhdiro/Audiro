@@ -73,7 +73,7 @@
         <%@ include file="../../fragments/header.jspf"%>
 
         <main class="row">
-        <input id="usersId" name="usersId" type="hidden" value="${usersId}" />
+        <input id="id" name="id" type="hidden" value="${id}" />
             <!-- 여행일기 목록불러오기 -->
             <div class="col-md-8">
                 <div class="mt-2 card" id="list">

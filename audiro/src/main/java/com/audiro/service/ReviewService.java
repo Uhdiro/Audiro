@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.audiro.dto.CreateReviewDto;
+import com.audiro.dto.DetailsReviewDto;
 import com.audiro.dto.LikeReviewPostDto;
 import com.audiro.dto.LikeUserFavoriteDto;
 import com.audiro.dto.ListReviewDto;
@@ -48,27 +49,27 @@ public class ReviewService {
 
 	// 내 여행일기 리스트 불러오기
 	public List<MyReviewListDto> myReviewList(MyReviewListDto dto) {
-		List<MyReviewListDto> list = reviewDao.readMyReview(dto.getUsersId());
+		List<MyReviewListDto> list = reviewDao.readMyReview(dto.getId());
 		log.debug("myReviewList={}", list);
 		return list;
 
 	}
 	//프로필 이미지 가져오기
-	public String img(Integer usersId) {
-		String profileimg = reviewDao.profileImg(usersId);
+	public String img(String id) {
+		String profileimg = reviewDao.profileImg(id);
 		return profileimg;
 	}
 
 	// 나를 찜한 유저 수
-	public int countLike(Integer userId) {
+	public int countLike(String id) {
 
-		int result = reviewDao.countLike(userId);
+		int result = reviewDao.countLike(id);
 		return result;
 	}
 
 	// 내 여행일기 갯수
-	public int countMyReveiw(Integer userId) {
-		int result = reviewDao.countMyReveiw(userId);
+	public int countMyReveiw(String id) {
+		int result = reviewDao.countMyReveiw(id);
 		return result;
 	}
 	
@@ -106,20 +107,20 @@ public class ReviewService {
 
 	///////////////////////////////////////////////////////
 	// 내 여행후기게시판 상세보기
-	public Post readById(@RequestParam(name="postId") Integer postId, 
-						 @RequestParam(name="usersId") Integer usersId) {
-		Post list = reviewDao.readDetailsReviewById(postId);
+	public DetailsReviewDto readById(Integer postId, String id) {
 		
-        // 날짜 포맷팅을 위한 패턴 설정
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DetailsReviewDto list = reviewDao.readDetailsReviewById(postId);
+		
+		// 날짜 포맷팅을 위한 패턴 설정
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        // LocalDateTime 객체를 포맷팅된 문자열로 변환
-        String formattedModifiedTime = list.getModifiedTime().format(formatter);
+	    // LocalDateTime 객체를 포맷팅된 문자열로 변환
+	    String formattedModifiedTime = list.getModifiedTime().format(formatter);
 
-        // 변환된 문자열을 설정
-        list.setFormattedModifiedTime(formattedModifiedTime);
-     
-		return list;
+	    // 변환된 문자열을 설정
+	    list.setFormattedModifiedTime(formattedModifiedTime);
+	 
+	    return list;
 	}
 
 	// 여행후기 게시글 저장

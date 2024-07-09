@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.audiro.repository.CommentDao">
 
+	<!-- 모든 댓글 목록 불러오기 -->
 	<select id="selectByCommentsId" resultType="Comment">
         select 
         	c.comments_id 
@@ -24,21 +25,26 @@
     <!-- 대댓글추가 -->
     <insert id="insert" parameterType="com.audiro.dto.CommentCreateDto">
         insert into comments (post_id, users_id, content, parent_comment_id)
-        values (#{postId}, #{usersId}, #{content}, #{parentCommentId}) 
+        select #{postId}, #{usersId}, #{content}, #{parentCommentId}
+        from users u
+    	where u.id = #{id}
     </insert> 
     
     <!-- 새 댓글 추가 -->
      <insert id="newInsert" parameterType="com.audiro.dto.CommentCreateDto">
-        insert into comments (post_id, users_id, content)
-        values (#{postId}, #{usersId}, #{content})
+     	insert into comments (post_id, users_id, content)
+    	select #{postId}, u.users_id, #{content}
+    	from users u
+    	where u.id = #{id}
     </insert>
     
+    <!-- 댓글수정 -->
     <update id="update">
         update comments
         set content = #{content}, modified_time = systimestamp
         where users_id = #{users_id}
     </update>
-    
+    <!-- 댓글 삭제 -->
     <delete id="deleteById">
         delete from comments where comments_id = #{commentsId}
     </delete>
@@ -55,21 +61,5 @@
         select * from comments where comments_id = #{commentsId}
     </select>
     
-   
-    <!-- 대댓글 삭제하기 -->
-    <delete id="deleteByIdReply">
-        delete from comments where praent_comment_id = #{praentCommentId}
-    </delete>
-
-	<!-- 대댓글 수정하기 -->
-	 <update id="updateReply">
-        update comments
-        set content = #{content}, modified_time = systimestamp
-        where users_id = #{users_id}
-    </update>
-    
-    
-	
-
 
 </mapper>

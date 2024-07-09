@@ -27,6 +27,8 @@ public class DetailsReviewDto {
 	private LocalDateTime modifiedTime;
 	private Integer favoritePost;
 	private Integer favoriteUserId;
+	private String id;
+	private String formattedModifiedTime; //시간타입변환해서 저장용도
 	
 	public static DetailsReviewDto fromEntity(Post post) {
 		
@@ -40,6 +42,8 @@ public class DetailsReviewDto {
 				.modifiedTime(post.getModifiedTime())
 				.favoriteUserId(post.getFavoriteUserId())
 				.favoritePost(post.getFavoritePost())
+				.id(post.getId())
+				.formattedModifiedTime(post.getFormattedModifiedTime())
 				.build();
 		
 	}

@@ -29,5 +29,7 @@ public class Post {
 	private Integer commentId;
 	private String formattedModifiedTime;   //포맷팅된 수정 시간
 	private Integer favoriteUserId;         //관심유저인지 확인 
-      
+	private String id;                      //유저 아이디
+    private String path;                    //프로필 이미지 경로
+    private String introduction;            //프로필 자기소개
 }

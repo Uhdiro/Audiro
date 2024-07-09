@@ -14,18 +14,22 @@
 	        , p.modified_time
 	        , p.post_id
 	        , u.nickname
+	        , u.id
 	        , fp.users_id as favorite_post
 	        , fu.favorite_users_id as favorite_user_id
+	        , pr.path
+	        , pr.introduction
 	    from post p
 	    left join users u on p.users_id = u.users_id
-	    left join favorite_post fp on p.post_id = fp.post_id and fp.users_id = 8
-	    left join favorite_users fu on p.users_id = fu.users_id and fu.interested_user_id = 8
+	    left join favorite_post fp on p.post_id = fp.post_id 
+	    left join favorite_users fu on p.users_id = fu.users_id
+	    left join profile pr on p.users_id = pr.users_id 
 	    where p.post_type_id = 10
-	          and u.users_id = 8
+	          and u.id = #{id}
 	    order by p.modified_time desc
 	</select>
 
-	<!-- 내 여행후기 전체 불러오기 (좋아요순) -->
+	<!-- 내 여행후기 전체 불러오기 (좋아요순) 
 	<select id="readMyReviewByGood" resultType="com.audiro.dto.MyReviewListDto" parameterType="MyReviewListDto">
 		select p.users_id,
 		title, p.modified_time, p.post_id, u.nickname
@@ -35,27 +39,30 @@
 		and p.post_type_id = 10
 		order by good desc
 	</select>
-
+	-->
 	<!-- 프로필 이미지가져오기 -->
 	<select id="profileImg" resultType="String">
-		select path
-		from profile
-		where users_id = #{usersId}
+		select p.path
+		from profile p
+		join users u on p.users_id = u.users_id
+		where u.id = #{id}
 	</select>
 	
 	<!-- 나를 찜한 유저 수 -->
 	<select id="countLike" resultType="Integer" >
 		select count(*)
 		from favorite_users fu
-		where fu.interested_user_id = #{usersId}
+		join users u on fu.users_id = u.users_id
+		where u.id = #{id}
 	</select>
 
 	<!-- 내 여행일기 개수 -->
 	<select id="countMyReveiw" resultType="Integer" >
 		select count(*) as post_count
-		from post
-		where post_type_id = 10
-		and users_id = #{usersId}
+		from post p
+		join users u on p.users_id = u.users_id
+		where p.post_type_id = 10
+		and u.id = #{id}
 	</select>
 	
 
@@ -69,9 +76,12 @@
 	
 	
 	<!-- 여행 후기 1개 상세 내용불러오기 -->
-	<select id="readDetailsReviewById" resultType="com.audiro.repository.Post" >
-		select * from post
-		where post_id = #{postId}
+	<select id="readDetailsReviewById" resultType="DetailsReviewDto" >
+		select p.*, u.nickname 
+    	from post p 
+    	join users u on p.users_id = u.users_id 
+    	where p.post_id = #{postId}
+    	and u.id = #{id}
 	</select>
 
 	<!-- 해당 여행후기 좋아요 수 -->
@@ -88,9 +98,10 @@
 			 , fp.interested_user_id
 			 , fp.users_id
 		from favorite_users fu
+		join users u on fu.users_id = u.users_id
 		where 
-			 fu.users_id = #{usersId}
-			 and fu.interested_user_Id = #{interestedUserId}
+			 u.id = #{id}
+			 and fu.interested_user_Id = #{id}
 	</select>
 
 	<!-- 해당 여행일기 유저 관심유저담기 -->
@@ -131,7 +142,7 @@
 
 	<!-- 여행 후기 1개 삭제 -->
 	<delete id="deleteReview" >>
-		delete from post where post_id = #{postId}
+		delete post where post_id = #{postId}
 	</delete>
 
 	<!-- 여행후기 저장하기 -->

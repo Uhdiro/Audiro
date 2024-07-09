@@ -5,12 +5,17 @@ import com.audiro.dto.CommentItemDto;
 import com.audiro.repository.Comment;
 import com.audiro.repository.CommentDao;
 import com.audiro.service.CommentsService;
+
+import jakarta.servlet.http.HttpSession;
+
 import com.audiro.dto.CommentUpdateDto;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import lombok.Delegate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,8 +54,9 @@ public class CommentsRestController {
 	
 	//새댓글등록
 	@PostMapping("/new")
-	public ResponseEntity<Integer> newInsertComment(@RequestBody CommentCreateDto dto) {
-		
+	public ResponseEntity<Integer> newInsertComment(@RequestBody CommentCreateDto dto, HttpSession session) {
+		String signedInUser = (String) session.getAttribute("id"); // 세션에서 ID 가져오기
+	    dto.setId(signedInUser); // DTO에 ID 설정		
 		int result = commentDao.newInsert(dto);
 		return ResponseEntity.ok(result);
 	}
@@ -60,11 +68,19 @@ public class CommentsRestController {
         log.debug("updateComment(id={}, dto={})", commentsId, dto);
         
         dto.setCommentsId(commentsId);
-        int result = commentsService.update(dto); 
+        int result = commentDao.update(dto); 
         
         return ResponseEntity.ok(result);
     }
 	
+	//댓글 삭제
+	@DeleteMapping("/{commentsId}")
+	public ResponseEntity<Integer> deleteById(@PathVariable int commentsId) {
+        
+        int result = commentDao.deleteById(commentsId);
+        
+        return ResponseEntity.ok(result);
+	}
 	
 	
 
