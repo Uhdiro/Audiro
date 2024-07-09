@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 	const dayContainer = document.querySelector('div#dayContainer');
-	const planContainer = document.querySelector('div#dayPlan');
+	const planContainer = document.querySelector('div#planContainer');
 	const travelPlanId = dayContainer.getAttribute('plan-id');
 	let detailedPlans = [];
 	let maxDay = 0;

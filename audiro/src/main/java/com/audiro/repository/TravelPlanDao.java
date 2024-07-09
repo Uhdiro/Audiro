@@ -20,4 +20,8 @@ public interface TravelPlanDao {
 	List<DetailedPlanDto> selectDetailedPlan(int travelPlanId);
 	
 	Integer selectMaxDay(int travelPlanId);
+	
+	Integer updateTravelPlan(TravelPlan plan);
+	
+	Integer deleteAllDetailedPlan(int travelPlanId);
 }

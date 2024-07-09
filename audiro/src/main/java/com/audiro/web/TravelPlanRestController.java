@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.audiro.dto.DetailedPlanDto;
 import com.audiro.dto.FavoriteDestinationDto;
 import com.audiro.dto.TravelPlanDto;
+import com.audiro.repository.TravelPlan;
 import com.audiro.service.FavoriteDestinationService;
 import com.audiro.service.TravelPlanService;
 
@@ -59,14 +60,22 @@ public class TravelPlanRestController {
 	public ResponseEntity<Map<String, Object>> details(@PathVariable("travelPlanId") int travelPlanId) {
 		List<DetailedPlanDto> list = planService.readDetailedPlanByTravelPlanId(travelPlanId);
 		int maxDay = planService.getMaxDay(travelPlanId);
+		TravelPlan plan=planService.readTravelPlanById(travelPlanId);
 		log.debug("max= {}",maxDay);
 		// Map을 사용하여 list와 maxDay를 함께 담습니다.
 		Map<String, Object> response = new HashMap<>();
 		response.put("list", list);
 		response.put("maxDay", maxDay);
-
+		response.put("travelPlan", plan);
 		// ResponseEntity로 OK 응답과 함께 Map을 반환합니다.
 		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/modify")
+	public ResponseEntity<Integer> modifyPlan(@RequestBody TravelPlanDto dto){
+		int result=planService.updateTravelPlan(dto);
+		planService.deleteAllDetailedPlan(dto.getTravelPlanId());
+		return ResponseEntity.ok(result);
 	}
 	
 	

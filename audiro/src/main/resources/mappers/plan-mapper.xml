@@ -4,23 +4,23 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.audiro.repository.TravelPlanDao">
 
-<insert id="insertTravelPlan" 
-	parameterType="TravelPlan"
-	keyProperty="plan.travelPlanId" 
-	keyColumn="travel_plan_id"
-	useGeneratedKeys="true">
-	insert into travel_plan (users_id, title, start_date, duration, end_date)
-	values (#{plan.usersId}, #{plan.title}, #{plan.startDate}, #{plan.duration}, #{plan.endDate})
-</insert>
-
-<insert id="insertDetailedPlan">
-	insert 
-	into detailed_plan 
-		(travel_plan_id, destination_id, day, start_time, end_time)
-	values 
-		(#{travelPlanId}, #{destinationId}, #{day}, #{startTime}, #{endTime})
-
-</insert>
+	<insert id="insertTravelPlan" 
+		parameterType="TravelPlan"
+		keyProperty="plan.travelPlanId" 
+		keyColumn="travel_plan_id"
+		useGeneratedKeys="true">
+		insert into travel_plan (users_id, title, start_date, duration, end_date)
+		values (#{plan.usersId}, #{plan.title}, #{plan.startDate}, #{plan.duration}, #{plan.endDate})
+	</insert>
+	
+	<insert id="insertDetailedPlan">
+		insert 
+		into detailed_plan 
+			(travel_plan_id, destination_id, day, start_time, end_time)
+		values 
+			(#{travelPlanId}, #{destinationId}, #{day}, #{startTime}, #{endTime})
+	
+	</insert>
 
 	<select id="selectAllTrvaelPlan" resultType="TravelPlan">
 		select * from
@@ -29,7 +29,7 @@
 
 	<select id="selectTravelPlanById" resultType="TravelPlan">
 		select * from travel_plan
-		where travel_plan_id = #{travel_plan_id}
+		where travel_plan_id = #{travelPlanId}
 	</select>
 
 	<select id="selectDetailedPlan" resultType="DetailedPlanDto">
@@ -39,12 +39,23 @@
 		on d.destination_id = t.travel_destination_id
 		join favorite_destination f
    		on t.travel_destination_id = f.destination_id
-		where travel_plan_id = #{travel_plan_id}
+		where travel_plan_id = #{travelPlanId}
 		order by detailed_plan_id
 	</select>
 	
 	<select id="selectMaxDay"  resultType="Integer">
-		select max(day) from detailed_plan where travel_plan_id = #{travel_plan_id}
+		select max(day) from detailed_plan where travel_plan_id = #{travelPlanId}
 	</select>
+	
+	<update id="updateTravelPlan">
+		update travel_plan
+		set title = #{title}, duration = #{duration}, start_date = #{startDate}, end_date = #{endDate}
+		where travel_plan_id = #{travelPlanId}
+	</update>
+	
+	<delete id="deleteAllDetailedPlan">
+		delete from detailed_plan
+		where travel_plan_id = #{travelPlanId}
+	</delete>
 
 </mapper>

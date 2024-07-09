@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function getFavDestination(event) {
 		const favoriteDestinationId = event.target.closest('.favDestination').getAttribute('fav-id');
-		const uri = `../api/plan/fav/${favoriteDestinationId}`;
+		const uri = `/audiro/api/plan/fav/${favoriteDestinationId}`;
 		axios
 			.get(uri)
 			.then((response) => {

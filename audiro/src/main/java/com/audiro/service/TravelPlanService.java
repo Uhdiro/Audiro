@@ -61,4 +61,14 @@ public class TravelPlanService {
 		int result=travelPlanDao.selectMaxDay(travelPlanId);
 		return result;
 	}
+	
+	public int updateTravelPlan(TravelPlanDto dto) {
+		int result= travelPlanDao.updateTravelPlan(dto.toEntity());
+		return result;
+	}
+	
+	public int deleteAllDetailedPlan(int travelPlanId) {
+		int result=travelPlanDao.deleteAllDetailedPlan(travelPlanId);
+		return result;
+	}
 }
