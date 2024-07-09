@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TravelDestination {
-	private int TravelDestinationId;
+	private Integer travelDestinationId;
 	private String name;
 	private String description;
 	private String phone;
@@ -19,8 +19,5 @@ public class TravelDestination {
 	private Double latitude;
 	private Double longitude;
 	private String imgUrl;
-	private String region;
-	private String theme;
-	private String companion;
 
 }

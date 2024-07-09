@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+body {
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+#dayPlan h5 {
+	font-size: 2rem;
+	margin-bottom: .5em;
+	background-color: #F6F1B4;
+}
+
+.click {
+	border-style: inset;
+	border-width: 1px;
+}
+
+.days {
+	position: relative;
+}
+
+img.deleteDayImg {
+	width: 30%;
+}
+
+img.collapseImg {
+	width: 60%;
+}
+
+img.deleteFavImg{
+	width: 20%;
+}
+
+.deleteFav{
+	text-align: right;
+}

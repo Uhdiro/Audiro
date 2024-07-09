@@ -1,13 +1,23 @@
 package com.audiro.repository;
 
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter @Setter @ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class FavoriteUsers {
-	
-	private Integer favoritedUsersId; 
-	private Integer usersId; 
-	private Integer interestedUserId; 
+	private Integer favoriteUsersId;
+	private Integer usersId;
+	private Integer interestedUserId;
+	private LocalDateTime createdTime;
+	private String interestedUserNickname;
 
 
 }
