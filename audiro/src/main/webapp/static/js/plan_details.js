@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			let htmlStr = `
                 <li id="list${d.favoriteDestinationId}" class="list row g-0 my-1 p-2" des-id="${d.destinationId}">
 	            	<div class="name col-10">${d.name}</div>
-	            	
                 </li>
 		`;
 			
