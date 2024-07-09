@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const favDestination = document.querySelectorAll('div.favDestination');
 		favDestination.forEach((f) => {
+			f.removeEventListener('click', getFavDestination);
 			f.addEventListener('click', getFavDestination);
 		})
 
@@ -63,14 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function favDestinationToPlan(data) {
 		const dayId = document.querySelector('div.click').getAttribute('day-id');
-		const plan = document.querySelector(`div#dayPlan${dayId} ul.timeline`);
-		htmlStr = `
-                <li class="event">
-                    <h3>"${data.name}"</h3>
-                    <p></p>
+		const plan = document.querySelector(`div#dayPlan${dayId} .timeline ul`);
+		const htmlStr = `
+                <li class="list row g-0 my-1 p-2">
+                	<div class="name col-10">${data.name}</div>
+                	<div class="deleteFav col-2">
+						<img class="deleteFavImg" src="/audiro/images/delete.png" />
+					</div>
                 </li>
 		`;
 		plan.insertAdjacentHTML('beforeend', htmlStr);
+		
+		addNewEvent();
+	}
+	
+	function addNewEvent(){
+		const deleteFavImg = document.querySelectorAll('.deleteFavImg');
+		deleteFavImg.forEach((d) => {
+			d.removeEventListener('click', deleteFavDestinationInPlan); // 중복 방지 위해 기존 이벤트 제거
+			d.addEventListener('click', deleteFavDestinationInPlan);
+		})
+
+	}
+	
+
+	function deleteFavDestinationInPlan(event) {
+		const favList = event.target.closest('.list');
+		favList.remove();
+
 	}
 
 
