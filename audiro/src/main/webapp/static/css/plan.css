@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
-#dayPlan h5{
-	background-color: #F6F1B4
+body {
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+#dayPlan h5 {
+	font-size: 2rem;
+	margin-bottom: .5em;
+	background-color: #F6F1B4;
 }
 
 .click {
@@ -13,7 +20,7 @@
 	position: relative;
 }
 
-img.deleteImg {
+img.deleteDayImg {
 	width: 30%;
 }
 
@@ -21,11 +28,10 @@ img.collapseImg {
 	width: 60%;
 }
 
-/* input#title{
-	width:90%;
-} */
-
-.timeline {
-	list-style: none;
+img.deleteFavImg{
+	width: 20%;
 }
 
+.deleteFav{
+	text-align: right;
+}

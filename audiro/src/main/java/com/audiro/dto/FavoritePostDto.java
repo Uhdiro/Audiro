@@ -1,5 +1,7 @@
 package com.audiro.dto;
 
+import java.time.LocalDateTime;
+
 import com.audiro.repository.FavoritePost;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ public class FavoritePostDto {
 	private Integer favoritePostId;
 	private Integer usersId;
 	private Integer postId;
+	private LocalDateTime createdTime;
 	private String favoritePostTitle;
 	
 	public static FavoritePostDto fromEntity(FavoritePost favoritepost) {
@@ -20,6 +23,7 @@ public class FavoritePostDto {
 				.favoritePostId(favoritepost.getFavoritePostId())
 				.usersId(favoritepost.getUsersId())
 				.postId(favoritepost.getPostId())
+				.createdTime(favoritepost.getCreatedTime())
 				.favoritePostTitle(favoritepost.getFavoritePostTitle())
 				.build();
 	}

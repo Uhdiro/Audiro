@@ -85,6 +85,10 @@
                 </div>
             </div>
         </main>
+        
+        <footer>
+            <%@ include file="../fragments/footer.jspf" %>
+        </footer>
     </div>
     
     
