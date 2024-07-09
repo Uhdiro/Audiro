@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			alert('찜!!!!!!!!!!!!!!!');
 			const tag = event.currentTarget;
 			const postId = tag.attributes['data-review-id'].nodeValue; // 클릭된 버튼의 data-review-id 값 가져오기
-			const usersId = document.querySelector('input#usersId').value;
+			const usersId = document.querySelector('input#usersId');
 			
 			console.log('Post ID:', postId); // 디버깅을 위해 콘솔에 출력
 			console.log('Users ID:', usersId); // 디버깅을 위해 콘솔에 출력

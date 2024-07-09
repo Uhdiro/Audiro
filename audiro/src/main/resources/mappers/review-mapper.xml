@@ -7,7 +7,7 @@
 
 	<!-- 내여행후기 -->
 	<!-- 내 여행후기 전체 불러오기 (최신순) -->
-	<select id="readMyReview" resultType="com.audiro.dto.MyReviewListDto"  parameterType="User">
+	<select id="readMyReview" resultType="com.audiro.dto.MyReviewListDto">
 	    select 
 	        p.users_id 
 	        , p.title
@@ -18,10 +18,10 @@
 	        , fu.favorite_users_id as favorite_user_id
 	    from post p
 	    left join users u on p.users_id = u.users_id
-	    left join favorite_post fp on p.post_id = fp.post_id and fp.users_id = #{usersId}
-	    left join favorite_users fu on p.users_id = fu.users_id and fu.interested_user_id = #{usersId}
+	    left join favorite_post fp on p.post_id = fp.post_id and fp.users_id = 8
+	    left join favorite_users fu on p.users_id = fu.users_id and fu.interested_user_id = 8
 	    where p.post_type_id = 10
-	        and u.users_id = #{usersId}
+	          and u.users_id = 8
 	    order by p.modified_time desc
 	</select>
 
@@ -44,14 +44,14 @@
 	</select>
 	
 	<!-- 나를 찜한 유저 수 -->
-	<select id="countLike" resultType="Integer" parameterType="Integer">
+	<select id="countLike" resultType="Integer" >
 		select count(*)
 		from favorite_users fu
 		where fu.interested_user_id = #{usersId}
 	</select>
 
 	<!-- 내 여행일기 개수 -->
-	<select id="countMyReveiw" resultType="Integer" parameterType="Integer">
+	<select id="countMyReveiw" resultType="Integer" >
 		select count(*) as post_count
 		from post
 		where post_type_id = 10
@@ -60,7 +60,7 @@
 	
 
 	<!-- 해당 찜 갯수 -->
-	<select id="countFavoriteReveiw" resultType="Integer" parameterType="Integer">
+	<select id="countFavoriteReveiw" resultType="Integer" >
 		select count(*)
         from favorite_post fp
         join post p on fp.post_id=p.post_id
@@ -69,13 +69,13 @@
 	
 	
 	<!-- 여행 후기 1개 상세 내용불러오기 -->
-	<select id="readDetailsReviewById" resultType="com.audiro.repository.Post" parameterType="Integer">
+	<select id="readDetailsReviewById" resultType="com.audiro.repository.Post" >
 		select * from post
 		where post_id = #{postId}
 	</select>
 
 	<!-- 해당 여행후기 좋아요 수 -->
-	<select id="countGoodByPostId" resultType="Integer" parameterType="Integer">
+	<select id="countGoodByPostId" resultType="Integer">
 		select good
 		from post
 		where post_id = #{postId}
@@ -94,20 +94,20 @@
 	</select>
 
 	<!-- 해당 여행일기 유저 관심유저담기 -->
-	<insert id="addLikeUser" parameterType="com.audiro.dto.LikeUserFavoriteDto">
+	<insert id="addLikeUser">
 		insert into favorite_users (users_id, interested_user_id)
 		values (#{usersId}, #{interestedUserId})
 	</insert>
 	
 	<!-- 해당 관심유저 삭제하기 -->
-	<delete id="deleteLikeUser" parameterType="com.audiro.dto.LikeUserFavoriteDto">
+	<delete id="deleteLikeUser" >
 		delete from favorite_users 
 		where favorite_users_id = #{favoriteUsersId}
 	</delete>
 	
 	<!-- 여행후기 찜 담아있는 내용 불러오기. -->
-	<select id="getFavoritePostIds" resultType="com.audiro.dto.LikeReviewPostDto" parameterType="com.audiro.dto.LikeReviewPostDto">
-		select 
+	<select id="getFavoritePostIds" resultType="com.audiro.dto.LikeReviewPostDto">
+			select 
 			 fp.favorite_post_id
 			 , fp.post_id
 			 , fp.users_id
@@ -118,30 +118,30 @@
 	</select>
 	
 	<!-- 해당 여행일기 찜담기  -->
-	<insert id="addLikeReview" parameterType="com.audiro.dto.LikeReviewPostDto">
+	<insert id="addLikeReview" >
 		insert into favorite_post (users_id, post_id)
 		values (#{usersId}, #{postId})
 	</insert>
 	
 	<!-- 해당 여행후기 찜 삭제하기 -->
-	<delete id="deleteLikeReview" parameterType="com.audiro.dto.LikeReviewPostDto">
+	<delete id="deleteLikeReview">
 		delete from favorite_post 
 		where favorite_post_id = #{favoritePostId}
 	</delete>
 
 	<!-- 여행 후기 1개 삭제 -->
-	<delete id="deleteReview" parameterType="com.audiro.dto.LikeReviewPostDto">>
+	<delete id="deleteReview" >>
 		delete from post where post_id = #{postId}
 	</delete>
 
 	<!-- 여행후기 저장하기 -->
-	<insert id="insertReview" parameterType="CreateReviewDto">
+	<insert id="insertReview" >
 		insert into post (users_id, post_type_id, title, content)
 		values (#{usersId}, 10, #{title}, #{content, jdbcType=CLOB})
 	</insert>
 
 	<!-- 여행후기 글 수정하기 -->
-	<update id="updateReview" parameterType="CreateReviewDto">
+	<update id="updateReview" >
 		update post
 		set title = #{title},
 		content = #{content, jdbcType=CLOB},

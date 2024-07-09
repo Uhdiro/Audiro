@@ -60,14 +60,14 @@ public class ReviewService {
 	}
 
 	// 나를 찜한 유저 수
-	public int countLike(User userId) {
+	public int countLike(Integer userId) {
 
 		int result = reviewDao.countLike(userId);
 		return result;
 	}
 
 	// 내 여행일기 갯수
-	public int countMyReveiw(User userId) {
+	public int countMyReveiw(Integer userId) {
 		int result = reviewDao.countMyReveiw(userId);
 		return result;
 	}

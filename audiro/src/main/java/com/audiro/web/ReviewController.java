@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -82,26 +83,24 @@ public class ReviewController {
 
 	// 여행후기 수정 업데이트
 	@PostMapping("/update")
-	public String update(@ModelAttribute  CreateReviewDto dto) {
+	public String update(@RequestBody  CreateReviewDto dto) {
 		reviewService.update(dto);
 		return "redirect:/post/review/details?postId=" + dto.getPostId();
 	}
 
 	// 내 여행일기 페이지
-	@GetMapping("/mypage/{usersId}")
-	public void mypage(Model model, MyReviewListDto dto, @PathVariable("usersId") User usersId) {
-	    // dto에 usersId 설정
-	    //dto.setUsersId(usersId);
-	    
+	@GetMapping("/mypage")
+	public void mypage(Model model, MyReviewListDto dto) {
+	
 	    // 내 여행일기 목록
 	    List<MyReviewListDto> list = reviewService.myReviewList(dto);
 	    model.addAttribute("list", list);
-
+	    dto.setUsersId(2);
 	    // 내 여행일기 수
-	    int countMyReview = reviewService.countMyReveiw(usersId);
+	    int countMyReview = reviewService.countMyReveiw(dto.getUsersId());
 	    model.addAttribute("countMyReview", countMyReview);
 	    // 나를 찜한 유저 수
-	    int countLike = reviewService.countLike(usersId);
+	    int countLike = reviewService.countLike(dto.getUsersId());
 	    model.addAttribute("countLike", countLike);
 	}
 
@@ -129,12 +128,14 @@ public class ReviewController {
 
 	// 여행후기 목록 랭킹모델함께 보냄.
 	@GetMapping("/list")
-	public void reviewAllList(Model model, Post post,  @PathVariable("usersId") Integer usersId) {
+	public void reviewAllList(Model model, Post post)
+			//,@PathVariable("usersId") Integer usersId) 
+	{
 		List<ListReviewDto> list = reviewService.readAll();
 		List<Post> rank = reviewService.selectUserTop3();
 
 		model.addAttribute("list", list);
-		model.addAttribute("user", usersId);
+		model.addAttribute("usersId", post.getUsersId());
 		// model.addAttribute("rank",rank);
 
 	}

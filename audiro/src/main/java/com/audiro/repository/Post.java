@@ -1,6 +1,6 @@
 package com.audiro.repository;
 
-import java.sql.Clob;
+
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
