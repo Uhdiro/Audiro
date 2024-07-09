@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.audiro.dto.DetailedPlanDto;
 import com.audiro.dto.FavoriteDestinationDto;
 import com.audiro.dto.TravelPlanDto;
-import com.audiro.repository.DetailedPlan;
-import com.audiro.repository.TravelPlan;
 import com.audiro.service.FavoriteDestinationService;
 import com.audiro.service.TravelPlanService;
 
@@ -70,4 +68,6 @@ public class TravelPlanRestController {
 		// ResponseEntity로 OK 응답과 함께 Map을 반환합니다.
 		return ResponseEntity.ok(response);
 	}
+	
+	
 }

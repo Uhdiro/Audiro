@@ -23,7 +23,7 @@
 	<div class="container-fluid">
 		<%@ include file="../fragments/header.jspf"%>
 		<div class="container-full mx-5 text-center card px-0">
-					<c:url var="modifyPlan" value="/api/plan/modify"></c:url>
+					<c:url var="modifyPlan" value="/travel/plan/modify"></c:url>
 					<form method="post" action="${modifyPlan}">
 						<div class="row">
 							<div class="col-3 p-2 ">
