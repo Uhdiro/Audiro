@@ -32,7 +32,7 @@
                 </li>  
                 <li class="nav-item">
                         <c:url var="myPage" value="/mypage">
-                            
+                            <c:param name="id" value="${signOutPage}"></c:param>
                         </c:url>
                         <a class="nav-link" href="${myPage}">마이페이지</a>
                 </li> 
