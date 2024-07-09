@@ -19,4 +19,5 @@ public class FavoriteUsers {
 	private LocalDateTime createdTime;
 	private String interestedUserNickname;
 
+
 }
