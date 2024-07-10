@@ -35,7 +35,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="card-body">
+				<div class="card-body m-5">
 					<table>
 						<thead>
 							<tr>
