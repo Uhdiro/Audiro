@@ -11,6 +11,8 @@ $(document).ready(function () {
 	const planContainer = document.querySelector('div#planContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 	const btnSave=document.querySelector('#btnSave');
+	const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
+	const btnConfirm = document.querySelector('#btnConfirm');
 	
 	// Datepicker 초기화
 	$('#startDate').datepicker({
@@ -38,7 +40,7 @@ $(document).ready(function () {
 	}
 
 
-	btnSave.addEventListener('click', function(event) {
+	btnSave.addEventListener('click', (event) => {
 		event.preventDefault(); // 폼 제출 기본 동작 막기
 		if (currentPath === "/audiro/travel/plan/modify") {
 			updateTravelPlan();
@@ -47,15 +49,18 @@ $(document).ready(function () {
 		}
 	});
 
-	deleteAll.addEventListener('click', function() {
+	deleteAll.addEventListener('click', (event) =>  {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		deleteAllDay(true); // showModal을 true로 전달
 	});
 
-	btnCreateDay.addEventListener('click', () => {
+	btnCreateDay.addEventListener('click', (event) => {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		createAll();
 	});
 
 	dayContainer.addEventListener('click', (event) => {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		clickDays(event);
 
 	});
@@ -286,7 +291,6 @@ $(document).ready(function () {
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
 		const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
 		deleteModal.show();
-		const btnConfirm = document.querySelector('#btnConfirm');
 		btnConfirm.removeEventListener('click', confirmDeleteDay); // 기존 이벤트 리스너 제거
 		btnConfirm.addEventListener('click', confirmDeleteDay); // 새로운 이벤트 리스너 추가
 
@@ -386,23 +390,23 @@ $(document).ready(function () {
 
 	function deleteAllDay(showModal) {
 		if (showModal) {
-			const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
 			deleteModal.show();
-			const btnConfirm = document.querySelector('#btnConfirm');
 			btnConfirm.removeEventListener('click', confirmDeleteAll); // 기존 이벤트 리스너 제거
 			btnConfirm.addEventListener('click', confirmDeleteAll); // 새로운 이벤트 리스너 추가
 
-			function confirmDeleteAll() {
-				deleteModal.hide();
-				deleteAllElements();
-				defaultDay();
-			}
 		} else {
 			deleteAllElements();
 			defaultDay();
 		}
 
+		function confirmDeleteAll() {
+			deleteModal.hide();
+			deleteAllElements();
+			defaultDay();
+		}
+
 	}
+
 
 	function deleteAllElements() {
 		const dayElement = document.querySelectorAll('.days');
@@ -488,10 +492,10 @@ $(document).ready(function () {
 		axios
 			.get(uri)
 			.then((response) => {
+				index=response.data.maxDay+1;
 				getDayAndPlan(response.data);
 				getDetailedPlans(response.data);
 				//TODO:
-				index=response.data.maxDay+1;
 				console.log(index);
 
 			})
