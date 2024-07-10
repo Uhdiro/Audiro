@@ -4,7 +4,12 @@ button.badge {
     border: none;
 }
 
-#cardContainer img {
+.img-destination {
     width: 100%;
     border-radius: 5px;
+}
+
+.img-like {
+    width: 25px;
+    height: 25px;
 }

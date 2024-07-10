@@ -130,15 +130,22 @@ document.addEventListener('DOMContentLoaded', function() {
         destinations.forEach(d => {
             const destinationDetailsPage = `./details?id=${d.travelDestinationId}`;
             const html = `
-                <div class="col-4">
+                <div class="col-4 card">
                     <a href="${destinationDetailsPage}">
-                        <img src="${d.imgUrl}" alt="${d.name}" />
-                        <p>${d.name}</p>
+                        <img src="${d.imgUrl}" class="img-destination" alt="${d.name}" />
                     </a>
+                    <div>
+                        <span>${d.name}</span>
+                        <img src="../images/like_black.png" class="img-like" alt="like" data-id="${d.travelDestinationId}" />
+                    </div>
                 </div>
             `;
             cardContainer.innerHTML += html;
         });
+        
+        if (signedInUser !== null && signedInUser !== '') {
+            updateFavoriteStates(destinations);
+        }
     }
     
     function clickBtnSearch() {
@@ -171,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
             pagination.innerHTML += btnPage;
         }
     
-        // 오른쪽 화살표 버튼 (마지막 페이지로 이동)
         const lastPage = `
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Last">
@@ -187,9 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 const ariaLabel = event.target.getAttribute('aria-label');
                 if (ariaLabel === 'First') {
-                    currentPage = 1; // 첫 번째 페이지로 이동
+                    currentPage = 1;
                 } else if (ariaLabel === 'Last') {
-                    currentPage = totalPages; // 마지막 페이지로 이동
+                    currentPage = totalPages;
                 } else {
                     const page = parseInt(event.target.dataset.page);
                     if (!isNaN(page)) {
@@ -208,6 +214,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentPage === totalPages) {
             lastArrow.parentElement.classList.add('disabled');
         }
+    }
+    
+    function updateFavoriteStates(destinations) {
+        destinations.forEach(d => {
+            const travelDestinationId = d.travelDestinationId;
+            axios.get(`../api/favorite/${travelDestinationId}/${signedInUser}`)
+                .then(response => {
+                    const isFavorite = response.data !== -1;
+                    const imgTag = document.querySelector(`.img-like[data-id="${travelDestinationId}"]`);
+                    
+                    if (isFavorite) {
+                        imgTag.src = `../images/like_red2.png`;
+                    } else {
+                        imgTag.src = `../images/like_black.png`;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        });
     }
 
 });
