@@ -22,13 +22,13 @@
 		<main>
 			<div class="card">
 				<div class="card-header">
-					<c:url var="planSearchPage" value="/list/search" />
+					<c:url var="planSearchPage" value="/travel/plan/search" />
 					<form method="get" action="${planSearchPage}"> <!-- 검색바 -->
 						<div class="row justify-content-end">
 							<div class="col-3">
-								<select class="form-control" name="category">
-									<option value="t">최신순</option>
-									<option value="c">내용</option>
+								<select class="form-control" name="category" onchange="this.form.submit()">
+									<option value="c"  ${empty param.category or param.category == 'c' ? 'selected' : ''}>작성순</option>
+									<option value="m" ${param.category == 'm' ? 'selected' : ''}>최신순</option>
 								</select>
 							</div>
 						</div>

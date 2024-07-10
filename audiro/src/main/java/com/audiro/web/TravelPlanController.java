@@ -1,7 +1,9 @@
 package com.audiro.web;
 
+import java.io.Console;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class TravelPlanController {
 	}
 
 	@GetMapping("/list")
-	public String couse(Model model) {
+	public String list(Model model) {
 		List<TravelPlan> list= service.readAllTravelPlan();
 		model.addAttribute("travelPlan", list);
 		return "/travel/plan_list";
@@ -51,4 +53,18 @@ public class TravelPlanController {
 		model.addAttribute("travelPlanIdForModify", travelPlanIdForModify);
 		return "/travel/plan";
 	}
+	
+	@GetMapping("/search")
+	public String search(@RequestParam(name = "category", defaultValue = "c") String category, Model model) {
+		List<TravelPlan> list;
+		if ("m".equals(category)) {
+			list = service.readAllTravelPlanOrderByDesc();
+			log.debug("오라라라");
+		} else {
+			list = service.readAllTravelPlan();
+		}
+		model.addAttribute("travelPlan", list);
+		return "/travel/plan_list";
+	}
+	
 }

@@ -78,5 +78,4 @@ public class TravelPlanRestController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
 }

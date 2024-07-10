@@ -14,6 +14,8 @@ public interface TravelPlanDao {
 	int insertDetailedPlan(DetailedPlan detailedPlan);
 
 	List<TravelPlan> selectAllTrvaelPlan();
+	
+	List<TravelPlan>selectAllTrvaelPlanOrderByDesc();
 
 	TravelPlan selectTravelPlanById(int travelPlanId);
 

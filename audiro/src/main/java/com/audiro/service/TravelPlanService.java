@@ -47,6 +47,11 @@ public class TravelPlanService {
 		return list;
 	}
 	
+	public List<TravelPlan> readAllTravelPlanOrderByDesc(){
+		List<TravelPlan> list=travelPlanDao.selectAllTrvaelPlanOrderByDesc();
+		return list;
+	}
+	
 	public TravelPlan readTravelPlanById(int travelPlanId) {
 		TravelPlan plan=travelPlanDao.selectTravelPlanById(travelPlanId);
 		return plan;
