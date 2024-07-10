@@ -26,4 +26,8 @@ public interface TravelPlanDao {
 	Integer updateTravelPlan(TravelPlan plan);
 	
 	Integer deleteAllDetailedPlan(int travelPlanId);
+	
+	Integer deletePlanById(int travelPlanId);
+	
+	
 }

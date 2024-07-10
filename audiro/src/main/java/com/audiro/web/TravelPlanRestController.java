@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.audiro.dto.DetailedPlanDto;
@@ -46,6 +47,10 @@ public class TravelPlanRestController {
 	@PostMapping("/create/travelPlan")
 	public ResponseEntity<Integer> createPlan(@RequestBody TravelPlanDto dto){
 		int result=planService.createPlan(dto);
+	    if (dto.getStartDate() == null || dto.getEndDate() == null) {
+	    	 dto.setStartDate(null); 
+	    	 dto.setEndDate(null); 
+	    }
 		return ResponseEntity.ok(result);
 	}
 	
@@ -75,6 +80,12 @@ public class TravelPlanRestController {
 	public ResponseEntity<Integer> modifyPlan(@RequestBody TravelPlanDto dto){
 		int result=planService.updateTravelPlan(dto);
 		planService.deleteAllDetailedPlan(dto.getTravelPlanId());
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/deleteCourse/{travelPlanId}")
+	public ResponseEntity<Integer> deletePlan(@PathVariable("travelPlanId") int travelPlanId){
+		int result=planService.deletePlanById(travelPlanId);
 		return ResponseEntity.ok(result);
 	}
 	

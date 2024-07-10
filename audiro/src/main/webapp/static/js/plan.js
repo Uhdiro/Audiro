@@ -118,13 +118,7 @@ $(document).ready(function () {
 		const title = document.querySelector('input#title').value;
 		const startDate = document.querySelector('input#startDate').value;
 		const endDate = document.querySelector('input#endDate').value;
-		
-		const startDateToDate = new Date(startDate);
-		const endDateToDate = new Date(endDate);
-		console.log(`start=${startDateToDate}`);
-
-		const millisecondsInADay = 24 * 60 * 60 * 1000;
-		const duration = (endDateToDate - startDateToDate) / millisecondsInADay;
+		let duration=0;
 		
 		if (startDate == '' || endDate == '') {
 			const days = document.querySelectorAll('div.days');
@@ -133,6 +127,13 @@ $(document).ready(function () {
 				let endDay = d.getAttribute('day-id');
 				duration = endDay - startDay;
 			})
+		} else {
+			const startDateToDate = new Date(startDate);
+			const endDateToDate = new Date(endDate);
+			console.log(`start=${startDateToDate}`);
+
+			const millisecondsInADay = 24 * 60 * 60 * 1000;
+			duration = (endDateToDate - startDateToDate) / millisecondsInADay;
 		}
 
 		if (title === '') {
@@ -150,6 +151,7 @@ $(document).ready(function () {
 		}
 
 		const data = { usersId, title, startDate, duration, endDate };
+		console.log(data);
 		let travelPlanId = 0;
 		const uri = '/audiro/api/plan/create/travelPlan';
 		axios

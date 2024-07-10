@@ -76,4 +76,9 @@ public class TravelPlanService {
 		int result=travelPlanDao.deleteAllDetailedPlan(travelPlanId);
 		return result;
 	}
+	
+	public int deletePlanById(int travelPlanId) {
+		int result=travelPlanDao.deletePlanById(travelPlanId);
+		return result;
+	}
 }

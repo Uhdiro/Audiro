@@ -142,8 +142,6 @@
 	<c:url var="planJS" value="/js/plan.js" />
 	<script src="${planJS}"></script>
 
-	<%-- <c:url var="modifyJS" value="/js/plan_modify.js" />
-	<script src="${modifyJS}"></script> --%>
 
 </body>
 </html>

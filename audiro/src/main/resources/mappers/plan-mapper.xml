@@ -62,5 +62,10 @@
 		delete from detailed_plan
 		where travel_plan_id = #{travelPlanId}
 	</delete>
+	
+	<delete id="deletePlanById">
+		delete from travel_plan
+		where travel_plan_id = #{travelPlanId}
+	</delete>
 
 </mapper>
