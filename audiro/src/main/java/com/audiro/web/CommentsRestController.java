@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +56,14 @@ public class CommentsRestController {
 	//새댓글등록
 	@PostMapping("/new")
 	public ResponseEntity<Integer> newInsertComment(@RequestBody CommentCreateDto dto, HttpSession session) {
-		String signedInUser = (String) session.getAttribute("id"); // 세션에서 ID 가져오기
-	    dto.setId(signedInUser); // DTO에 ID 설정		
+		String id = (String) session.getAttribute("signedInUser"); // 세션에서 ID 가져오기
+		log.debug("Signed in user ID from session: " + id); 
+		
+		if (id == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 유저가 로그인되어 있지 않은 경우 처리
+	    }
+		
+	    dto.setId(id); // DTO에 ID 설정		
 		int result = commentDao.newInsert(dto);
 		return ResponseEntity.ok(result);
 	}

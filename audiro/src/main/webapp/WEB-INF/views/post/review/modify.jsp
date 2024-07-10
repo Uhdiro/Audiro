@@ -47,7 +47,7 @@
 					<form id="modifyForm" action="/audiro/post/review/update"
 						method="post" class="form-inline">
 						<input type="hidden" id="postId" name="postId" value="${list.postId}" /> 
-					    <input type="hidden" id="usersId" name="usersId" value="${list.usersId}" /> 
+					    <input type="hidden" id="id" name="id" value="${list.id}" /> 
 					    <input id="title" class="form-control" name="title" value="${list.title}"
 							   type="text" required />
 						<textarea id="summernote" name="content">${list.content}</textarea>

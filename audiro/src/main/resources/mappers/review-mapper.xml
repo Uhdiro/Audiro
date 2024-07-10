@@ -80,9 +80,9 @@
 		select p.*, u.nickname 
     	from post p 
     	join users u on p.users_id = u.users_id 
+    	left join favorite_post fp on p.users_id = fp.users_id
     	where p.post_id = #{postId}
-    	and u.id = #{id}
-	</select>
+ 	</select>
 
 	<!-- 해당 여행후기 좋아요 수 -->
 	<select id="countGoodByPostId" resultType="Integer">
@@ -94,14 +94,13 @@
 	<!-- 관심유저 담아있는 내용 불러오기. -->
 	<select id="getFavoriteUserIds" resultType="com.audiro.dto.LikeUserFavoriteDto">
 		select 
-			 fu.favorite_users_id
-			 , fp.interested_user_id
-			 , fp.users_id
-		from favorite_users fu
-		join users u on fu.users_id = u.users_id
-		where 
-			 u.id = #{id}
-			 and fu.interested_user_Id = #{id}
+         	    fu.*
+         	  , u.id
+   		from favorite_users fu
+   		join users u on fu.users_id = u.users_id
+   		where 
+         	 u.id = #{id}
+        and fu.interested_user_Id = #{interestedUserId}
 	</select>
 
 	<!-- 해당 여행일기 유저 관심유저담기 -->
@@ -147,8 +146,10 @@
 
 	<!-- 여행후기 저장하기 -->
 	<insert id="insertReview" >
-		insert into post (users_id, post_type_id, title, content)
-		values (#{usersId}, 10, #{title}, #{content, jdbcType=CLOB})
+        insert into post (users_id, post_type_id, title, content)
+		select #{usersId}, 10, #{title}, #{content}
+		from users u
+		where u.id = #{id}
 	</insert>
 
 	<!-- 여행후기 글 수정하기 -->

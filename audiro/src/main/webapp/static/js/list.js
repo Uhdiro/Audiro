@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			alert('찜!!!!!!!!!!!!!!!');
 			const tag = event.currentTarget;
 			const postId = tag.attributes['data-review-id'].nodeValue; // 클릭된 버튼의 data-review-id 값 가져오기
-			const usersId = document.querySelector('input#usersId');
+			const id = document.querySelector('input#id');
 			
 			console.log('Post ID:', postId); // 디버깅을 위해 콘솔에 출력
-			console.log('Users ID:', usersId); // 디버깅을 위해 콘솔에 출력
+			console.log('Users ID:', id); // 디버깅을 위해 콘솔에 출력
 			
 			try {
 				const response = await axios.post('/audiro/api/review/likeReview/toggle', { postId });

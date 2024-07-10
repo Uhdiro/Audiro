@@ -47,10 +47,10 @@ public interface ReviewDao {
 	List<LikeUserFavoriteDto> getFavoriteUserIds(LikeUserFavoriteDto dto);
 	
 	// 관심유저 담기
-	int addLikeUser(LikeUserFavoriteDto dto);
+	int addLikeUser(Integer usersId);
 	
 	// 관심유저 삭제
-	int deleteLikeUser(LikeUserFavoriteDto dto);
+	int deleteLikeUser(Integer usersId); // LikeUserFavoriteDto dto
 
 	//여행후기 찜 담아있는 내용 불러오기
 	List<LikeReviewPostDto> getFavoritePostIds(LikeReviewPostDto dto);

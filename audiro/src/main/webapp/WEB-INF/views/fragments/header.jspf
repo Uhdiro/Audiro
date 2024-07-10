@@ -9,10 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Audiro</title>
 
-<c:url var="css" value="/css/bootstrap.css" />
-
-
-<link href="${css}" rel="stylesheet">
+<c:url var="css" value="/css/bootstrap.css" /> <link href="${css}" rel="stylesheet"> 
 
 <style>
    

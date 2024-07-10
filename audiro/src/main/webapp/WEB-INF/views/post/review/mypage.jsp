@@ -81,27 +81,34 @@
             <div class="row" id="row">
                            
                 <!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
-                <div class="col-md-3">
+ <div class="col-md-3">
                     <div class="mt-2 card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div>
                                 <span id="nickname">${list[0].nickname}</span>
                             </div>
-
-                            <button id="userLike" class="btn ${list[0].favoriteUserId != null ? 'active' : ''}" data-user-id="${id}">
-                            	<i class="${list[0].favoriteUserId != null ? 'fi fi-ss-following' : 'fi fi-rs-following'}"></i>  
+                            <button id="userLike" class="btn ${list[0].favoriteUserId != null ? 'active' : ''}" data-user-id="${signedInUser}">
+                                <i class="${list[0].favoriteUserId != null ? 'fi fi-ss-following' : 'fi fi-rs-following'}"></i>
                             </button>
                         </div>
                         <div class="card-body" id="profil">
                             <div class="card" style="width: 13rem;">
-                                <img src="${list[0].path}" class="card-img-top" alt="프로필 이미지">
+                                <img src="${list[0].path}" class="card-img-top" alt="프로필 이미지" style="max-width: 100%; height: auto;">
                                 <div class="card-body">
-                                    <p class="card-text" ${list[0].introduction}/>
+                                    <p class="card-text">${list[0].introduction}</p>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li id="" class="list-group-item">내 여행일기 ${countMyReview}</li>
-                                    <li id="" class="list-group-item">나를 찜한 유저 ${countLike}</li>
-                                </ul>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>내 여행일기</td>
+                                            <td>${countMyReview}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>나를 찜한 유저</td>
+                                            <td>${countLike}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -142,7 +149,7 @@
                             <div class="card-body">
                                 <!-- 클릭 시 상세페이지로 이동하는 링크 -->
                                 <h5 class="card-title">
-                                    <a href="details?postId=${review.postId}&id=${id}" class="card-link">${review.title}</a>
+                                    <a href="details?postId=${review.postId}&id=${review.id}" class="card-link">${review.title}</a>
                                 </h5>
                                 <a href="details?postId=${review.postId}&id=${id}" class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 justify-content-between">

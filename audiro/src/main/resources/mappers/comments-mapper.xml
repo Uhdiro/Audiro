@@ -31,12 +31,13 @@
     </insert> 
     
     <!-- 새 댓글 추가 -->
-     <insert id="newInsert" parameterType="com.audiro.dto.CommentCreateDto">
-     	insert into comments (post_id, users_id, content)
-    	select #{postId}, u.users_id, #{content}
-    	from users u
-    	where u.id = #{id}
-    </insert>
+	<insert id="newInsert" parameterType="com.audiro.dto.CommentCreateDto">
+	    insert into comments (post_id, users_id, content)
+	    select #{postId}, u.users_id, #{content}
+	    from users u
+	    where u.id = #{id}
+	</insert>
+
     
     <!-- 댓글수정 -->
     <update id="update">

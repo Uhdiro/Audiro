@@ -29,6 +29,7 @@ public class DetailsReviewDto {
 	private Integer favoriteUserId;
 	private String id;
 	private String formattedModifiedTime; //시간타입변환해서 저장용도
+	private Integer commentId;
 	
 	public static DetailsReviewDto fromEntity(Post post) {
 		
@@ -44,6 +45,7 @@ public class DetailsReviewDto {
 				.favoritePost(post.getFavoritePost())
 				.id(post.getId())
 				.formattedModifiedTime(post.getFormattedModifiedTime())
+				.commentId(post.getCommentId())
 				.build();
 		
 	}

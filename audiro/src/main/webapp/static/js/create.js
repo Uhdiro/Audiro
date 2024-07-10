@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		e.preventDefault();// 버튼기본동작을 막음.
 
-		const inputTitle = document.querySelector('input#title');
-		const summernote = document.querySelector('textarea#summernote');
+		const inputTitle = document.querySelector('input#title').value;
+		const content = document.querySelector('textarea#c_editor').value;
 
 		// form 찾음. -> form.action, form.method 설정 -> form.submit()
 		const form = document.querySelector('form#createForm')
 		// 제목과 내용이 비어있는 지 체크:
-		if (inputTitle.value === '' || summernote.value === '') {
+		if (inputTitle.value === '' || content.value === '') {
 			alert('제목과 내용은 반드시 입력하세요.');
 			return;
 		}

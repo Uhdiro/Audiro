@@ -46,18 +46,14 @@ public class ReviewRestController {
 		return ResponseEntity.ok(likeReview);
 	}
 	
-	//관심유저 담기
-	@PostMapping("/likeUser/toggle")
-	public ResponseEntity<Boolean> likeUser(@RequestBody LikeUserFavoriteDto request
-											  ,HttpSession session) {
-		
-        String signedInUser = (String) session.getAttribute("signedInUser");
-        request.setId(signedInUser);
-        
-		Boolean likeUser = reviewService.togglUserFavorite(request);
-
-		return ResponseEntity.ok(likeUser);
-	}
+	// 관심유저 담기
+    @PostMapping("/likeUser/toggle")
+    public ResponseEntity<Boolean> likeUser(@RequestBody LikeUserFavoriteDto request
+    										 ,HttpSession session) {
+        // 서비스 계층 메서드 호출
+        Boolean likeUser = reviewService.togglUserFavorite(request,session);
+        return ResponseEntity.ok(likeUser);
+    }
 	
 
 	// 임시저장 목록 1개 선택시 불러오기
