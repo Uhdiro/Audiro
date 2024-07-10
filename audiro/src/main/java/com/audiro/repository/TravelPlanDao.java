@@ -11,7 +11,7 @@ public interface TravelPlanDao {
 
 	Long insertTravelPlan(@Param("plan") TravelPlan plan);
 
-	int insertDetailedPlan(DetailedPlan detailedPlan);
+	Long insertDetailedPlan(DetailedPlan detailedPlan);
 
 	List<TravelPlan> selectAllTrvaelPlan();
 	

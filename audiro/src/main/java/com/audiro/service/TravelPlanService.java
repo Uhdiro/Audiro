@@ -30,8 +30,7 @@ public class TravelPlanService {
 	}
 	
 	@Transactional
-	public int createDetailedPlan(List<DetailedPlanDto> dto) {
-		List<DetailedPlan> detailedPlans=dto.stream().map(DetailedPlanDto::toEntity).toList();
+	public int createDetailedPlan(List<DetailedPlan> detailedPlans) {
 		log.debug("service");
 		
 		int result = 0;

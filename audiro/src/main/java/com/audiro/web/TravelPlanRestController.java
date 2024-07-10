@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.audiro.dto.DetailedPlanDto;
 import com.audiro.dto.FavoriteDestinationDto;
 import com.audiro.dto.TravelPlanDto;
+import com.audiro.repository.DetailedPlan;
 import com.audiro.repository.TravelPlan;
 import com.audiro.service.FavoriteDestinationService;
 import com.audiro.service.TravelPlanService;
@@ -55,9 +56,9 @@ public class TravelPlanRestController {
 	}
 	
 	@PostMapping("/create/detailedPlan")
-	public ResponseEntity<Integer> createDetailedPlan(@RequestBody List<DetailedPlanDto> dto){
+	public ResponseEntity<Integer> createDetailedPlan(@RequestBody List<DetailedPlan> plan){
 		log.debug("rest");
-		int result=planService.createDetailedPlan(dto);
+		int result=planService.createDetailedPlan(plan);
 		return ResponseEntity.ok(result);
 	}
 

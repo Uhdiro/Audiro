@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let detailedPlans = [];
 	let maxDay = 0;
 
-	const uri = `../../api/plan/details/${travelPlanId}`;
+	const uri = `/audiro/api/plan/details/${travelPlanId}`;
 	axios
 		.get(uri)
 		.then((response) => {

@@ -13,7 +13,9 @@ $(document).ready(function () {
 	const btnSave=document.querySelector('#btnSave');
 	const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
 	const btnConfirm = document.querySelector('#btnConfirm');
-	
+	const startDateValue = document.querySelector('input#startDate').value;
+	const endDateValue = document.querySelector('input#endDate').value;
+
 	// Datepicker 초기화
 	$('#startDate').datepicker({
 		format: 'yyyy-mm-dd',
@@ -21,7 +23,7 @@ $(document).ready(function () {
 		startDate: '0d'
 	}).on('changeDate', function() {
 		getDateRange(false); // showModal을 false로 전달
-		
+
 	});
 
 	$('#endDate').datepicker({
@@ -34,8 +36,14 @@ $(document).ready(function () {
 
 	// 수정 용
 	if (currentPath === "/audiro/travel/plan/modify") {
-		modify();
-	}else{
+		// 수정할 때 날짜 존재시 일정추가 버튼 없애기
+		//TODO: value가 저장되어야 보지..
+		if (startDateValue !== '' || endDateValue !== '') {
+			btnCreateDay.style.display = 'none';
+		}
+		modifyForm();
+		console.log(startDate);
+	} else {
 		defaultDay();
 	}
 
@@ -67,16 +75,16 @@ $(document).ready(function () {
 
 
 	function createAll() {
-		createDay();
-		createPlan();
+		createDayForm();
+		createPlanForm();
 		index++;
 	}
 
 	function updateTravelPlan() {
 		const travelPlanId = document.querySelector('#travelPlanIdForModify').value;
 		const title = document.querySelector('input#title').value;
-		const startDate = document.querySelector('input#startDate').value;
-		const endDate = document.querySelector('input#endDate').value;
+		let startDate = document.querySelector('input#startDate').value;
+		let endDate = document.querySelector('input#endDate').value;
 		const startDateToDate = new Date(startDate);
 		const endDateToDate = new Date(endDate);
 		console.log(travelPlanId);
@@ -84,9 +92,12 @@ $(document).ready(function () {
 		console.log(startDate);
 
 		const millisecondsInADay = 24 * 60 * 60 * 1000;
-		const duration = (endDateToDate - startDateToDate) / millisecondsInADay;
+		let duration = (endDateToDate - startDateToDate) / millisecondsInADay;
 
-		if (startDate == '' || endDate == '') {
+		if (startDate === '') startDate = null;
+		if (endDate === '') endDate = null;
+
+		if (startDate == null || endDate == null) {
 			const days = document.querySelectorAll('div.days');
 			days.forEach((d) => {
 				const startDay = 1;
@@ -116,17 +127,36 @@ $(document).ready(function () {
 		//const usersId=session.getAttribute(SESSION_ATTR_USER);
 		const usersId = '1';
 		const title = document.querySelector('input#title').value;
-		const startDate = document.querySelector('input#startDate').value;
-		const endDate = document.querySelector('input#endDate').value;
-		let duration=0;
-		
-		if (startDate == '' || endDate == '') {
+		let startDate = document.querySelector('input#startDate').value;
+		let endDate = document.querySelector('input#endDate').value;
+		let duration = 0;
+
+		// 날짜 미입력시 일차만 저장하기
+		if (startDate === '') startDate = null;
+		if (endDate === '') endDate = null;
+		let startTime = startDate;
+		let endTime = endDate;
+
+
+		if (startDate == null && endDate == null) {
 			const days = document.querySelectorAll('div.days');
-			days.forEach((d) => {
+			if (days.length > 0) {
 				const startDay = 1;
-				let endDay = d.getAttribute('day-id');
+				const endDay = days[days.length - 1].getAttribute('day-id');
 				duration = endDay - startDay;
-			})
+			}
+		} else if (startDate == null || endDate == null) {
+			const alert = document.querySelector('div#alert');
+			const htmlStr = `
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div>날짜를 모두 작성해주세요.</div>
+            </div>
+        `;
+			alert.insertAdjacentHTML('beforeend', htmlStr);
+			return;
 		} else {
 			const startDateToDate = new Date(startDate);
 			const endDateToDate = new Date(endDate);
@@ -135,6 +165,7 @@ $(document).ready(function () {
 			const millisecondsInADay = 24 * 60 * 60 * 1000;
 			duration = (endDateToDate - startDateToDate) / millisecondsInADay;
 		}
+		
 
 		if (title === '') {
 			const alert = document.querySelector('div#alert');
@@ -158,31 +189,25 @@ $(document).ready(function () {
 			.post(uri, data)
 			.then((response) => {
 				travelPlanId = response.data;
-				console.log('야호');
-				console.log(`id${travelPlanId}`);
-				createrDetailedPlan(travelPlanId,startDate,endDate);
+				createrDetailedPlan(travelPlanId,startTime,endTime);
+				//defaultDay();
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}
 
-	function createrDetailedPlan(travelPlanId,startDate,endDate) {
+	function createrDetailedPlan(travelPlanId,startTime,endTime) {
 		let detailedPlans = [];
 		const detailedPlanElements = document.querySelectorAll(`div.plans`);
 
 		detailedPlanElements.forEach((d) => {
-			const favoriteDestinationElements = d.querySelectorAll('.list'); 
+			const favoriteDestinationElements = d.querySelectorAll('.list');
 			favoriteDestinationElements.forEach((list) => {
 				const destinationId = list.getAttribute("des-id");
 				const day = d.getAttribute('day-id')
-				let startTime=null;
-				let endTime=null;
-				if (startDate !=='' ||endDate!=='') {
-					startTime=startDate;
-					endTime=endDate;
-				}
-			
+				
+
 				const data = { travelPlanId, destinationId, day, startTime, endTime };
 				detailedPlans.push(data);
 			});
@@ -207,7 +232,7 @@ $(document).ready(function () {
 		document.querySelector('div#planContainer').remove();
 	}
 
-
+	
 	function getDateRange(showModal) {
 		const alert=document.querySelector('div#alert');
 		
@@ -324,7 +349,7 @@ $(document).ready(function () {
 	}
 
 
-	function createDay() {
+	function createDayForm() {
 		const divDay = document.querySelector('div#dayContainer');
 		let htmlStr = '';
 		htmlStr = `
@@ -425,14 +450,14 @@ $(document).ready(function () {
 		if (days.length === 0) {
 
 			index = 1;
-			createDay();
-			createPlan();
+			createDayForm();
+			createPlanForm();
 			index++;
 		}
 	}
 
 
-	function createPlan() {
+	function createPlanForm() {
 		let htmlStr = '';
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
@@ -488,7 +513,7 @@ $(document).ready(function () {
 	}
 
 
-	function modify() {
+	function modifyForm() {
 		const travelPlanIdForModify = document.querySelector('#travelPlanIdForModify').value;
 		const uri = `/audiro/api/plan/details/${travelPlanIdForModify}`;
 		axios
@@ -520,15 +545,33 @@ $(document).ready(function () {
 	}
 	function getDayAndPlan(data) {
 		const travelPlan = data.travelPlan;
-		const title=travelPlan.title;
-		const duration=travelPlan.duration;
-		const startDate=getDate(travelPlan.startDate);
-		const endDate= getDate(travelPlan.endDate);
+		
+		const title = travelPlan.title;
+		const duration = travelPlan.duration;
+		const startDate = travelPlan.startDate;
+		const endDate = travelPlan.endDate
+		
+		const startDateElement = document.querySelector('input#startDate');
+		const endDateElement= document.querySelector('input#endDate');
+		console.log(startDateElement);
+
+
+		// 날짜 미입력시에
+		// TODO: value값 집어넣기
+		if (startDate == null && endDate == null) {
+			startDateElement.value == '';
+			endDateElement.value == '';
+		} else {
+			console.log(getDate(travelPlan.startDate));
+			startDateElement.value = getDate(travelPlan.startDate);
+			endDateElement.value = getDate(travelPlan.endDate);
+		}
+
 		// 각 필드에 travelPlan 객체의 값 설정하기
 		document.querySelector('input#title').value=title;
 		document.querySelector('input#duration').value=duration;
-		document.querySelector('input#startDate').value=startDate;
-		document.querySelector('input#endDate').value=endDate;
+		/*document.querySelector('input#startDate').value=startDate;
+		document.querySelector('input#endDate').value=endDate;*/
 
 		const maxDay = data.maxDay;
 		let dayStr = '';
