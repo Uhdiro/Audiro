@@ -15,7 +15,7 @@ public interface TravelPlanDao {
 
 	List<TravelPlan> selectAllTrvaelPlan();
 	
-	List<TravelPlan>selectAllTrvaelPlanOrderByDesc();
+	List<TravelPlan>selectAllTrvaelPlanOrderByTitle();
 
 	TravelPlan selectTravelPlanById(int travelPlanId);
 

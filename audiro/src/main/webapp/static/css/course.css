@@ -15,7 +15,7 @@ td, th {
 }
 
 td.img{
-	 width: 3%;
+	 width: 7%;
 }
 img.deletePlanImg{
 	max-width: 100%; /* 이미지의 최대 너비를 부모 요소(td)의 너비에 맞추기 */

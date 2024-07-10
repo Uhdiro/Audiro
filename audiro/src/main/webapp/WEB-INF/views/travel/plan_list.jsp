@@ -29,7 +29,7 @@
 							<div class="col-3">
 								<select class="form-control" name="category" onchange="this.form.submit()">
 									<option value="c"  ${empty param.category or param.category == 'c' ? 'selected' : ''}>작성순</option>
-									<option value="m" ${param.category == 'm' ? 'selected' : ''}>최신순</option>
+									<option value="t" ${param.category == 't' ? 'selected' : ''}>제목순</option>
 								</select>
 							</div>
 						</div>
@@ -78,10 +78,13 @@
 			</div>
 		</main>
 	</div>
+	<%@ include file="../fragments/modal_delete_plan.jspf"%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
+		
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		
 	<c:url var="courseJS" value="/js/course.js" />
 	<script src="${courseJS}"></script>

@@ -104,25 +104,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Delete</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p>정말 삭제하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnConfirm" class="btn btn-primary">확인</button>
-					<button type="button" id="btnCancel" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@ include file="../fragments/modal_delete_plan.jspf"%>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

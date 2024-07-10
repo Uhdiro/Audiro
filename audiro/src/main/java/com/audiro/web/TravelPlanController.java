@@ -44,7 +44,6 @@ public class TravelPlanController {
 		TravelPlan plan=service.readTravelPlanById(id);
 		List<DetailedPlanDto> list=service.readDetailedPlanByTravelPlanId(id);
 		model.addAttribute("travelPlan",plan);
-		log.debug("dp={}",list);
 		return "/travel/plan_details";
 	}
 	
@@ -57,9 +56,8 @@ public class TravelPlanController {
 	@GetMapping("/search")
 	public String search(@RequestParam(name = "category", defaultValue = "c") String category, Model model) {
 		List<TravelPlan> list;
-		if ("m".equals(category)) {
-			list = service.readAllTravelPlanOrderByDesc();
-			log.debug("오라라라");
+		if ("t".equals(category)) {
+			list = service.readAllTravelPlanOrderByTitle();
 		} else {
 			list = service.readAllTravelPlan();
 		}

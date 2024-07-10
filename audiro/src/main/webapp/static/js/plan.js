@@ -291,7 +291,7 @@ $(document).ready(function () {
 		// 부모요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
-		const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
+		//const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
 		deleteModal.show();
 		btnConfirm.removeEventListener('click', confirmDeleteDay); // 기존 이벤트 리스너 제거
 		btnConfirm.addEventListener('click', confirmDeleteDay); // 새로운 이벤트 리스너 추가

@@ -27,9 +27,9 @@
 		travel_plan order by created_time
 	</select>
 	
-	<select id="selectAllTrvaelPlanOrderByDesc" resultType="TravelPlan">
+	<select id="selectAllTrvaelPlanOrderByTitle" resultType="TravelPlan">
 		select * from
-		travel_plan order by created_time desc
+		travel_plan order by title
 	</select>
 	
 	<select id="selectTravelPlanById" resultType="TravelPlan">

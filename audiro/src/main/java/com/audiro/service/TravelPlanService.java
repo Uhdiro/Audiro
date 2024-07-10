@@ -47,8 +47,8 @@ public class TravelPlanService {
 		return list;
 	}
 	
-	public List<TravelPlan> readAllTravelPlanOrderByDesc(){
-		List<TravelPlan> list=travelPlanDao.selectAllTrvaelPlanOrderByDesc();
+	public List<TravelPlan> readAllTravelPlanOrderByTitle(){
+		List<TravelPlan> list=travelPlanDao.selectAllTrvaelPlanOrderByTitle();
 		return list;
 	}
 	
