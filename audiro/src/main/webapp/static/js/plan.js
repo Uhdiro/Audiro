@@ -47,8 +47,12 @@ $(document).ready(function () {
 	if (currentPath === "/audiro/travel/plan/modify") {
 		// 수정할 때 날짜 존재시 일정추가 버튼 없애기
 		//TODO: value가 저장되어야 보지..
-		if (startDateValue !== '' || endDateValue !== '') {
+		console.log(`value=${startDateValue}, ${endDateValue}`);
+		if (startDateValue !== '' && endDateValue !== '') {
 			btnCreateDay.style.display = 'none';
+		}
+		else {
+			btnCreateDay.style.display = 'block';
 		}
 		modifyForm();
 	} else {
@@ -561,20 +565,15 @@ $(document).ready(function () {
 		const duration = travelPlan.duration;
 		const startDate = travelPlan.startDate;
 		const endDate = travelPlan.endDate
-		
+		console.log(startDate);
+		console.log(title);
 		const startDateElement = document.querySelector('input#startDate');
 		const endDateElement= document.querySelector('input#endDate');
 		console.log(startDateElement);
 
 
-		// 날짜 미입력시에
-		// TODO: value값 집어넣기
-		if (startDate == null || endDate == null) {
-			console.log('머');
-			startDateElement.value == '';
-			endDateElement.value == '';
-		} else {
-			console.log(getDate(travelPlan.startDate));
+		// startDate와 endDate 값이 null이 아닌 경우에만 입력
+		if (startDate&&endDate) {
 			startDateElement.value = getDate(travelPlan.startDate);
 			endDateElement.value = getDate(travelPlan.endDate);
 		}
