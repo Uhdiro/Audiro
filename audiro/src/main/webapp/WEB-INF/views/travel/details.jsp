@@ -23,7 +23,10 @@
         <main>
             <div class="card">
                 <div class="card-header">
-                    <h2>${destination.name}</h2>
+                    <span class="d-none" id="destination-id">${destination.travelDestinationId}</span>
+                    <span>${destination.name}</span>
+                    <c:url var="imgLike" value="/images/like_black.png" />
+                    <img src="${imgLike}" class="img-like" alt="like" />
                 </div>
                 
                 <div class="card-body">
@@ -55,9 +58,15 @@
         </footer>
     </div>
     
+    <script>
+        const signedInUser = `${signedInUser}`;
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a100046aeeb3a25f545a7ba94f0e6c8"></script>
     

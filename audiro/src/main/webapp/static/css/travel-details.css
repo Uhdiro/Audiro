@@ -8,3 +8,8 @@
 .card img {
     width: 100%;
 }
+
+.card-header .img-like {
+    width: 30px;
+    height: 30px;
+}
