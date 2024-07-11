@@ -15,8 +15,8 @@
 		<!-- hikariConfig.setDriverClassName(new OracleDriver()); -->
 		<property name="jdbcUrl"
 			value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="c##test" />
-		<property name="password" value="1234" />
+		<property name="username" value="audiro" />
+		<property name="password" value="audiro" />
 	</bean>
 
     <bean id="ds" class="com.zaxxer.hikari.HikariDataSource">
@@ -28,6 +28,12 @@
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml" />
         <property name="configLocation" value="classpath:mybatis-config.xml" />
     </bean>
+    
+    <bean 
+        id="bcryptPasswordEncoder" 
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </bean>
+    
     <mybatis:scan base-package="com.audiro.repository" />
     <context:component-scan base-package="com.audiro.service" />
 </beans>
