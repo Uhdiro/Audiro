@@ -63,12 +63,13 @@
 									</div>
 									<div class="date col-sm-3 col-6 mb-2">
 										<input type="text" id="startDate" name="startDate"
-											class="form-control" placeholder="start" readonly /> <input
-											type="hidden" id="duration" name="duration" />
+											class="form-control" placeholder="start" readonly /> 
 									</div>
 									<div class="date col-sm-3 col-6 mb-2">
 										<input type="text" id="endDate" name="endDate"
 											class="form-control" placeholder="end" readonly />
+										<input
+											type="hidden" id="duration" name="duration" />
 									</div>
 
 								</div>
