@@ -146,6 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (signedInUser !== null && signedInUser !== '') {
             updateFavoriteStates(destinations);
         }
+        
+        const imgAllLikes = document.querySelectorAll('img.img-like');
+        for (let imgLike of imgAllLikes) {
+            imgLike.addEventListener('click', clickLike);
+        }
     }
     
     function clickBtnSearch() {
@@ -236,4 +241,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function clickLike(event) {
+        if (signedInUser === null || signedInUser === '') {
+            if (confirm("로그인 하시겠습니까?")) {
+                window.location.href = '/audiro/user/signin';
+            }
+            return;
+        }
+        
+        const clickedImg = event.target;
+        const clickedImgSrc = clickedImg.getAttribute('src');
+        const clickedImgDestiId = clickedImg.getAttribute('data-id');
+        
+        const imgLikeBlackSrc = `../images/like_black.png`;
+        const imgLikeRedSrc = `../images/like_red2.png`;
+        
+        if (clickedImgSrc === imgLikeBlackSrc) {
+            clickedImg.src = imgLikeRedSrc;
+            updateFavoriteState(clickedImgDestiId, 1)
+            .then(() => {
+                    animateHeart();
+            });
+        } else {
+            clickedImg.src = imgLikeBlackSrc;
+            updateFavoriteState(clickedImgDestiId, 0);
+        }
+
+    }
+    
+    function updateFavoriteState(travelDestinationId, isFavorite) {
+        return axios.post('../api/favorite/update', {
+            travelDestinationId: travelDestinationId,
+            signedInUser: signedInUser,
+            isFavorite: isFavorite
+        })
+        .then()
+        .catch(error => {
+            console.log(error);
+        });
+    }
+    
+    function animateHeart() {
+        const heartAnimation = document.querySelector('#heart-animation');
+
+        heartAnimation.style.display = 'block';
+        heartAnimation.classList.add('play-animation');
+
+        setTimeout(() => {
+            heartAnimation.style.display = 'none';
+            heartAnimation.classList.remove('play-animation');
+        }, 2000);
+    }
+    
 });

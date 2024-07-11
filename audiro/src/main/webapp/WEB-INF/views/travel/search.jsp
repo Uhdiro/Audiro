@@ -84,6 +84,11 @@
                     </nav>
                 </div>
             </div>
+            
+            <div id="heart-animation">
+                <c:url var="imgHeart" value="../images/heart.png" />
+                <img src="${imgHeart}" alt="heart" class="heart" />
+            </div>
         </main>
         
         <footer>
