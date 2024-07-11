@@ -148,7 +148,9 @@ $(document).ready(function () {
 				duration = endDay - startDay;
 			}
 		} else if (startDate == null || endDate == null) {
+			btnSave.diabled=true;
 			const alert = document.querySelector('div#alert');
+			alert.innerHTML='';
 			const htmlStr = `
             <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
@@ -170,6 +172,8 @@ $(document).ready(function () {
 
 		if (title === '') {
 			const alert = document.querySelector('div#alert');
+			alert.innerHTML='';
+			btnSave.diabled=true;
 			const htmlStr = `
             <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
@@ -246,9 +250,12 @@ $(document).ready(function () {
 
 
 		if (startDateToDate > endDateToDate) {
+			alert.innerHTML='';
+			btnSave.diabled=true;
 			startDate = '';
 			endDate = '';
-			deleteAllElements();
+			// TODO: 문제없으면 삭제
+			//deleteAllElements();
 			const htmlStr = `
 				<div class="alert alert-primary d-flex align-items-center" role="alert">
 				  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">

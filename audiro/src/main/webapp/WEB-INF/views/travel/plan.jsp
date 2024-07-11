@@ -54,7 +54,6 @@
 						<div class="col-9">
 							<div id="planContainer">
 								<div class="row g-0 m-2">
-									<div id="alert"></div>
 									<div class="col-sm-6 col-12 mb-2">
 										<div id="title" class="mb-2">
 											<input type="text" id="title" name="title" maxlength="40"
@@ -70,7 +69,7 @@
 										<input type="text" id="endDate" name="endDate"
 											class="form-control" placeholder="end" readonly />
 									</div>
-
+									<div id="alert"></div>
 								</div>
 							</div>
 						</div>
