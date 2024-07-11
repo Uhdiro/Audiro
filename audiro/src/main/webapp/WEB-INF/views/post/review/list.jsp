@@ -73,7 +73,7 @@
         <%@ include file="../../fragments/header.jspf"%>
 
         <main class="row">
-        <input id="usersId" name="usersId" type="hidden" value="${usersId}" />
+        <input id="id" name="id" type="hidden" value="${signedInUser}" />
             <!-- 여행일기 목록불러오기 -->
             <div class="col-md-8">
                 <div class="mt-2 card" id="list">
@@ -139,7 +139,7 @@
                                         <div class="card-body">
                                             <!-- 클릭 시 상세페이지로 이동하는 링크 -->
                                             <h5 class="card-title">
-                                                <a href="details?postId=${list.postId}&usersId=${list.usersId}"class="card-link">${list.title}</a>
+                                                <a href="details?postId=${list.postId}&id=${list.id}"class="card-link">${list.title}</a>
                                             </h5>
                                             <a href="#" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
@@ -205,7 +205,12 @@
         </main>
     </div>
 
-    <script
+	<!-- 로그인유저저장 -->
+	<script>
+		var signedInUser = "${signedInUser}";
+	</script>
+
+	<script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-wEmeIV1mKuiNp12aFgE3XrA6sgC09K6Qap604vR9CLMNHOVvA20vFJo7Gh2NvGhP"
         crossorigin="anonymous">

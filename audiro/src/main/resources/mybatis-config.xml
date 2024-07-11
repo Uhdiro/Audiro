@@ -7,7 +7,7 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-	<typeAliases>
+	<typeAliases> 
         <typeAlias type="com.audiro.repository.User" alias="User"/>
 		<typeAlias type="com.audiro.repository.TravelDestination" alias="Destination" />
         <typeAlias type="com.audiro.repository.FavoriteUsers" alias="FavoriteUsers" />
@@ -23,6 +23,7 @@
 		<typeAlias type="com.audiro.dto.CreateReviewDto" alias="CreateReviewDto"/>		
 		<typeAlias type="com.audiro.dto.MyReviewListDto" alias="MyReviewListDto"/>		
 		<typeAlias type="com.audiro.dto.LikeReviewPostDto" alias="LikeReviewPostDto"/>	  
+		<typeAlias type="com.audiro.dto.DetailsReviewDto" alias="DetailsReviewDto"/>	  
 	</typeAliases>
 </configuration>
 

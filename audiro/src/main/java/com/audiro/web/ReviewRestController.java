@@ -25,6 +25,7 @@ import com.audiro.repository.Post;
 import com.audiro.repository.Profile;
 import com.audiro.service.ReviewService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,13 +46,14 @@ public class ReviewRestController {
 		return ResponseEntity.ok(likeReview);
 	}
 	
-	//관심유저 담기
-	@PostMapping("/likeUser/toggle")
-	public ResponseEntity<Boolean> likeUser(@RequestBody LikeUserFavoriteDto request) {
-		Boolean likeUser = reviewService.togglUserFavorite(request);
-
-		return ResponseEntity.ok(likeUser);
-	}
+	// 관심유저 담기
+    @PostMapping("/likeUser/toggle")
+    public ResponseEntity<Boolean> likeUser(@RequestBody LikeUserFavoriteDto request
+    										 ,HttpSession session) {
+        
+    Boolean likeUser = reviewService.togglUserFavorite(request,session);
+    return ResponseEntity.ok(likeUser);
+    }
 	
 
 	// 임시저장 목록 1개 선택시 불러오기
