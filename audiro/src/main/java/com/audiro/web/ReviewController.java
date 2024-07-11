@@ -91,7 +91,7 @@ public class ReviewController {
 
 	// 내 여행일기 페이지
 	@GetMapping("/mypage")
-	public void mypage( Model model, HttpSession session) {
+	public void mypage(Model model, MyReviewListDto dto,  HttpSession session) {
 		
 		// 세션에서 로그인사용자 ID 가져오기
 	    String id = (String) session.getAttribute("signedInUser");
