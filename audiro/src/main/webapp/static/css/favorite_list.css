@@ -43,7 +43,7 @@
 	}
 	.favorite-list-container {
 	    width: 300px;
-	    
+	   
 	    border-radius: 10px;
 	    overflow: hidden;
 	    position: relative;
@@ -74,4 +74,13 @@
 		width: 25px;
     		height: 25px;
     }
+    @keyframes grow { 
+			0% { transform: scale(1); }
+		    50% { transform: scale(1.5); }
+		    100% { transform: scale(1); }
+		}
+		
+		.like-animation {
+		    animation: grow 0.3s ease-in-out;
+		}
     

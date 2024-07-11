@@ -22,7 +22,7 @@
     
     <!-- 로그인유저의 찜 상태 -->
     <select id="selectFavoriteState" resultType="integer">
-    		select fd.favorite_destination_id
+    		select fd.destination_id
 		from favorite_destination fd
 		    join users u on fd.users_id = u.users_id
 		where fd.destination_id = #{destinationId}
@@ -41,9 +41,9 @@
 		)
 		select travel_destination_id, name, address, img_url, num_favorites, rank
 		from mainTopDestination
-		where rank &lt;=9
+		where rank &lt;=12
 		order by rank, travel_destination_id
-		fetch first 9 rows only
+		fetch first 12 rows only
     </select>
     
 </mapper>

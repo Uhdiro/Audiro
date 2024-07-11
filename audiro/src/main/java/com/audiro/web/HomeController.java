@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.audiro.dto.FavoriteStateReqDto;
+import com.audiro.dto.FavoriteTopPostStateReqDto;
+import com.audiro.dto.FavoriteTopPostUpdateReqDto;
 import com.audiro.dto.FavoriteUpdateReqDto;
 import com.audiro.dto.TopDestinationDto;
+import com.audiro.dto.TopPostDto;
 import com.audiro.service.TopService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,15 +29,21 @@ public class HomeController {
 	
 	private final TopService topService;
 	
+// Home Destination
 	@GetMapping("/")
-	public String list(Model model) {
+	public String topDestination(Model model) {
 		List<TopDestinationDto> topDestination = topService.getTopDestination();
 		log.debug("top destination:{}", topDestination);
 		model.addAttribute("topDestination", topDestination);
+		
+		List<TopPostDto> topPost = topService.getTopPost();
+        log.debug("top post:{}", topPost);
+        model.addAttribute("topPost", topPost);
+        
 		return "home";
 	}
-	
-	@GetMapping("/api/favorite/{travelDestinationId}/{signedInUser}")
+	// 메인 여행지 찜 상태
+	@GetMapping("/favorite/state/topDestination/{travelDestinationId}/{signedInUser}")
 	@ResponseBody
 	public ResponseEntity<Integer> apiFavorite(@PathVariable Integer travelDestinationId,
 			@PathVariable String signedInUser) {
@@ -47,24 +56,28 @@ public class HomeController {
 		
 		return ResponseEntity.ok(id != null ? id : -1);
 	}
+	// 메인 글 찜 상태
+	@GetMapping("/favorite/state/topPost/{postId}/{signedInUser}")
+	@ResponseBody
+	public ResponseEntity<Integer> favoriteStateTopPost(@PathVariable Integer postId,
+			@PathVariable String signedInUser) {
+		log.debug("apiFavorite(postId={}, signedInUser={})", 
+				postId, signedInUser);
+		
+		FavoriteTopPostStateReqDto dto = new FavoriteTopPostStateReqDto(postId, signedInUser);
+		Integer id = topService.getFavoriteTopPostState(dto);
+		log.debug("id = {}", id);
+		
+		return ResponseEntity.ok(id != null ? id : -1);
+	}
 	
-	@PostMapping("/api/favorite/update")
+	// 메인 여행지 찜 업데이트
+	@PostMapping("/favorite/update/top/destination")
 	@ResponseBody
 	public ResponseEntity<Void> updateFavorite(@RequestBody FavoriteUpdateReqDto reqDto) {
-	    log.debug("updateFavorite(reqDto={})", reqDto);
 
-	    if (reqDto.getTravelDestinationId() == null) {
-	        log.error("travelDestinationId is null");
-	        return ResponseEntity.badRequest().build();
-	    }
-
-	 // 현재 유저와 여행지의 즐겨찾기 상태 확인
 	    boolean isCurrentlyFavorite = topService.isFavorite(reqDto.getSignedInUser(), reqDto.getTravelDestinationId());
-	    log.debug("Current favorite state: {}", isCurrentlyFavorite);
-
-	 // 디버그 로그 추가: isFavorite 값 확인
-	    log.debug("Requested favorite state: {}", reqDto.getIsFavorite());
-
+	   
 	    if ((reqDto.getIsFavorite() == 1) == isCurrentlyFavorite) {
 	        log.warn("No change in favorite state, skipping update.");
 	        return ResponseEntity.ok().build();
@@ -80,4 +93,26 @@ public class HomeController {
 	    return ResponseEntity.ok().build();
 	}
 	
+	// 메인 글 찜 업데이트
+	@PostMapping("/favorite/update/top/post")
+	@ResponseBody
+	public ResponseEntity<Void> updateFavoritePost(@RequestBody FavoriteTopPostUpdateReqDto reqDto) {
+
+	    boolean isCurrentlyFavorite = topService.isFavoriteTopPost(reqDto.getSignedInUser(), reqDto.getPostId());
+	   
+	    if ((reqDto.getIsFavorite() == 1) == isCurrentlyFavorite) {
+	        log.warn("No change in favorite state, skipping update.");
+	        return ResponseEntity.ok().build();
+	    }
+
+	    if (reqDto.getIsFavorite() == 1) {
+	        log.debug("Inserting favorite: {}", reqDto);
+	        topService.addFavorite(reqDto);
+	    } else {
+	        log.debug("Deleting favorite: {}", reqDto);
+	        topService.removeFavorite(reqDto);
+	    }
+	    return ResponseEntity.ok().build();
+	}
+		
 }

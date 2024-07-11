@@ -83,16 +83,24 @@ document.addEventListener('DOMContentLoaded', () => {
             imgElement.setAttribute('src', blackIconSrc);
             updateFavoriteState(dataType, dataId, 0)
             		.then(() => {
-                    alert('좋아요가 해제되었습니다.');
+                    
                     
                 });
         } else {
             imgElement.setAttribute('src', redIconSrc);
+            animateLike();
             updateFavoriteState(dataType, dataId, 1)
                 .then(() => {
-                    alert('좋아요가 반영되었습니다.');
+                 
                 });
         }
+        
+        function animateLike() {
+		    imgElement.classList.add('like-animation');
+		    imgElement.addEventListener('animationend', function() {
+		        imgElement.classList.remove('like-animation');
+		    }, { once: true });
+		}
     }
     
     // 정렬 드롭다운 메뉴 변경 이벤트 핸들러
