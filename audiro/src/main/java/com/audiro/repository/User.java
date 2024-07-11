@@ -15,4 +15,5 @@ public class User {
 	private String nickname;
 	private String phone;
 	private String email;
+
 }
