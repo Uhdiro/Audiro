@@ -84,10 +84,20 @@
                                    class="card-link">여행 후기 게시판</a>
                             </h3>
                         </div>
-                        <div>
-                            <c:set var="createUrl" value="create" />
-                            <a href="${createUrl}"><button>여행 후기 작성하러 가기</button></a>
-                        </div>
+						<!-- 로그인한 경우 추가 기능 -->
+						<div>
+						<c:if test="${!empty signedInUser}">
+							<div>
+	                            <c:set var="createUrl" value="create" />
+	                            <a href="${createUrl}"><button>여행 후기 작성하러 가기</button></a>
+	                        </div>
+	                        
+	                         <div>
+	                            <c:set var="mypageUrl" value="mypage" />
+	                            <a href="${mypageUrl}"><button>내 여행일기 보러가기</button></a>
+	                        </div>
+						</c:if>
+						</div>
 
                         <!-- 여행후기 게시판 제목 --><!-- 정렬순 -->
                         <div class="d-flex justify-content-end mb-3">

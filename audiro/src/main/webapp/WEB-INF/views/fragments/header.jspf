@@ -105,10 +105,10 @@
                 </li>               
                 <!-- 여행일기 -->
                 <li class="nav-item">
-                    <c:url var="travelReviewPage" value="/post/review/mypage">
+                    <c:url var="travelReviewPage" value="/post/review/list">
                     	<c:param name="id" value="${signedInUser}"></c:param>
                     </c:url>
-                    <a class="nav-link" href="${travelReviewPage}">여행일기</a>
+                    <a class="nav-link" href="${travelReviewPage}">여행후기</a>
                 </li> 
                 <!-- 여행일기 -->
                 <li class="nav-item">
