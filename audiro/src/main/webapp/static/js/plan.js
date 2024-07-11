@@ -15,6 +15,7 @@ $(document).ready(function () {
 	const btnConfirm = document.querySelector('#btnConfirm');
 	let startDateValue = document.querySelector('input#startDate').value;
 	let endDateValue = document.querySelector('input#endDate').value;
+	const modifyUrl="/audiro/travel/plan/modify";
 
 	// Datepicker 초기화
 	$('#startDate').datepicker({
@@ -23,7 +24,6 @@ $(document).ready(function () {
 		startDate: '0d'
 	}).on('changeDate', function() {
 		getDateRange(false); // showModal을 false로 전달
-
 	});
 
 	$('#endDate').datepicker({
@@ -44,7 +44,7 @@ $(document).ready(function () {
 	});
 
 	// 수정 용
-	if (currentPath === "/audiro/travel/plan/modify") {
+	if (currentPath ===modifyUrl) {
 		modifyForm();
 	} else {
 		defaultDay();
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
 	btnSave.addEventListener('click', (event) => {
 		event.preventDefault(); // 폼 제출 기본 동작 막기
-		if (currentPath === "/audiro/travel/plan/modify") {
+		if (currentPath === modifyUrl) {
 			updateTravelPlan();
 		} else {
 			createTravelPlan();
@@ -540,7 +540,7 @@ $(document).ready(function () {
 				startDateValue = document.querySelector('input#startDate').value;
 				endDateValue = document.querySelector('input#endDate').value;
 				// 날짜 존재 시 일차 추가 버튼 숨기기
-				if (startDateValue !== '' && endDateValue !== '') {
+				if (startDateValue !== '' || endDateValue !== '') {
 					btnCreateDay.style.display = 'none';
 				}
 				else {
