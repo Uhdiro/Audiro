@@ -13,6 +13,8 @@
         crossorigin="anonymous" />
     <c:url var="travelSearchCss" value="/css/travel-search.css" />
     <link href="${travelSearchCss}" rel="stylesheet" />
+    <c:url var="heartCss" value="/css/heart.css" />
+    <link href="${heartCss}" rel="stylesheet" />
 </head>
 <body>
 

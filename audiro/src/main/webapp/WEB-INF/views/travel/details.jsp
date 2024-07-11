@@ -13,6 +13,8 @@
         crossorigin="anonymous" />
     <c:url var="travelDetailsCss" value="/css/travel-details.css" />
     <link href="${travelDetailsCss}" rel="stylesheet" />
+    <c:url var="heartCss" value="/css/heart.css" />
+    <link href="${heartCss}" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -50,6 +52,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div id="heart-animation">
+                <c:url var="imgHeart" value="../images/heart.png" />
+                <img src="${imgHeart}" alt="heart" class="heart" />
             </div>
         </main>
         
