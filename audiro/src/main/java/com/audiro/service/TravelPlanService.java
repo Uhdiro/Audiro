@@ -31,8 +31,6 @@ public class TravelPlanService {
 	
 	@Transactional
 	public int createDetailedPlan(List<DetailedPlan> detailedPlans) {
-		log.debug("service");
-		
 		int result = 0;
 		for(DetailedPlan item : detailedPlans) {
 			result += travelPlanDao.insertDetailedPlan(item);

@@ -643,6 +643,3 @@ $(document).ready(function () {
 	}
 
 });
-
-
-

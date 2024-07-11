@@ -1,0 +1,278 @@
+@charset "UTF-8";
+
+		body {
+		    margin: 0;
+		    padding: 0;
+		    background: rgba(0, 0, 128, 0.5); /* 네이비색에 50% 투명도 적용 */
+		    background-size: cover;
+		    font-family: 'NixgonFonts';
+		}
+		.background-image {
+            background-image: url('../images/main.jpg');
+            background-size: cover; /* 이미지를 요소에 맞게 조정 */
+            background-position: center; /* 이미지를 중앙에 배치 */
+            height: 400px; /* 높이를 필요에 따라 조정 */
+            width: 100%; /* 너비를 100%로 설정 */
+            margin-bottom: 100px;
+        }
+		h3 {
+			margin-top: 100px; /* 위 여백을 50px로 설정; */
+			font-size: 15px;
+			margin-bottom: 50px;
+			font-family: 'NixgonFonts';
+		}
+		.wrap {
+            display: flex;
+            overflow: hidden;
+            margin-top: 0px;
+        }
+        
+        .wrap .rolling-list ul {
+            display:flex;
+            list-style-type: none; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
+            padding: 0; /* 첫번째 사진과 마지막 사진 사이 여백= 0 */
+        }
+        .wrap .rolling-list ul li { 
+            width: 400px; 
+            height: 250px; 
+            box-sizing: border-box; 
+            border-radius: 0px; 
+            margin: 0 5px; 
+            padding: 0px 0px; 
+            display: flex; 
+            align-items: center; 
+            flex-shrink: 0; 
+        }
+        .rolling-list.original {
+            animation: rollingleft1 60s linear infinite;
+        }
+        .rolling-list.clone {
+            animation: rollingleft2 60s linear infinite;
+        }
+        @keyframes rollingleft1 {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-100%); }
+            50.01% { transform: translateX(100%); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes rollingleft2 {
+            0% { transition: translateX(0); }
+            100% { transform: translateX(-200%); }
+        }
+        .image-wrap {
+            width: 100%;
+            height: 100%;
+            border-radius: 0px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-title {
+            font-size: 15px;
+            font-weight: bold;
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            z-index: 1;
+        }
+        
+        .image-descript {
+            font-size: 12px;
+            position: absolute;
+            bottom: 2px;
+            left: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            z-index: 1;
+        }
+        
+        .carousel-image {
+        		transition: all 0.3s ease-in-out; /* 부드러운 전환 효과 */
+            width: 300px;
+            max-width: 600px; /* 최대 너비 제한 */
+     
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 10px 10px; /* 이미지 간 여백 조정 */
+          	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          	overflow: hidden;
+          	
+        }
+        .carousel-image:hover {
+		    width: 30%; /* 호버 시 너비 증가 */
+            
+		    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* 테두리가 빛나는 효과 */
+		    color: black;
+		}
+		.carousel-image:hover #destination-name {
+		    color: white; /* 호버 시 더 밝아지는 색상 */
+		    text-shadow: 1px 1px 2px gray;
+		}
+
+
+		#destination-name {
+			position: absolute;
+			top:5px;
+			left: 10%; /* 수평 중앙 정렬 */
+			color: white;
+			padding: 5px;
+			font-size: 15px;
+    			font-weight: bold;
+    			text-shadow: 1px 1px 2px gray;
+		}
+		
+       .my-card {
+            width: 300px;
+            min-width: 300px;
+            height: 350px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            position: relative;
+            margin: 10px 10px; /* 이미지 간 여백 조정 */
+           	border: 1px solid gray; /* 테두리 추가 */
+           	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #post-title {
+		    font-size: 20px;
+		    font-weight: bold;
+		    position: absolute;
+		    top: 50px;
+		    left: 5px;
+		    color: navy;
+		    z-index: 1;
+		    padding: 5px; /* 내부 여백 설정 */  
+		}
+		
+		#post-content {	
+		    font-size: 15px;
+		    font-weight: bold;
+		    position: absolute;
+		    top: 90px; /* top 위치를 50px로 변경 */
+		    left: 5px; /* left를 추가하여 내용이 카드 안에 들어오도록 설정 */
+		    color: black;
+		    z-index: 1;
+		    padding: 5px; /* 내부 여백 설정 */		    
+		}
+           
+        .carousel-image img {
+            width: 100%;
+            height: 100%;
+            /* object-fit: contain;  이미지가 잘리지 않고 축소됨 */
+            object-fit: cover; 
+            display: block;
+            align-self: flex-end;
+        }
+        
+        .carousel-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-rank {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+            color: white;
+            z-index: 1;
+            padding: 5px; /* 내부 여백 설정 */
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .like {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            width: 30px; 
+            height: 30px;
+        }
+        #post-like {
+		    position: absolute;
+		    top: 5px;
+		    right: 10px;
+		    width: 25px;
+		    height: 25px;
+		}
+		
+		#post-like img {
+		    width: 100%;
+		    height: 100%;
+		}
+        
+        #heart-animation {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+        }
+        
+        #heart-animation img {
+            width: 100px; /* 적절한 크기로 설정 */
+            opacity: 0;
+            animation: fadeInOut 2s forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(0%) rotate(0deg); }
+            25% { opacity: 1; transform: translateY(-30%) rotate(-5deg); }
+            50% { opacity: 1; transform: translateY(-60%) rotate(5deg); }
+            75% { opacity: 0.5; transform: translateY(-90%) rotate(-5deg); }
+            100% { opacity: 0; transform: translateY(-120%) rotate(5deg); }
+        }
+       
+		.carousel-controls {
+			position: relative;
+			display: flex;
+		    justify-content: center;	    
+		    background-color: rgba(0, 0, 0, 0.2);
+		    padding: 5px;
+		    border-radius: 20px; 
+		    gap: 10px;
+		    margin-top: 10px auto;
+		    max-width: fit-content;
+		    margin-top: 20px;
+		    margin-bottom: 100px;
+		}
+		.carousel-control-btn {
+		    background-color: transparent;
+		    border: none;
+		    color: white;
+		    padding: 5px;
+		    font-size: 16px;
+		    cursor: pointer;
+		    border-radius: 5px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    font-weight: normal; /* 두께를 유지 */
+		}
+		@keyframes grow { 
+			0% { transform: scale(1); }
+		    50% { transform: scale(1.5); }
+		    100% { transform: scale(1); }
+		}
+		
+		.like-animation {
+		    animation: grow 0.3s ease-in-out;
+		}
+		
+		
+        

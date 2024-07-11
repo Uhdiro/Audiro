@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.audiro.dto.DetailedPlanDto;
@@ -67,7 +66,6 @@ public class TravelPlanRestController {
 		List<DetailedPlanDto> list = planService.readDetailedPlanByTravelPlanId(travelPlanId);
 		int maxDay = planService.getMaxDay(travelPlanId);
 		TravelPlan plan=planService.readTravelPlanById(travelPlanId);
-		log.debug("max= {}",maxDay);
 		// Map을 사용하여 list와 maxDay를 함께 담습니다.
 		Map<String, Object> response = new HashMap<>();
 		response.put("list", list);
