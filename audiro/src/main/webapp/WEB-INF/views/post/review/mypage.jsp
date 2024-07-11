@@ -241,19 +241,19 @@ main {
 </head>
 <body>
 	<div class="container-fluid">
-		<c:set var="travelReviewPage" value="내 여행일기" />
+		<c:set var="travelReviewPage" value="${post[0].nickname}님의 여행일기" />
 		<%@ include file="../../fragments/header.jspf"%>
 
 		<main>
 			<div class="profile-container">
 				<div class="profile-header">
-					<img src="${list[0].path}" class="profile-img" alt="프로필 이미지">
+					<img src="${post[0].path}" class="profile-img" alt="프로필 이미지">
 					<div class="profile-info">
 						<div class="username-stats">
 							<h2 class="profile-nickname-container">
-								<span id="nickname" class="profile-nickname">${list[0].nickname}</span>
+								<span id="nickname" class="profile-nickname">${post[0].nickname}</span>
 								<button id="userLike"
-									class="likeReview ${list[0].favoriteUserId != null ? 'active' : ''}"
+									class="likeReview ${post[0].favoriteUserId != null ? 'active' : ''}"
 									data-user-id="${id}"></button>
 							</h2>
 							<div class="stats">
@@ -268,12 +268,12 @@ main {
 								</div>
 							</div>
 						</div>
-						<div class="bio">${list[0].introduction}</div>
+						<div class="bio">${post[0].introduction}</div>
 					</div>
 				</div>
 				<div class="profile-posts" id="profilePosts">
 					<!-- 여행후기 반복문 -->
-					<c:forEach var="post" items="${list}">
+					<c:forEach var="post" items="${post}">
 						<article id="post-${post.postId}"
 							class="post-${post.postId} post type-post status-publish format-standard has-post-thumbnail hentry category-lifestyle">
 							<div class="blog-post-item"
@@ -311,8 +311,8 @@ main {
 									<!-- .modified-time -->
 									<div class="card-header" style="text-align: right">
 										<button
-											class="btn likeReview ${review.favoritePost != null ? 'active' : ''}"
-											data-review-id="${review.postId}"></button>
+											class="btn likeReview ${post.favoritePost != null ? 'active' : ''}"
+											data-review-id="${post.postId}"></button>
 									</div>
 								</div>
 								<!-- .entry-container -->
