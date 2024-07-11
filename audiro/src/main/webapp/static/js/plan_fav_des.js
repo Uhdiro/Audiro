@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	getAllFavDestination();
 
 	function getAllFavDestination() {
-		const uri = '../api/plan/fav';
+		const uri = '/audiro/api/plan/fav';
 		axios
 			.get(uri)
 			.then((response) => {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function getFavDestination(event) {
 		const favoriteDestinationId = event.target.closest('.favDestination').getAttribute('fav-id');
-		const uri = `../api/plan/fav/${favoriteDestinationId}`;
+		const uri = `/audiro/api/plan/fav/${favoriteDestinationId}`;
 		axios
 			.get(uri)
 			.then((response) => {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const dayId = document.querySelector('div.click').getAttribute('day-id');
 		const plan = document.querySelector(`div#dayPlan${dayId} .timeline ul`);
 		const htmlStr = `
-                <li class="list row g-0 my-1 p-2">
+                <li id="list${data.favoriteDestinationId}" class="list row g-0 my-1 p-2" des-id="${data.destinationId}">
                 	<div class="name col-10">${data.name}</div>
                 	<div class="deleteFav col-2">
 						<img class="deleteFavImg" src="/audiro/images/delete.png" />
@@ -75,10 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		`;
 		plan.insertAdjacentHTML('beforeend', htmlStr);
 		
-		addNewEvent();
+		deleteEvent();
 	}
 	
-	function addNewEvent(){
+	function deleteEvent(){
 		const deleteFavImg = document.querySelectorAll('.deleteFavImg');
 		deleteFavImg.forEach((d) => {
 			d.removeEventListener('click', deleteFavDestinationInPlan); // 중복 방지 위해 기존 이벤트 제거

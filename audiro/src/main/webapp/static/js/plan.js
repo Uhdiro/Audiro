@@ -5,14 +5,19 @@
 $(document).ready(function () {
 	
 	let index = 1;
+	const currentPath = window.location.pathname;
 	const btnCreateDay = document.querySelector('button#createDay');
 	const dayContainer = document.querySelector('div#dayContainer');
+	const planContainer = document.querySelector('div#planContainer');
 	const deleteAll = document.querySelector('button#deleteAll');
 	const btnSave=document.querySelector('#btnSave');
-	let startToTimestamp;
-	let endToTimestamp;
-
-
+	const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
+	const btnConfirm = document.querySelector('#btnConfirm');
+	let startDateValue = document.querySelector('input#startDate').value;
+	let endDateValue = document.querySelector('input#endDate').value;
+	// 수정 할 때 url
+	const modifyUrl="/audiro/travel/plan/modify";
+	
 	// Datepicker 초기화
 	$('#startDate').datepicker({
 		format: 'yyyy-mm-dd',
@@ -20,7 +25,7 @@ $(document).ready(function () {
 		startDate: '0d'
 	}).on('changeDate', function() {
 		getDateRange(false); // showModal을 false로 전달
-		
+
 	});
 
 	$('#endDate').datepicker({
@@ -31,32 +36,99 @@ $(document).ready(function () {
 		getDateRange(false); // showModal을 false로 전달
 	});
 
+	// 여행계획 수정 시에 eventlistener 초기화
+	document.addEventListener('click', function(event) {
+		if (event.target.classList.contains('deleteDayImg')) {
+			deleteDayAndPlan(event);
+		} else if (event.target.classList.contains('deleteFavImg')) {
+			deleteList(event);
+		}
+	});
 
-	defaultDay();
+	// 수정 용
+	if (currentPath === modifyUrl) {
+		modifyForm();
+	} else {
+		defaultDay();
+	}
 
-	btnSave.addEventListener('click', function(event) {
+
+	btnSave.addEventListener('click', (event) => {
 		event.preventDefault(); // 폼 제출 기본 동작 막기
-		createTravelPlan();
-		});
+		if (currentPath === modifyUrl) {
+			updateTravelPlan();
+		} else {
+			createTravelPlan();
+		}
+	});
 
-	deleteAll.addEventListener('click', function() {
+	deleteAll.addEventListener('click', (event) =>  {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		deleteAllDay(true); // showModal을 true로 전달
 	});
 
-	btnCreateDay.addEventListener('click', () => {
+	btnCreateDay.addEventListener('click', (event) => {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		createAll();
 	});
 
 	dayContainer.addEventListener('click', (event) => {
+		event.preventDefault(); // 폼 제출 기본 동작 막기
 		clickDays(event);
 
 	});
 
 
 	function createAll() {
-		createDay();
-		createPlan();
+		if (existingDays.length === 0) {
+			createDayForm();
+		}
+
+		if (existingPlans.length === 0) {
+			createPlanForm();
+		}
 		index++;
+	}
+
+	function updateTravelPlan() {
+		const travelPlanId = document.querySelector('#travelPlanIdForModify').value;
+		const title = document.querySelector('input#title').value;
+		let startDate = document.querySelector('input#startDate').value;
+		let endDate = document.querySelector('input#endDate').value;
+		const startDateToDate = new Date(startDate);
+		const endDateToDate = new Date(endDate);
+		console.log(travelPlanId);
+		console.log(title);
+		console.log(startDate);
+
+		const millisecondsInADay = 24 * 60 * 60 * 1000;
+		let duration = (endDateToDate - startDateToDate) / millisecondsInADay;
+
+		if (startDate === '') startDate = null;
+		if (endDate === '') endDate = null;
+
+		if (startDate == null || endDate == null) {
+			const days = document.querySelectorAll('div.days');
+			days.forEach((d) => {
+				const startDay = 1;
+				let endDay = d.getAttribute('day-id');
+				duration = endDay - startDay;
+			})
+		}
+
+			const data = { travelPlanId, title, startDate, duration, endDate };
+			console.log(data);
+			const uri = '/audiro/api/plan/modify';
+			axios
+				.post(uri, data)
+				.then((response) => {
+					//TODO: 수정 성공시 어떤 메세지
+					createrDetailedPlan(travelPlanId,startDate,endDate)
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+		
 	}
 
 
@@ -64,91 +136,105 @@ $(document).ready(function () {
 		//const usersId=session.getAttribute(SESSION_ATTR_USER);
 		const usersId = '1';
 		const title = document.querySelector('input#title').value;
-		const startDate = document.querySelector('input#startDate').value;
-		const endDate = document.querySelector('input#endDate').value;
+		let startDate = document.querySelector('input#startDate').value;
+		let endDate = document.querySelector('input#endDate').value;
+		let duration = 0;
 
-		const startDateToDate = new Date(startDate);
-		const endDateToDate = new Date(endDate);
-		startToTimestamp = startDateToDate.toISOString();
-		endToTimestamp = endDateToDate.toISOString();
+		// 날짜 미입력시 일차만 저장하기
+		if (startDate === '') startDate = null;
+		if (endDate === '') endDate = null;
+		let startTime = startDate;
+		let endTime = endDate;
 
-		const millisecondsInADay = 24 * 60 * 60 * 1000;
-		const duration = (endDateToDate - startDateToDate) / millisecondsInADay; // duration을 일수로 계산
+
+		if (startDate == null && endDate == null) {
+			const days = document.querySelectorAll('div.days');
+			if (days.length > 0) {
+				const startDay = 1;
+				const endDay = days[days.length - 1].getAttribute('day-id');
+				duration = endDay - startDay;
+			}
+		} else if (startDate == null || endDate == null) {
+			const alert = document.querySelector('div#alert');
+			const htmlStr = `
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div>날짜를 모두 작성해주세요.</div>
+            </div>
+        `;
+			alert.insertAdjacentHTML('beforeend', htmlStr);
+			return;
+		} else {
+			const startDateToDate = new Date(startDate);
+			const endDateToDate = new Date(endDate);
+
+			const millisecondsInADay = 24 * 60 * 60 * 1000;
+			duration = (endDateToDate - startDateToDate) / millisecondsInADay;
+		}
+		
 
 		if (title === '') {
 			const alert = document.querySelector('div#alert');
 			const htmlStr = `
-				<div class="alert alert-primary d-flex align-items-center" role="alert">
-				  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-				    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-				  </svg>
-				  <div>
-				    제목을 작성해주세요.
-				  </div>
-				</div>
-			`;
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div>제목을 작성해주세요.</div>
+            </div>
+        `;
 			alert.insertAdjacentHTML('beforeend', htmlStr);
 			return;
 		}
 
-
-		
-		const data = { usersId, title, startDate, duration, endDate};
-		let travelPlanId=0;
-		const uri = '../api/plan/create/travelPlan';
+		const data = { usersId, title, startDate, duration, endDate };
+		let travelPlanId = 0;
+		const uri = '/audiro/api/plan/create/travelPlan';
 		axios
 			.post(uri, data)
 			.then((response) => {
-				travelPlanId=response.data;
-				console.log('야호');
-				console.log(travelPlanId);
-			createrDetailedPlan(travelPlanId);
+				travelPlanId = response.data;
+				createrDetailedPlan(travelPlanId,startTime,endTime);
+				//defaultDay();
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-
-		
 	}
-	
-	function createrDetailedPlan(travelPlanId){
-		const detailedPlans = [];
-		const detailedPlanElement = document.querySelectorAll(`div.plans`);
 
-		detailedPlanElement.forEach((d) => {
-			const favoriteDestinationElement = document.querySelectorAll('.list');
-			favoriteDestinationElement.forEach((list) => {
+	function createrDetailedPlan(travelPlanId,startTime,endTime) {
+		let detailedPlans = [];
+		const detailedPlanElements = document.querySelectorAll(`div.plans`);
 
+		detailedPlanElements.forEach((d) => {
+			const favoriteDestinationElements = d.querySelectorAll('.list');
+			favoriteDestinationElements.forEach((list) => {
 				const destinationId = list.getAttribute("des-id");
-				const day = d.getAttribute('day-id');
-				console.log(`destinationId${destinationId}`);
-				console.log(`day${day}`);
-				const startTime = startToTimestamp;
-				const endTime = endToTimestamp;
-				console.log(`start${startTime}`);
-				console.log(`end${endTime}`);
-				const detailedPlanData = {travelPlanId, destinationId, day, startTime, endTime};
-				detailedPlans.push(detailedPlanData);
-			});
+				const day = d.getAttribute('day-id')
+				
 
+				const data = { travelPlanId, destinationId, day, startTime, endTime };
+				detailedPlans.push(data);
+			});
 		});
-		
-		const uri = '../api/plan/create/detailedPlan';
-				console.log('야호2');
+		const uri = '/audiro/api/plan/create/detailedPlan';
 		axios
 			.post(uri, detailedPlans)
 			.then((response) => {
-				document.querySelector('div#dayContainer').remove();
-				document.querySelector('div#dayPlan').remove();
+				console.log(response.data);
 				console.log('야호3');
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 
+		document.querySelector('div#dayContainer').remove();
+		document.querySelector('div#planContainer').remove();
 	}
 
-
+	
 	function getDateRange(showModal) {
 		const alert=document.querySelector('div#alert');
 		
@@ -196,7 +282,7 @@ $(document).ready(function () {
 			if (differenceInDays < currentDay) {
 				// 현재 일차 수가 날짜 차이보다 많으면 초과된 일차 삭제
 				for (let i = currentDay; i > differenceInDays; i--) {
-					deleteDayByIndex(i);
+					deleteExceededIndex(i);
 				}
 			} else if (differenceInDays === currentDay) {
 				return;
@@ -213,7 +299,7 @@ $(document).ready(function () {
 	}
 
 	// 날짜 지정시 초과된 index 삭제
-    function deleteDayByIndex(dayIndex) {
+    function deleteExceededIndex(dayIndex) {
 		const dayElement = document.querySelector(`#index${dayIndex}`);
 		const planElement = document.querySelector(`#dayPlan${dayIndex}`);
 		if (dayElement) {
@@ -226,25 +312,36 @@ $(document).ready(function () {
 	}
 
 	// day의 deleteImg를 클릭해서 삭제
-	function deleteDay(event) {
+	// day가 삭제될경우, 해당하는 plan도 삭제
+	function deleteDayAndPlan(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
 		// 부모요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
-		const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
+		// deleteDayAndPlan 함수 내 모달 초기화
+		const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
 		deleteModal.show();
-		const btnConfirm = document.querySelector('#btnConfirm');
-		btnConfirm.addEventListener('click', () => {
+		btnConfirm.removeEventListener('click', confirmDeleteDay); // 기존 이벤트 리스너 제거
+		btnConfirm.addEventListener('click', confirmDeleteDay); // 새로운 이벤트 리스너 추가
+
+		function confirmDeleteDay() {
 			dayElement.remove();
 			planElement.remove();
 			resetDay();
 			deleteModal.hide();
 			index--;
-
-		});
+		}
 
 	}
+	// .list 요소를 삭제하는 함수
+    function deleteList(event) {
+		// 부모 요소 중에서 .list 클래스를 가진 요소를 찾음
+		const favList = event.target.closest('.list');
+		if (favList) {
+			favList.remove();
+		}
+    }
 	
 
 	function clickDays(event) {
@@ -264,7 +361,7 @@ $(document).ready(function () {
 	}
 
 
-	function createDay() {
+	function createDayForm() {
 		const divDay = document.querySelector('div#dayContainer');
 		let htmlStr = '';
 		htmlStr = `
@@ -300,13 +397,11 @@ $(document).ready(function () {
 	}
 
 	function addNewEvent() {
-		const target = document.querySelectorAll(`div.days`);
-
 		// 새로운 deleteDayImg 요소에 이벤트 리스너 추가
 		const deleteDayImg = document.querySelectorAll('img.deleteDayImg');
 		deleteDayImg.forEach((d) => {
-			d.removeEventListener('click', deleteDay); // 중복방지
-			d.addEventListener('click', deleteDay);
+			d.removeEventListener('click', deleteDayAndPlan); // 중복방지
+			d.addEventListener('click', deleteDayAndPlan);
 		});
 
 		// 새로운 collapseImg 요소에 이벤트 리스너 추가
@@ -333,23 +428,27 @@ $(document).ready(function () {
 	}
 
 	function deleteAllDay(showModal) {
+		// modal이 true일 경우 모달 창 띄우기
 		if (showModal) {
-			const deleteModal = new bootstrap.Modal('div.modal', { backdrop: true });
 			deleteModal.show();
-			const btnConfirm = document.querySelector('#btnConfirm');
-			btnConfirm.removeEventListener(); // 중복 제거
-			btnConfirm.addEventListener('click', () => {
-				deleteModal.hide();
-				deleteAllElements();
-				defaultDay();
-			})
-		} else {
+			btnConfirm.removeEventListener('click', confirmDeleteAll); // 기존 이벤트 리스너 제거
+			btnConfirm.addEventListener('click', confirmDeleteAll); // 새로운 이벤트 리스너 추가
+
+		} else { // modal이 false일 경우 창 안 띄우고 바로 삭제
+			deleteAllElements();
+			defaultDay();
+		}
+
+		function confirmDeleteAll() {
+			deleteModal.hide();
 			deleteAllElements();
 			defaultDay();
 		}
 
 	}
 
+
+	// 해당하는 day의 모든 일차 plan 삭제
 	function deleteAllElements() {
 		const dayElement = document.querySelectorAll('.days');
 		const planElement = document.querySelectorAll('.plans');
@@ -365,15 +464,14 @@ $(document).ready(function () {
 		if (days.length === 0) {
 
 			index = 1;
-			createDay();
-			createPlan();
+			createDayForm();
+			createPlanForm();
 			index++;
 		}
 	}
 
 
-	function createPlan() {
-		const dayContainer = document.querySelector('div#dayPlan');
+	function createPlanForm() {
 		let htmlStr = '';
 		htmlStr = `
 			<div id="dayPlan${index}" day-id="${index}" class="plans row g-0 m-2">
@@ -383,11 +481,10 @@ $(document).ready(function () {
 				 	</ul>
 				</div>
 				<div class="date">
-					
 				</div>
 			</div>
 		`;
-		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
+		planContainer.insertAdjacentHTML('beforeend', htmlStr);
 	}
 
 
@@ -400,19 +497,19 @@ $(document).ready(function () {
 			const dayLink = day.querySelector('a');
 			const deleteDiv = day.querySelector('div.deleteDay');
 
-				day.id = `index${indexReset}`;
-				day.setAttribute('day-id', indexReset);
+			day.id = `index${indexReset}`;
+			day.setAttribute('day-id', indexReset);
 
-				dayLink.textContent = `${indexReset}일차`;
-				dayLink.setAttribute('href', `#dayPlan${indexReset}`);
+			dayLink.textContent = `${indexReset}일차`;
+			dayLink.setAttribute('href', `#dayPlan${indexReset}`);
 
-				deleteDiv.id = `delete${indexReset}`;
+			deleteDiv.id = `delete${indexReset}`;
 
-				indexReset++;
+			indexReset++;
 
-			}
+		}
 
-			);
+		);
 		index = indexReset;
 		// 한 개의 일차만 남은 경우 다시 일차 생성
 		defaultDay();
@@ -430,5 +527,119 @@ $(document).ready(function () {
 	}
 
 
+	function modifyForm() {
+		const travelPlanIdForModify = document.querySelector('#travelPlanIdForModify').value;
+		const uri = `/audiro/api/plan/details/${travelPlanIdForModify}`;
+		axios
+			.get(uri)
+			.then((response) => {
+				index=response.data.maxDay+1;
+				getDayAndPlan(response.data);
+				getDetailedPlans(response.data);
+				// 페이지 로딩 -> axios로 데이터 받아서 요소에 저장 -> 바뀐 요소 다시 초기화
+				startDateValue = document.querySelector('input#startDate').value;
+				endDateValue = document.querySelector('input#endDate').value;
+				// 날짜 존재 시 일차 추가 버튼 숨기기
+				if (startDateValue !== '' && endDateValue !== '') {
+					btnCreateDay.style.display = 'none';
+				}
+				else {
+					btnCreateDay.style.display = 'block';
+				}
+
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+	}
+
+	function getDate(dateArray){
+		// 배열에서 연도, 월, 일 추출
+		const year = dateArray[0];
+		const month = dateArray[1].toString().padStart(2, '0');  // 월을 2자리로 만들고 부족한 부분은 0으로 채움
+		const day = dateArray[2].toString().padStart(2, '0');    // 일을 2자리로 만들고 부족한 부분은 0으로 채움
+
+		// 'yyyy-mm-dd' 형식의 문자열 조합
+		const formattedDate = `${year}-${month}-${day}`;
+		return formattedDate;
+
+	}
+	function getDayAndPlan(data) {
+		const travelPlan = data.travelPlan;
+		
+		const title = travelPlan.title;
+		const duration = travelPlan.duration;
+		const startDate = travelPlan.startDate;
+		const endDate = travelPlan.endDate
+		console.log(startDate);
+		console.log(title);
+		const startDateElement = document.querySelector('input#startDate');
+		const endDateElement= document.querySelector('input#endDate');
+		console.log(startDateElement);
+
+
+		// startDate와 endDate 값이 null이 아닌 경우에만 입력
+		if (startDate&&endDate) {
+			startDateElement.value = getDate(travelPlan.startDate);
+			endDateElement.value = getDate(travelPlan.endDate);
+		}
+
+		// 각 필드에 travelPlan 객체의 값 설정하기
+		document.querySelector('input#title').value=title;
+		document.querySelector('input#duration').value=duration;
+		/*document.querySelector('input#startDate').value=startDate;
+		document.querySelector('input#endDate').value=endDate;*/
+
+		const maxDay = data.maxDay;
+		let dayStr = '';
+		let planStr = '';
+
+		for (let i = 1; i <= maxDay; i++) {
+			dayStr = `
+                        <div class="days non-click row g-0 my-1 p-2" id="index${i}" day-id="${i}">
+                            <div class="col-2">
+                                <img class="collapseImg" alt="collapseImg" src="/audiro/images/collapse.png" />
+                            </div>
+                            <div class="col-7">
+                                <a href="#dayPlan${i}">${i}일차</a>
+                            </div>
+                            <div id="delete${index}" class="deleteDay col-3">
+								<img class="deleteDayImg" src="/audiro/images/delete.png" />
+							</div>
+                        </div>
+                    `;
+			planStr = `
+                	<div id="dayPlan${i}" day-id="${i}" class="plans row g-0 m-2">
+						<h5>${i}일차</h5>
+						<div class="timeline">
+							<ul>
+						 	</ul>
+						</div>
+						<div class="date">
+						</div>
+					</div>
+                `;
+			dayContainer.insertAdjacentHTML('beforeend', dayStr);
+			planContainer.insertAdjacentHTML('beforeend', planStr);
+		}
+	}
+
+	function getDetailedPlans(data) {
+		let detailedPlans = data.list;
+		detailedPlans.forEach((d) => {
+			const li = document.querySelector(`#dayPlan${d.day} ul`);
+			let htmlStr = `
+                <li id="list${d.favoriteDestinationId}" class="list row g-0 my-1 p-2" des-id="${d.destinationId}">
+	            	<div class="name col-10">${d.name}</div>
+	            	<div class="deleteFav col-2">
+						<img class="deleteFavImg" src="/audiro/images/delete.png" />
+					</div>
+                </li>
+		`;
+
+			li.insertAdjacentHTML('beforeend', htmlStr);
+		});
+	}
 
 });

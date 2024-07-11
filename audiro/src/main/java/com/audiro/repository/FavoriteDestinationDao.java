@@ -9,8 +9,12 @@ import com.audiro.dto.FavoriteListDestStateReqDto;
 import com.audiro.dto.FavoriteListDestUpdateReqDto;
 
 public interface FavoriteDestinationDao {
-	
-	List<FavoriteDestinationDto> selectAllOrderById();	
+	// views/favorite/list
+	List<FavoriteDestination> selectFavoriteDestination();
+	//views/travel/plan.jsp
+	List<FavoriteDestinationDto> selectAllOrderById();
+	//view/travel/plan.jsp
+
 	FavoriteDestinationDto selectById(Integer favoriteDestinationId);
 	
 	// views/favorite/list
