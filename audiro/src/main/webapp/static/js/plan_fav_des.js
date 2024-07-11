@@ -75,10 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		`;
 		plan.insertAdjacentHTML('beforeend', htmlStr);
 		
-		addNewEvent();
+		deleteEvent();
 	}
 	
-	function addNewEvent(){
+	function deleteEvent(){
 		const deleteFavImg = document.querySelectorAll('.deleteFavImg');
 		deleteFavImg.forEach((d) => {
 			d.removeEventListener('click', deleteFavDestinationInPlan); // 중복 방지 위해 기존 이벤트 제거

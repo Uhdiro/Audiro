@@ -34,6 +34,15 @@ $(document).ready(function () {
 		getDateRange(false); // showModal을 false로 전달
 	});
 
+	// 여행계획 수정 시에 eventlistener 초기화
+	document.addEventListener('click', function(event) {
+		if (event.target.classList.contains('deleteDayImg')) {
+			deleteDayAndPlan(event);
+		} else if (event.target.classList.contains('deleteFavImg')) {
+			deleteList(event);
+		}
+	});
+
 	// 수정 용
 	if (currentPath === "/audiro/travel/plan/modify") {
 		// 수정할 때 날짜 존재시 일정추가 버튼 없애기
@@ -42,7 +51,6 @@ $(document).ready(function () {
 			btnCreateDay.style.display = 'none';
 		}
 		modifyForm();
-		console.log(startDate);
 	} else {
 		defaultDay();
 	}
@@ -113,7 +121,6 @@ $(document).ready(function () {
 				.post(uri, data)
 				.then((response) => {
 					//TODO: 수정 성공시 어떤 메세지
-					console.log(response);
 					createrDetailedPlan(travelPlanId,startDate,endDate)
 				})
 				.catch((error) => {
@@ -160,7 +167,6 @@ $(document).ready(function () {
 		} else {
 			const startDateToDate = new Date(startDate);
 			const endDateToDate = new Date(endDate);
-			console.log(`start=${startDateToDate}`);
 
 			const millisecondsInADay = 24 * 60 * 60 * 1000;
 			duration = (endDateToDate - startDateToDate) / millisecondsInADay;
@@ -182,7 +188,6 @@ $(document).ready(function () {
 		}
 
 		const data = { usersId, title, startDate, duration, endDate };
-		console.log(data);
 		let travelPlanId = 0;
 		const uri = '/audiro/api/plan/create/travelPlan';
 		axios
@@ -212,12 +217,7 @@ $(document).ready(function () {
 				detailedPlans.push(data);
 			});
 		});
-		console.log(`플랜${detailedPlans[0]}`);
 		const uri = '/audiro/api/plan/create/detailedPlan';
-		console.log('야호2');
-		detailedPlans.forEach((plan, index) => {
-			console.log(`Plan ${index}:`, plan);
-		});
 		axios
 			.post(uri, detailedPlans)
 			.then((response) => {
@@ -280,7 +280,7 @@ $(document).ready(function () {
 			if (differenceInDays < currentDay) {
 				// 현재 일차 수가 날짜 차이보다 많으면 초과된 일차 삭제
 				for (let i = currentDay; i > differenceInDays; i--) {
-					deleteDayByIndex(i);
+					deleteExceededIndex(i);
 				}
 			} else if (differenceInDays === currentDay) {
 				return;
@@ -297,7 +297,7 @@ $(document).ready(function () {
 	}
 
 	// 날짜 지정시 초과된 index 삭제
-    function deleteDayByIndex(dayIndex) {
+    function deleteExceededIndex(dayIndex) {
 		const dayElement = document.querySelector(`#index${dayIndex}`);
 		const planElement = document.querySelector(`#dayPlan${dayIndex}`);
 		if (dayElement) {
@@ -310,13 +310,15 @@ $(document).ready(function () {
 	}
 
 	// day의 deleteImg를 클릭해서 삭제
-	function deleteDay(event) {
+	// day가 삭제될경우, 해당하는 plan도 삭제
+	function deleteDayAndPlan(event) {
 		// 이벤트 요소의 조상 중에서 가장 가까운 .days
 		const dayElement = event.target.closest('.days');// 가장 가까운 .days 요소 찾기
 		// 부모요소의 day-id 속성값 가져오기
 		const dayId = dayElement.getAttribute('day-id');
 		const planElement = document.querySelector(`#dayPlan${dayId}`);
-		//const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
+		// deleteDayAndPlan 함수 내 모달 초기화
+		const deleteModal = new bootstrap.Modal(document.querySelector('div.modal'), { backdrop: true });
 		deleteModal.show();
 		btnConfirm.removeEventListener('click', confirmDeleteDay); // 기존 이벤트 리스너 제거
 		btnConfirm.addEventListener('click', confirmDeleteDay); // 새로운 이벤트 리스너 추가
@@ -330,6 +332,14 @@ $(document).ready(function () {
 		}
 
 	}
+	// .list 요소를 삭제하는 함수
+    function deleteList(event) {
+		// 부모 요소 중에서 .list 클래스를 가진 요소를 찾음
+		const favList = event.target.closest('.list');
+		if (favList) {
+			favList.remove();
+		}
+    }
 	
 
 	function clickDays(event) {
@@ -388,8 +398,8 @@ $(document).ready(function () {
 		// 새로운 deleteDayImg 요소에 이벤트 리스너 추가
 		const deleteDayImg = document.querySelectorAll('img.deleteDayImg');
 		deleteDayImg.forEach((d) => {
-			d.removeEventListener('click', deleteDay); // 중복방지
-			d.addEventListener('click', deleteDay);
+			d.removeEventListener('click', deleteDayAndPlan); // 중복방지
+			d.addEventListener('click', deleteDayAndPlan);
 		});
 
 		// 새로운 collapseImg 요소에 이벤트 리스너 추가
@@ -416,12 +426,13 @@ $(document).ready(function () {
 	}
 
 	function deleteAllDay(showModal) {
+		// modal이 true일 경우 모달 창 띄우기
 		if (showModal) {
 			deleteModal.show();
 			btnConfirm.removeEventListener('click', confirmDeleteAll); // 기존 이벤트 리스너 제거
 			btnConfirm.addEventListener('click', confirmDeleteAll); // 새로운 이벤트 리스너 추가
 
-		} else {
+		} else { // modal이 false일 경우 창 안 띄우고 바로 삭제
 			deleteAllElements();
 			defaultDay();
 		}
@@ -435,6 +446,7 @@ $(document).ready(function () {
 	}
 
 
+	// 해당하는 day의 모든 일차 plan 삭제
 	function deleteAllElements() {
 		const dayElement = document.querySelectorAll('.days');
 		const planElement = document.querySelectorAll('.plans');
@@ -523,7 +535,6 @@ $(document).ready(function () {
 				getDayAndPlan(response.data);
 				getDetailedPlans(response.data);
 				//TODO:
-				console.log(index);
 
 			})
 			.catch((error) => {
@@ -558,7 +569,8 @@ $(document).ready(function () {
 
 		// 날짜 미입력시에
 		// TODO: value값 집어넣기
-		if (startDate == null && endDate == null) {
+		if (startDate == null || endDate == null) {
+			console.log('머');
 			startDateElement.value == '';
 			endDateElement.value == '';
 		} else {
