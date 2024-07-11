@@ -98,6 +98,65 @@
     border-top: none; /* 테이블 선 제거 */
 }
 
+.card-profile {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-profile:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: none; /* 배경 제거 */
+}
+
+.profile-nickname {
+    font-size: 1.5em;
+}
+
+.profile-body {
+    padding: 15px;
+}
+
+.profile-card {
+    width: 100%; /* 부모 카드에 가득 차게 */
+}
+
+.profile-img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-table {
+    width: 100%;
+}
+
+.profile-table td {
+    padding: 5px;
+    border-top: none; /* 테이블 선 제거 */
+}
+
+/* 스크롤에 따라 프로필이 따라 움직이는 효과 */
+.card-profile {
+    position: -webkit-sticky; /* 사파리 지원 */
+    position: sticky;
+    top: 10px;
+}
+
+.likeUser {
+    background: none; /* 버튼 배경 제거 */
+    border: none; /* 버튼 테두리 제거 */
+
+
+
 /* 포스트 항목 스타일 */
 .entry-container {
     border: 1px solid #d3d3d3; /* 연한 회색 외곽선 */
@@ -139,6 +198,8 @@
 }
 
 
+
+
 </style>
 </head>
 
@@ -152,36 +213,38 @@
             <div class="row" id="row">
                            
                 <!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
+<div <!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
 <div class="col-md-3">
     <div class="mt-2 card card-profile">
         <div class="profile-header">
-            <span id="nickname" style="font-size: 1.5em;">${list[0].nickname}</span>
+            <span id="nickname" class="profile-nickname">${list[0].nickname}</span>
             <button id="userLike" class="btn likeUser ${list[0].favoriteUserId != null ? 'active' : ''}" data-user-id="${id}">
                 <img src="${list[0].favoriteUserId != null ? 'images/like_red2.png' : 'images/like_black.png'}" alt="Like" width="20" height="20">
             </button>
         </div>
-        <div class="card-body" id="profil">
-            <div class="card" style="width: 13rem;">
-                <img src="${list[0].path}" class="card-img-top" alt="프로필 이미지" style="max-width: 100%; height: auto; border-radius: 50%;">
-                <div class="card-body">
-                    <p class="card-text">${list[0].introduction}</p>
-                </div>
-                <table class="table profile-table">
-                    <tbody>
-                        <tr>
-                            <td>내 여행일기</td>
-                            <td>${countMyReview}</td>
-                        </tr>
-                        <tr>
-                            <td>나를 찜한 유저</td>
-                            <td>${countLike}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="card-body profile-body" id="profil">
+            <div class="profile-img-wrapper">
+                <img src="${list[0].path}" class="profile-img" alt="프로필 이미지">
             </div>
+            <div class="card-body">
+                <p class="card-text">${list[0].introduction}</p>
+            </div>
+            <table class="table profile-table">
+                <tbody>
+                    <tr>
+                        <td>내 여행일기</td>
+                        <td>${countMyReview}</td>
+                    </tr>
+                    <tr>
+                        <td>나를 찜한 유저</td>
+                        <td>${countLike}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 
 
 
