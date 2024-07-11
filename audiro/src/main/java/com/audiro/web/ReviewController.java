@@ -91,15 +91,18 @@ public class ReviewController {
 
 	// 내 여행일기 페이지
 	@GetMapping("/mypage")
-	public void mypage(Model model, MyReviewListDto dto) {
+	public void mypage(Model model, MyReviewListDto dto,  HttpSession session) {
+		
+		// 세션에서 사용자 ID 가져오기
+	    String id = (String) session.getAttribute("signedInUser");
+	    // 세션에 id 추가
+	    model.addAttribute("id", id);
+	    log.debug("id={}", id);
 		
 	    // 내 여행일기 목록
 	    List<MyReviewListDto> list = reviewService.myReviewList(dto);
 	    model.addAttribute("list", list);
 	   
-	    // 세션에 id 추가
-	    model.addAttribute("id", dto.getId());
-	    log.debug("id={}", dto.getId());
 	    
 	    // 내 여행일기 수
 	    int countMyReview = reviewService.countMyReveiw(dto.getId());
@@ -136,13 +139,14 @@ public class ReviewController {
 
 	// 여행후기 목록 랭킹모델함께 보냄.
 	@GetMapping("/list")
-	public void reviewList (Model model, HttpSession session) {
+	public void reviewList (Model model, @RequestParam("id") String id) {
 		
-	    String id = (String) session.getAttribute("signedInUser");
+	    
 		List<ListReviewDto> list = reviewService.readAll();
 		List<Post> rank = reviewService.selectUserTop3();
         
 		model.addAttribute("list", list);
+		model.addAttribute("id",id);
 		// model.addAttribute("rank",rank);
 
 	}

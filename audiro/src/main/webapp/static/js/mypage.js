@@ -82,15 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		    }
 		}
 		
-		
-		
-		
-		
-		
-		
-
-//like_red2.png
-
 	//콤보박스
 	function SelectCombobox() {
 		alert('클릭');
@@ -116,6 +107,52 @@ document.addEventListener('DOMContentLoaded', function() {
 	async function saveLike() {
 
 	}
+	
+	
+	
+	
+///////////////////////////////////////////////////////////////////	
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 });
 
