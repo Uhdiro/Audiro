@@ -213,7 +213,7 @@
             <div class="row" id="row">
                            
                 <!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
-<div <!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
+<!-- 프로필 파일 합치면 그때 내용 불러오기하기. -->
 <div class="col-md-3">
     <div class="mt-2 card card-profile">
         <div class="profile-header">
