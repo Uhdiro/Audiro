@@ -34,15 +34,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		try {
 			const response = await axios.post('/audiro/api/review/likeUser/toggle', { id });
 			if (response.data) {
-				tag.classList.add('active'); // 관심 담기 추가된 경우 UI 업데이트
+				tag.classList.add('active'); // 찜 추가된 경우 UI 업데이트
+				tag.querySelector('img').src = `../../images/like_red2.png`;
 			} else if (!response.data) {
-				tag.classList.remove('active'); // 관심 담기 제거된 경우 UI 업데이트
+				tag.classList.remove('active'); // 찜 제거된 경우 UI 업데이트
+				tag.querySelector('img').src = `../../images/like_black.png`;
 			}
 		} catch (error) {
 			console.error('Error toggling like:', error);
 		}
 	}
-
+/*11111번찜담기 기능
 	//여행후기 찜담기(찜담고 삭제기능)
 	async function favoriteReview(event) {
 		alert('후기찜버튼!!!!!');
@@ -58,9 +60,36 @@ document.addEventListener('DOMContentLoaded', function() {
 		} catch (error) {
 			console.error('Error toggling favorite:', error);
 		}
-	}
+		*/
 
 
+		// 여행후기 찜담기(찜담고 삭제기능)
+		async function favoriteReview(event) {
+		    alert('후기찜버튼!!!!!');
+		    const tag = event.currentTarget;
+		    const postId = tag.attributes['data-review-id'].nodeValue; // 클릭된 버튼의 data-review-id 값 가져오기
+		    try {
+		        const response = await axios.post('/audiro/api/review/likeReview/toggle', { postId });
+		        if (response.data) {
+		            tag.classList.add('active'); // 찜 추가된 경우 UI 업데이트
+		            tag.querySelector('img').src = `../../images/like_red2.png`;
+		        } else if (!response.data) {
+		            tag.classList.remove('active'); // 찜 제거된 경우 UI 업데이트
+		            tag.querySelector('img').src = `../../images/like_black.png`;
+		        }
+		    } catch (error) {
+		        console.error('Error toggling favorite:', error);
+		    }
+		}
+		
+		
+		
+		
+		
+		
+		
+
+//like_red2.png
 
 	//콤보박스
 	function SelectCombobox() {

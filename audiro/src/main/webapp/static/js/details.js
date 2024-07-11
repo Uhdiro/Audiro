@@ -54,9 +54,9 @@
 		const form = document.querySelector('.reviewBtn');
 		//const id = document.querySelector()
 		const postId = document.querySelector('input#postId').value;
-		const uri = `http://localhost:8080/audiro/post/review/modify?postId=${postId}`;
+		//const uri = `http://localhost:8080/audiro/post/review/modify?postId=${postId}`;
 		console.log(postId);
-		form.action = uri;
+		form.action = 'modify';
 		form.method = 'get';
 		form.submit();
 	}

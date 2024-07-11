@@ -38,7 +38,7 @@ public interface ReviewDao {
 	
 	// 여행후기 게시판//////////////////////////////////////////////////////////////
 	// 여행후기 postId로 1개 상세보기
-	DetailsReviewDto readDetailsReviewById(Integer postId);
+	DetailsReviewDto readDetailsReviewById(Integer postId, String id);
 
 	// 여행후기 postId good 수
 	int countGoodByPostId(Integer postId);

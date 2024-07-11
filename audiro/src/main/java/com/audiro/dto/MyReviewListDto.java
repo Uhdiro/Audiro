@@ -26,6 +26,7 @@ public class MyReviewListDto {
 	private Integer favoriteUserId; //관심유저 고유키 별칭으로가져옴.
 	private String path; //프로필경로
 	private String introduction; //프로필 자기소개
+	private String content;
 	
 	public static MyReviewListDto fromEntity(Post post) {
 		return MyReviewListDto.builder()
@@ -39,6 +40,7 @@ public class MyReviewListDto {
 				.favoriteUserId(post.getFavoriteUserId())
 				.path(post.getPath())
 				.introduction(post.getIntroduction())
+				.content(post.getContent())
 				.build();
 	}
 }

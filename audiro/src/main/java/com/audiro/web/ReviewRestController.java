@@ -50,9 +50,9 @@ public class ReviewRestController {
     @PostMapping("/likeUser/toggle")
     public ResponseEntity<Boolean> likeUser(@RequestBody LikeUserFavoriteDto request
     										 ,HttpSession session) {
-        // 서비스 계층 메서드 호출
-        Boolean likeUser = reviewService.togglUserFavorite(request,session);
-        return ResponseEntity.ok(likeUser);
+        
+    Boolean likeUser = reviewService.togglUserFavorite(request,session);
+    return ResponseEntity.ok(likeUser);
     }
 	
 

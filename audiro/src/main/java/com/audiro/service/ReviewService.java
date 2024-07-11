@@ -110,7 +110,7 @@ public class ReviewService {
 	// 내 여행후기게시판 상세보기
 	public DetailsReviewDto readById(Integer postId, String id) {
         
-		DetailsReviewDto list = reviewDao.readDetailsReviewById(postId);
+		DetailsReviewDto list = reviewDao.readDetailsReviewById(postId, id);
 		
 		// 날짜 포맷팅을 위한 패턴 설정
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -176,7 +176,6 @@ public class ReviewService {
 	// 여행후기 담아있지는 확인.
 	public boolean toggleFavorite(LikeReviewPostDto dto) {
 		// 여행후기 찜 담아있는 내용 불러오기.
-		
 		List<LikeReviewPostDto> favoritePostIds = reviewDao.getFavoritePostIds(dto);
 
 		// 현재 유저가 찜한 게시물인지 확인
@@ -198,8 +197,8 @@ public class ReviewService {
 	public boolean togglUserFavorite(LikeUserFavoriteDto dto, HttpSession session) {
 		
 		// 세션에서 로그인한 유저 ID 가져오기
-        String signedInUserId = (String) session.getAttribute("signedInUser");
-        dto.setId(signedInUserId); // 세션에서 가져온 로그인 유저 ID 설정
+        String id = (String) session.getAttribute("signedInUser");
+        dto.setId(id); // 세션에서 가져온 로그인 유저 ID 설정
         
 		// 여행후기 찜 담아있는 내용 불러오기.
 		List<LikeUserFavoriteDto> favoriteUserIds = reviewDao.getFavoriteUserIds(dto);

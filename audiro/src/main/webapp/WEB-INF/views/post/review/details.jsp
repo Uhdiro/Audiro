@@ -80,6 +80,11 @@
         white-space: pre-line;
         margin-bottom: 20px;
         }
+        
+    .nickname-link {
+        text-decoration: none; /* 링크 스타일 제거 */
+        color: inherit; /* 글자 색상 상속 */
+    }    
        
 </style>
 </head>
@@ -120,8 +125,10 @@
                                         <img src="../../images/bagic_profile.png" alt="프로필 이미지" class="p-profile-image"
                                             id="p-profile-image" />
                                         <div>
-                                            <span>${post.nickname}</span> <br /> 
-                                            <label for="modifiedTime" class="label-time"
+										<a href="/audiro/post/review/mypage?id=${sessionScope.signedInUsersId}"
+											class="nickname-link"> <span>${post.nickname}</span>
+										</a> <br /> 
+										<label for="modifiedTime" class="label-time"
                                                    style="margin-left: 2px; flex-shrink: 0; font-size: 0.8em;">
                                                    ${post.formattedModifiedTime} 
                                             </label>

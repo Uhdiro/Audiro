@@ -115,16 +115,19 @@
 		where favorite_users_id = #{favoriteUsersId}
 	</delete>
 	
-	<!-- 여행후기 찜 담아있는 내용 불러오기. -->
+	<!-- 여행후기 찜 담아있는 정보 불러오기. -->
 	<select id="getFavoritePostIds" resultType="com.audiro.dto.LikeReviewPostDto">
-			select 
-			 fp.favorite_post_id
-			 , fp.post_id
-			 , fp.users_id
-		from favorite_post fp
+        select 
+		    fp.favorite_post_id as favoriteUserId,
+		    fp.post_id,
+		    fp.users_id
+		from 
+		    favorite_post fp
+		join 
+		    users u on fp.users_id = u.users_id
 		where 
-			 fp.users_id = #{usersId}
-			 and fp.post_Id = #{postId}
+		    u.id = #{id}
+		    and fp.post_Id = #{postId}
 	</select>
 	
 	<!-- 해당 여행일기 찜담기  -->
