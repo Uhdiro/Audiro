@@ -254,7 +254,7 @@ main {
 								<span id="nickname" class="profile-nickname">${post[0].nickname}</span>
 								<button id="userLike"
 									class="likeReview ${post[0].favoriteUserId != null ? 'active' : ''}"
-									data-user-id="${id}"></button>
+									data-user-id="${signedInUser}"></button>
 							</h2>
 							<div class="stats">
 								<div>
@@ -273,7 +273,7 @@ main {
 				</div>
 				<div class="profile-posts" id="profilePosts">
 					<!-- 여행후기 반복문 -->
-					<c:forEach var="post" items="${post}">
+					<c:forEach var="post" items="${posts}">
 						<article id="post-${post.postId}"
 							class="post-${post.postId} post type-post status-publish format-standard has-post-thumbnail hentry category-lifestyle">
 							<div class="blog-post-item"

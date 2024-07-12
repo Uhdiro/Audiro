@@ -9,7 +9,7 @@
 	<!-- 내 여행후기 전체 불러오기 (최신순) -->
 	<select id="readMyReview" resultType="com.audiro.dto.MyReviewListDto">
 	    select 
-	        p.users_id 
+	          p.users_id   
 	        , p.title
 	        , p.modified_time
 	        , p.post_id
@@ -25,7 +25,7 @@
 	    left join favorite_users fu on p.users_id = fu.users_id
 	    left join profile pr on p.users_id = pr.users_id 
 	    where p.post_type_id = 10
-	          and u.id = #{id}
+	          and u.id = #{signedInUser}
 	    order by p.modified_time desc
 	</select>
 

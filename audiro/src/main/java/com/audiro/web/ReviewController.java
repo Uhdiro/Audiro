@@ -91,22 +91,17 @@ public class ReviewController {
 
 	// 내 여행일기 페이지
 	@GetMapping("/mypage")
-	public void mypage(Model model, MyReviewListDto dto,  HttpSession session) {
-		
-		// 세션에서 로그인사용자 ID 가져오기
-	    String id = (String) session.getAttribute("signedInUser");
+	public void mypage(Model model, MyReviewListDto dto, @RequestParam("id") String id) {
+			    
 	    // 세션에 id 추가
-	    model.addAttribute("id", id);
-	    log.debug("id={}", id);
+	    model.addAttribute("signedInUser", id);
+	    log.debug("signedInUser={}", id);
 		
 	    // 해당 여행일기 리스트
 	    List<MyReviewListDto> posts = reviewService.myReviewList(dto);
+	    log.debug("dto={}", dto);
 	    model.addAttribute("post", posts);
-	   
-	    // 여행일기 페이지의 해당 id 가져오기
-        String pageUserId = dto.getId();
-        model.addAttribute("pageUserId", pageUserId);
-	    
+	       
 	    // 해당 여행일기페이지 유저의 여행일기 수
 	    int countMyReview = reviewService.countMyReveiw(dto.getId());
 	    model.addAttribute("countMyReview", countMyReview);
