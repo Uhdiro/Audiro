@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const chkSaveId = document.querySelector('input#chkSaveId');
     const btnSignin = document.querySelector('input#btnSignin');
     
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('result') === 'f') {
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    }
+    
     btnSignin.addEventListener('click', function() {
         
         if (chkSaveId.checked) {
