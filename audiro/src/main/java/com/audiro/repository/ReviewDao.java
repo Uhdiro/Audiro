@@ -7,6 +7,7 @@ import com.audiro.dto.CreateReviewDto;
 import com.audiro.dto.DetailsReviewDto;
 import com.audiro.dto.LikeReviewPostDto;
 import com.audiro.dto.LikeUserFavoriteDto;
+import com.audiro.dto.ListReviewDto;
 import com.audiro.dto.MyReviewListDto;
 import com.audiro.dto.SerachReviewDto;
 
@@ -38,7 +39,7 @@ public interface ReviewDao {
 	
 	// 여행후기 게시판//////////////////////////////////////////////////////////////
 	// 여행후기 postId로 1개 상세보기
-	DetailsReviewDto readDetailsReviewById(Integer postId, String id);
+	DetailsReviewDto readDetailsReviewById(Integer postId, Integer usersid);
 
 	// 여행후기 postId good 수
 	int countGoodByPostId(Integer postId);
@@ -71,10 +72,10 @@ public interface ReviewDao {
 	int updateReview(CreateReviewDto dto);
 	
 	//여행후기 모두 불러오기(최신순)
-	List<Post> selectReviewAll();
+	List<ListReviewDto> selectReviewAll();
 	
 	//여행후기 모두 불러오기(좋아요순)
-	List<Post> rankingGoodReview();
+	List<ListReviewDto> rankingGoodReview();
 
 	//여행후기 검색하기
 	List<Post> searchKeyword(SerachReviewDto dto);

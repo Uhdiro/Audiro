@@ -26,6 +26,7 @@ public class ListReviewDto {
 	private LocalDateTime modifiedTime;
 	private Integer favoritePost;
 	private String id;
+	private String formattedModifiedTime;
 	
 	public static ListReviewDto fromEntity(Post post) {
 		
@@ -39,6 +40,7 @@ public class ListReviewDto {
 				.modifiedTime(post.getModifiedTime())
 				.favoritePost(post.getFavoritePost())
 				.id(post.getId())
+				.formattedModifiedTime(post.getFormattedModifiedTime())
 				.build();
 		
 	}

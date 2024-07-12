@@ -61,12 +61,10 @@ public class ReviewController {
 
 	// 여행후기 상세보기, 수정하기하면 작성된 페이지 띄우기
 	@GetMapping("/details")
-	public void reviewDetails(DetailsReviewDto dto, Model model, HttpSession session) {
-		
-		// 세션에서 사용자 ID 가져오기
-	    String id = (String) session.getAttribute("signedInUser");
+	public void reviewDetails(DetailsReviewDto dto, Model model,
+							  @RequestParam(name="usersId") Integer usersId) {
 	    //여행후기 상세보기
-	    DetailsReviewDto post = reviewService.readById(dto.getPostId(), id);
+	    DetailsReviewDto post = reviewService.readById(dto.getPostId(), usersId);
 		//굿 수
 		int countLike = reviewService.countGood(dto.getPostId());
 		//찜 수
@@ -78,7 +76,6 @@ public class ReviewController {
 		model.addAttribute("countLike", countLike);
 		model.addAttribute("countFavorite", countFavorite);
 		model.addAttribute("profile", profile);
-		model.addAttribute("signedInUser", id);
 		//model.addAttribute("profile", profile);
 	}
 
@@ -115,13 +112,9 @@ public class ReviewController {
 	// 여행후기수정페이지
 	@GetMapping("/modify")
 	public void reviewModify(@RequestParam(name = "postId") Integer postId, 
-							   HttpSession session,
-							   Model model) {
-			
-		// 세션에서 사용자 ID 가져오기
-	    String id = (String) session.getAttribute("signedInUser");
-
-		DetailsReviewDto list = reviewService.readById(postId, id);
+							 @RequestParam(name = "usersId") Integer usersId, 
+							 Model model) {
+		DetailsReviewDto list = reviewService.readById(postId, usersId);
 		model.addAttribute("list", list);
 		
 		//return "/post/review/modify?postId=" + postId;

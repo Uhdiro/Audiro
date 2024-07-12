@@ -108,9 +108,9 @@ public class ReviewService {
 
 	///////////////////////////////////////////////////////
 	// 내 여행후기게시판 상세보기
-	public DetailsReviewDto readById(Integer postId, String id) {
+	public DetailsReviewDto readById(Integer postId, @RequestParam Integer usersId) {
         
-		DetailsReviewDto list = reviewDao.readDetailsReviewById(postId, id);
+		DetailsReviewDto list = reviewDao.readDetailsReviewById(postId, usersId);
 		
 		// 날짜 포맷팅을 위한 패턴 설정
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -161,8 +161,22 @@ public class ReviewService {
 
 	// 여행후기 모두 불러오기(최신순)
 	public List<ListReviewDto> readAll() {
-		List<Post> list = reviewDao.selectReviewAll();
-		return list.stream().map(ListReviewDto::fromEntity).toList();
+		List<ListReviewDto> list = reviewDao.selectReviewAll();
+		
+		// 날짜 포맷팅을 위한 패턴 설정
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+	    // 각 ListReviewDto 객체에 대해 포맷팅된 문자열을 설정
+        for (ListReviewDto t : list) {
+            if (t.getModifiedTime() != null) {
+                String formattedModifiedTime = t.getModifiedTime().format(formatter);
+                t.setModifiedTime(formattedModifiedTime);
+            }
+        }
+	    // 변환된 문자열을 설정
+	    list.setFormattedModifiedTime(formattedModifiedTime);
+		
+		return list;
 	}
 
 	// 여행후기 검색
