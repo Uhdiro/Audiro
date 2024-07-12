@@ -49,7 +49,7 @@
 	</select>
 	
 	<select id="selectMaxDay"  resultType="Integer">
-		select max(day) from detailed_plan where travel_plan_id = #{travelPlanId}
+		select duration+1 from travel_plan where travel_plan_id = #{travelPlanId}
 	</select>
 	
 	<update id="updateTravelPlan">

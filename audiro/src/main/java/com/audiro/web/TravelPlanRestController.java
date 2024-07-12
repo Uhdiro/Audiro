@@ -1,5 +1,7 @@
 package com.audiro.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +49,8 @@ public class TravelPlanRestController {
 	
 	@PostMapping("/create/travelPlan")
 	public ResponseEntity<Integer> createPlan(@RequestBody TravelPlanDto dto){
-		int result=planService.createPlan(dto);
-	    if (dto.getStartDate() == null || dto.getEndDate() == null) {
-	    	 dto.setStartDate(null); 
-	    	 dto.setEndDate(null); 
-	    }
+	 
+	    int result=planService.createPlan(dto);
 		return ResponseEntity.ok(result);
 	}
 	
@@ -67,7 +66,7 @@ public class TravelPlanRestController {
 		List<DetailedPlanDto> list = planService.readDetailedPlanByTravelPlanId(travelPlanId);
 		int maxDay = planService.getMaxDay(travelPlanId);
 		TravelPlan plan=planService.readTravelPlanById(travelPlanId);
-		log.debug("max= {}",maxDay);
+
 		// Map을 사용하여 list와 maxDay를 함께 담습니다.
 		Map<String, Object> response = new HashMap<>();
 		response.put("list", list);
