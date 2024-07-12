@@ -240,6 +240,12 @@ $(document).ready(function () {
 		let startDate = document.querySelector('input#startDate').value;
 		let endDate = document.querySelector('input#endDate').value;
 
+		
+
+		// 날짜 지정할 때, 요소가 초기화 되는 것을 막음.
+		if (startDate === '' || endDate === '') {
+			return;
+		}
 		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
 		if (startDate !== '' || endDate !== '') {
 			btnCreateDay.style.display = 'none';
