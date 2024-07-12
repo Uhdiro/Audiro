@@ -88,12 +88,10 @@ $(document).ready(function () {
 		const title = document.querySelector('input#title').value;
 		let startDate = document.querySelector('input#startDate').value;
 		let endDate = document.querySelector('input#endDate').value;
+		
 		const startDateToDate = new Date(startDate);
 		const endDateToDate = new Date(endDate);
-		console.log(travelPlanId);
-		console.log(title);
-		console.log(startDate);
-
+		
 		const millisecondsInADay = 24 * 60 * 60 * 1000;
 		let duration = (endDateToDate - startDateToDate) / millisecondsInADay;
 
@@ -110,20 +108,19 @@ $(document).ready(function () {
 		}
 
 			const data = { travelPlanId, title, startDate, duration, endDate };
-			console.log(data);
 			const uri = '/audiro/api/plan/modify';
-			axios
-				.post(uri, data)
-				.then((response) => {
-					//TODO: 수정 성공시 어떤 메세지
-					createrDetailedPlan(travelPlanId,startDate,endDate)
-				})
-				.catch((error) => {
-					console.log(error);
-				})
-		
+		axios
+			.post(uri, data)
+			.then((response) => {
+				createrDetailedPlan(travelPlanId, startDate, endDate)
+				// 계획 저장 후 해당 계획의 상세보기로 이동
+				const redirectUrl = `/audiro/travel/plan/details?id=${travelPlanId}`;
+				window.location.href = redirectUrl; // 클라이언트 측에서 페이지 이동
+			})
+			.catch((error) => {
+				console.log(error);
+			})
 	}
-
 
 	function createTravelPlan() {
 		//const usersId=session.getAttribute(SESSION_ATTR_USER);
@@ -194,7 +191,8 @@ $(document).ready(function () {
 			.then((response) => {
 				travelPlanId = response.data;
 				createrDetailedPlan(travelPlanId,startTime,endTime);
-				//defaultDay();
+				// 페이지 새로고침
+            	window.location.reload();
 			})
 			.catch((error) => {
 				console.log(error);
@@ -221,34 +219,31 @@ $(document).ready(function () {
 			.post(uri, detailedPlans)
 			.then((response) => {
 				console.log(response.data);
-				console.log('야호3');
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 
-		document.querySelector('div#dayContainer').remove();
-		document.querySelector('div#planContainer').remove();
+	
 	}
 
 	
 	function getDateRange(showModal) {
-		const alert=document.querySelector('div#alert');
-		
-		alert.innerHTML='';
-		
+		const alert = document.querySelector('div#alert');
+
+		alert.innerHTML = '';
+
 		let startDate = document.querySelector('input#startDate').value;
 		let endDate = document.querySelector('input#endDate').value;
 
-		
+		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
+		if (startDate !== '' || endDate !== '') {
+			btnCreateDay.style.display = 'none';
+		}
 
 		// 날짜 지정할 때, 요소가 초기화 되는 것을 막음.
 		if (startDate === '' || endDate === '') {
 			return;
-		}
-		// 달력 날짜 입력시 '일차추가' 버튼 사라지게 한다.
-		if (startDate !== '' || endDate !== '') {
-			btnCreateDay.style.display = 'none';
 		}
 
 		const startDateToDate = new Date(startDate);
@@ -256,8 +251,8 @@ $(document).ready(function () {
 
 
 		if (startDateToDate > endDateToDate) {
-			alert.innerHTML='';
-			btnSave.diabled=true;
+			alert.innerHTML = '';
+			btnSave.diabled = true;
 			startDate = '';
 			endDate = '';
 			// TODO: 문제없으면 삭제
@@ -279,8 +274,8 @@ $(document).ready(function () {
 		const differenceInMillis = endDateToDate - startDateToDate;
 		// 밀리초를 일수로 변환
 		const differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24)) + 1;
-		const duration =document.querySelector('input#duration');
-		duration.value=differenceInDays;
+		const duration = document.querySelector('input#duration');
+		duration.value = differenceInDays;
 		let currentDay = index - 1;
 
 		// 현재 생성된 일차 수와 날짜 차이를 비교하여 일차를 증가 또는 감소시킴
@@ -305,7 +300,7 @@ $(document).ready(function () {
 	}
 
 	// 날짜 지정시 초과된 index 삭제
-    function deleteExceededIndex(dayIndex) {
+	function deleteExceededIndex(dayIndex) {
 		const dayElement = document.querySelector(`#index${dayIndex}`);
 		const planElement = document.querySelector(`#dayPlan${dayIndex}`);
 		if (dayElement) {
@@ -368,7 +363,7 @@ $(document).ready(function () {
 
 
 	function createDayForm() {
-		const divDay = document.querySelector('div#dayContainer');
+		const dayContainer = document.querySelector('div#dayContainer');
 		let htmlStr = '';
 		htmlStr = `
 			<div class="days non-click row g-0 my-1 p-2" id="index${index}" day-id="${index}">
@@ -383,7 +378,7 @@ $(document).ready(function () {
 				</div>
 			</div>
 		`;
-		divDay.insertAdjacentHTML('beforeend', htmlStr);
+		dayContainer.insertAdjacentHTML('beforeend', htmlStr);
 		
 		// 모든 일차를 non-click 상태로 설정
 		const days = document.querySelectorAll('.days');
@@ -549,10 +544,10 @@ $(document).ready(function () {
 				if (startDateValue !== '' || endDateValue !== '') {
 					btnCreateDay.style.display = 'none';
 				}
-				else {
+			/*	else {
 					btnCreateDay.style.display = 'block';
 				}
-
+*/
 			})
 			.catch((error) => {
 				console.log(error);
@@ -578,13 +573,9 @@ $(document).ready(function () {
 		const duration = travelPlan.duration;
 		const startDate = travelPlan.startDate;
 		const endDate = travelPlan.endDate
-		console.log(startDate);
-		console.log(title);
 		const startDateElement = document.querySelector('input#startDate');
 		const endDateElement= document.querySelector('input#endDate');
-		console.log(startDateElement);
-
-
+		
 		// startDate와 endDate 값이 null이 아닌 경우에만 입력
 		if (startDate&&endDate) {
 			startDateElement.value = getDate(travelPlan.startDate);
